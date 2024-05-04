@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import ir.rezarasuolzadeh.pickers.ui.dialog.DateDialog
 import ir.rezarasuolzadeh.pickers.ui.dialog.TimeDialog
 import ir.rezarasuolzadeh.pickers.ui.theme.PickersTheme
 import ir.rezarasuolzadeh.pickers.ui.theme.White
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = White
                 ) {
-                    TimeDialog()
+                    DateDialog()
                 }
             }
         }

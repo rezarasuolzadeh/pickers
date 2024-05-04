@@ -6,10 +6,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import ir.rezarasuolzadeh.pickers.TimePickerDialogCompose
+import ir.rezarasuolzadeh.pickers.DatePickerDialogCompose
 
 @Composable
-fun TimeDialog() {
+fun DateDialog() {
     val context = LocalContext.current
 
     Dialog(
@@ -21,9 +21,9 @@ fun TimeDialog() {
             dismissOnClickOutside = false
         )
     ) {
-        TimePickerDialogCompose(
-            onTimeSelect = { selectedTime ->
-                Toast.makeText(context, selectedTime, Toast.LENGTH_SHORT).show()
+        DatePickerDialogCompose(
+            onDateSelect = { selectedDate ->
+                Toast.makeText(context, selectedDate, Toast.LENGTH_SHORT).show()
             }
         )
     }
@@ -31,6 +31,6 @@ fun TimeDialog() {
 
 @Preview
 @Composable
-fun TimeDialogPreview() {
-    TimeDialog()
+fun DateDialogPreview() {
+    DateDialog()
 }

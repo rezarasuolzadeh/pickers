@@ -25,6 +25,7 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import ir.rezarasuolzadeh.pickers.R
 import ir.rezarasuolzadeh.pickers.fadingEdge
@@ -45,6 +46,7 @@ fun Picker(
     showDivider: Boolean = false,
     textStyle: TextStyle = LocalTextStyle.current,
     dividerColor: Color = LocalContentColor.current,
+    onItemChanged: (String) -> Unit = {}
 ) {
 
     val visibleItemsMiddle = visibleItemsCount / 2
@@ -78,6 +80,7 @@ fun Picker(
             .distinctUntilChanged()
             .collect { item ->
                 state.selectedItem = item
+                onItemChanged(item)
             }
     }
 
@@ -105,7 +108,8 @@ fun Picker(
                         .onSizeChanged { size ->
                             itemHeightPixels.value = size.height
                         }
-                        .then(other = textModifier)
+                        .then(other = textModifier),
+                    textAlign = TextAlign.Center
                 )
             }
         }

@@ -1,7 +1,7 @@
 package ir.rezarasuolzadeh.pickers
 
+import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,8 +31,8 @@ import com.eniac.sorena.ui.util.picker.rememberPickerState
 import ir.rezarasuolzadeh.pickers.ui.theme.White
 
 @Composable
-fun TimePickerDialogCompose(
-    onTimeSelect: (String) -> Unit
+fun DatePickerDialogCompose(
+    onDateSelect: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -40,17 +40,17 @@ fun TimePickerDialogCompose(
             .clip(shape = RoundedCornerShape(15.dp))
             .background(color = White)
     ) {
-        val hours = remember { (0..23).map { if (it < 10) "0$it" else "$it" } }
-        val minutes = remember { (0..59).map { if (it < 10) "0$it" else "$it" } }
-        val seconds = remember { (0..59).map { if (it < 10) "0$it" else "$it" } }
-        val hourPickerState = rememberPickerState()
-        val minutePickerState = rememberPickerState()
-        val secondPickerState = rememberPickerState()
+        val years = remember { (1380..1410).map { if (it < 10) "0$it" else "$it" } }
+        val months = remember { listOf("فروردین", "اردیبهشت", "خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند")}
+        var days = (1..31).map { if (it < 10) "0$it" else "$it" }
+        val yearPickerState = rememberPickerState()
+        val monthPickerState = rememberPickerState()
+        val dayPickerState = rememberPickerState()
         Text(
             modifier = Modifier
                 .padding(top = 10.dp)
                 .fillMaxWidth(),
-            text = "انتخاب زمان",
+            text = "انتخاب تاریخ",
             color = Black,
             fontFamily = FontFamily(Font(R.font.vazir_num)),
             fontWeight = FontWeight.Bold,
@@ -63,50 +63,69 @@ fun TimePickerDialogCompose(
             horizontalArrangement = Arrangement.Center
         ) {
             Picker(
-                state = hourPickerState,
-                items = hours,
+                state = yearPickerState,
+                items = years,
                 visibleItemsCount = 3,
                 modifier = Modifier
                     .padding(top = 25.dp)
-                    .width(65.dp),
+                    .width(90.dp),
                 textModifier = Modifier.padding(8.dp),
-                textStyle = TextStyle(fontSize = 20.sp)
+                textStyle = TextStyle(fontSize = 16.sp)
             )
             Text(
                 modifier = Modifier
                     .padding(top = 20.dp),
-                text = ":",
+                text = "/",
                 color = Black,
                 fontFamily = FontFamily(Font(R.font.vazir_num)),
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Center
             )
             Picker(
-                state = minutePickerState,
-                items = minutes,
+                state = monthPickerState,
+                items = months,
                 visibleItemsCount = 3,
                 modifier = Modifier
                     .padding(top = 25.dp)
-                    .width(65.dp),
+                    .width(90.dp),
                 textModifier = Modifier.padding(8.dp),
-                textStyle = TextStyle(fontSize = 20.sp)
+                textStyle = TextStyle(fontSize = 16.sp),
+                onItemChanged = {
+                    Log.d("REZAAAAA", "${it}")
+                    days = when(it) {
+                        "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور" -> {
+                             (1..31).map { if (it < 10) "0$it" else "$it" }
+                        }
+                        "مهر", "آبان", "آذر", "دی", "بهمن" -> {
+                            (1..30).map { if (it < 10) "0$it" else "$it" }
+                        }
+                        "اسفند" -> {
+                            (1..29).map { if (it < 10) "0$it" else "$it" }
+                        }
+                        else -> {
+                            (1..31).map { if (it < 10) "0$it" else "$it" }
+                        }
+                    }
+                }
             )
             Text(
                 modifier = Modifier
                     .padding(top = 20.dp),
-                text = ":",
+                text = "/",
                 color = Black,
                 fontFamily = FontFamily(Font(R.font.vazir_num)),
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Center
             )
             Picker(
-                state = secondPickerState,
-                items = seconds,
+                state = dayPickerState,
+                items = days,
                 visibleItemsCount = 3,
                 modifier = Modifier
                     .padding(top = 25.dp)
-                    .width(65.dp),
+                    .width(90.dp),
                 textModifier = Modifier.padding(8.dp),
-                textStyle = TextStyle(fontSize = 20.sp)
+                textStyle = TextStyle(fontSize = 16.sp)
             )
         }
         Text(
@@ -114,7 +133,7 @@ fun TimePickerDialogCompose(
                 .padding(top = 25.dp)
                 .fillMaxWidth()
                 .noRippleClickable {
-                    onTimeSelect("${hourPickerState.selectedItem}:${minutePickerState.selectedItem}:${secondPickerState.selectedItem}")
+                    onDateSelect("${yearPickerState.selectedItem}/${monthPickerState.selectedItem}/${dayPickerState.selectedItem}")
                 },
             text = "ثبت",
             color = Black,
@@ -128,8 +147,10 @@ fun TimePickerDialogCompose(
 
 @Preview
 @Composable
-fun TimePickerDialogPreview() {
-    TimePickerDialogCompose(
-        onTimeSelect = {}
+fun DatePickerDialogPreview() {
+    DatePickerDialogCompose(
+        onDateSelect = {
+            // nothing to do yet
+        }
     )
 }
