@@ -48,7 +48,6 @@ fun Picker(
     dividerColor: Color = LocalContentColor.current,
     onItemChanged: (String) -> Unit = {}
 ) {
-
     val visibleItemsMiddle = visibleItemsCount / 2
     val listScrollCount = Integer.MAX_VALUE
     val listScrollMiddle = listScrollCount / 2
@@ -126,4 +125,3 @@ fun Picker(
     }
 
 }
-
