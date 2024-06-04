@@ -1,13 +1,14 @@
 package ir.rezarasuolzadeh.pickers.ui.viewmodel.time
 
 import androidx.lifecycle.ViewModel
+import ir.rezarasuolzadeh.pickers.ui.utility.enums.TimeType
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class TimeViewModel : ViewModel() {
 
     var defaultDays = (1..31).map { if (it < 10) "0$it" else "$it" }
 
-    var days = MutableStateFlow(value = defaultDays)
+    var timeType = MutableStateFlow(value = TimeType.AM)
         private set
 
     /**
@@ -15,8 +16,11 @@ class TimeViewModel : ViewModel() {
      */
     fun onEvent(event: TimeEvent) {
         when (event) {
-            TimeEvent.UpdateCurrentTime -> {
+            is TimeEvent.UpdateCurrentTime -> {
                 // nothing to do yet
+            }
+            is TimeEvent.SetTimeType -> {
+                timeType.value = event.timeType
             }
         }
     }

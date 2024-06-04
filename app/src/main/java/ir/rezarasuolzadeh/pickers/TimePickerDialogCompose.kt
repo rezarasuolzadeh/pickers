@@ -1,11 +1,11 @@
 package ir.rezarasuolzadeh.pickers
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,12 +28,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.eniac.sorena.ui.util.picker.Picker
 import com.eniac.sorena.ui.util.picker.rememberPickerState
 import ir.rezarasuolzadeh.pickers.ui.theme.DarkBlue
+import ir.rezarasuolzadeh.pickers.ui.theme.Gray
 import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
+import ir.rezarasuolzadeh.pickers.ui.theme.TransparentWhite
 import ir.rezarasuolzadeh.pickers.ui.theme.White
+import ir.rezarasuolzadeh.pickers.ui.utility.enums.TimeType
+import ir.rezarasuolzadeh.pickers.ui.viewmodel.date.DateEvent
+import ir.rezarasuolzadeh.pickers.ui.viewmodel.time.TimeEvent
 import ir.rezarasuolzadeh.pickers.ui.viewmodel.time.TimeViewModel
 
 @Composable
@@ -41,6 +48,27 @@ fun TimePickerDialogCompose(
     onTimeSelect: (String) -> Unit,
     onCancel: () -> Unit,
     timeViewModel: TimeViewModel = viewModel()
+) {
+    val timeType by timeViewModel.timeType.collectAsStateWithLifecycle()
+
+    TimePickerDialogComposeContent(
+        showSeconds = showSeconds,
+        timeType = timeType,
+        onTimeSelect = onTimeSelect,
+        onCancel = onCancel,
+        onEvent = {
+            timeViewModel.onEvent(event = it)
+        }
+    )
+}
+
+@Composable
+fun TimePickerDialogComposeContent(
+    showSeconds: Boolean,
+    timeType: TimeType,
+    onTimeSelect: (String) -> Unit,
+    onCancel: () -> Unit,
+    onEvent: (TimeEvent) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -105,7 +133,7 @@ fun TimePickerDialogCompose(
                 textModifier = Modifier.padding(8.dp),
                 textStyle = TextStyle(fontSize = 20.sp)
             )
-            if(showSeconds) {
+            if (showSeconds) {
                 Text(
                     modifier = Modifier
                         .padding(top = 20.dp),
@@ -123,6 +151,86 @@ fun TimePickerDialogCompose(
                         .width(65.dp),
                     textModifier = Modifier.padding(8.dp),
                     textStyle = TextStyle(fontSize = 20.sp)
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .padding(top = 15.dp)
+                    .height(height = 60.dp)
+                    .width(width = 45.dp)
+                    .border(width = 0.4.dp, color = White, shape = RoundedCornerShape(10.dp))
+            ) {
+                Text(
+                    modifier = if(timeType == TimeType.AM) {
+                        Modifier
+                            .width(width = 45.dp)
+                            .height(height = 30.dp)
+                            .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
+                            .background(color = TransparentWhite)
+                            .noRippleClickable {
+                                onEvent(
+                                    TimeEvent.SetTimeType(
+                                        timeType = TimeType.AM
+                                    )
+                                )
+                            }
+                    } else {
+                        Modifier
+                            .width(width = 45.dp)
+                            .height(height = 30.dp)
+                            .noRippleClickable {
+                                onEvent(
+                                    TimeEvent.SetTimeType(
+                                        timeType = TimeType.AM
+                                    )
+                                )
+                            }
+                    },
+                    text = "ق.ظ",
+                    color = if(timeType == TimeType.AM) White else Gray,
+                    fontFamily = FontFamily(Font(R.font.vazir)),
+                    fontWeight = FontWeight.Light,
+                    textAlign = TextAlign.Center,
+                    fontSize = 13.sp
+                )
+                Box(
+                    modifier = Modifier
+                        .height(height = 0.3.dp)
+                        .fillMaxWidth()
+                        .background(color = White)
+                )
+                Text(
+                    modifier = if(timeType == TimeType.PM) {
+                        Modifier
+                            .width(width = 45.dp)
+                            .height(height = 30.dp)
+                            .clip(shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
+                            .background(color = TransparentWhite)
+                            .noRippleClickable {
+                                onEvent(
+                                    TimeEvent.SetTimeType(
+                                        timeType = TimeType.PM
+                                    )
+                                )
+                            }
+                    } else {
+                        Modifier
+                            .width(width = 45.dp)
+                            .height(height = 30.dp)
+                            .noRippleClickable {
+                                onEvent(
+                                    TimeEvent.SetTimeType(
+                                        timeType = TimeType.PM
+                                    )
+                                )
+                            }
+                    },
+                    text = "ب.ظ",
+                    color = if(timeType == TimeType.PM) White else Gray,
+                    fontFamily = FontFamily(Font(R.font.vazir)),
+                    fontWeight = FontWeight.Light,
+                    textAlign = TextAlign.Center,
+                    fontSize = 13.sp
                 )
             }
         }
@@ -184,7 +292,7 @@ fun TimePickerDialogCompose(
                         top.linkTo(parent.top)
                     }
                     .noRippleClickable {
-                        if(showSeconds) {
+                        if (showSeconds) {
                             onTimeSelect("${hourPickerState.selectedItem}:${minutePickerState.selectedItem}:${secondPickerState.selectedItem}")
                         } else {
                             onTimeSelect("${hourPickerState.selectedItem}:${minutePickerState.selectedItem}")

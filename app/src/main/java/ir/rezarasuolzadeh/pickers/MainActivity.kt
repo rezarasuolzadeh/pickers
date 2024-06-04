@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = White
                 ) {
-                    DateDialog()
+                    TimeDialog()
                 }
             }
         }

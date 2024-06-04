@@ -15,3 +15,7 @@ val White = Color(0xFFFFFFFF)
 
 val DarkBlue = Color(0xFF001D3C)
 val LightBlue = Color(0xFF003166)
+
+val Gray = Color(0xFF575757)
+
+val TransparentWhite = Color(0x4DFFFFFF)
