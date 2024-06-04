@@ -22,9 +22,11 @@ fun TimeDialog() {
         )
     ) {
         TimePickerDialogCompose(
+            showSeconds = true,
             onTimeSelect = { selectedTime ->
                 Toast.makeText(context, selectedTime, Toast.LENGTH_SHORT).show()
-            }
+            },
+            onCancel = {}
         )
     }
 }

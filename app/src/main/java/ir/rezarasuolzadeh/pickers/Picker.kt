@@ -31,6 +31,7 @@ import ir.rezarasuolzadeh.pickers.R
 import ir.rezarasuolzadeh.pickers.fadingEdge
 import ir.rezarasuolzadeh.pickers.pixelsToDp
 import ir.rezarasuolzadeh.pickers.ui.theme.Black
+import ir.rezarasuolzadeh.pickers.ui.theme.White
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
@@ -40,6 +41,7 @@ fun Picker(
     items: List<String>,
     state: PickerState = rememberPickerState(),
     modifier: Modifier = Modifier,
+    itemColor: Color = White,
     startIndex: Int = 0,
     visibleItemsCount: Int = 3,
     textModifier: Modifier = Modifier,
@@ -59,7 +61,7 @@ fun Picker(
     val fadingEdgeGradient = remember {
         Brush.verticalGradient(
             0f to Color.Transparent,
-            0.5f to Color.Black,
+            0.5f to itemColor,
             1f to Color.Transparent
         )
     }
@@ -101,7 +103,7 @@ fun Picker(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = textStyle,
-                    color = Black,
+                    color = itemColor,
                     fontFamily = FontFamily(Font(R.font.vazir_num)),
                     modifier = Modifier
                         .onSizeChanged { size ->
