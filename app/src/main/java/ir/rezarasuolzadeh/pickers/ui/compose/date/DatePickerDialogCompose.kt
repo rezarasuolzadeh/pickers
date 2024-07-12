@@ -37,16 +37,25 @@ import ir.rezarasuolzadeh.pickers.utils.extensions.noRippleClickable
 import ir.rezarasuolzadeh.pickers.ui.compose.picker.rememberPickerState
 import ir.rezarasuolzadeh.pickers.ui.theme.DarkBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
+import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
 import ir.rezarasuolzadeh.pickers.viewmodels.date.DateEvent
 import ir.rezarasuolzadeh.pickers.viewmodels.date.DateViewModel
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                            screen                                              //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 @Composable
 fun DatePickerDialogCompose(
+    initialDay: Int?,
+    initialMonth: MonthType?,
+    initialYear: Int?,
+    yearRange: IntRange,
     onDateSelect: (String) -> Unit,
     dateViewModel: DateViewModel = viewModel()
 ) {
 
-    val years = remember { (1380..1410).map { if (it < 10) "0$it" else "$it" } }
+    val years = remember { (yearRange).map { if (it < 10) "0$it" else "$it" } }
     val months = remember { listOf("فروردین", "اردیبهشت", "خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند")}
     val yearPickerState = rememberPickerState()
     val monthPickerState = rememberPickerState()
@@ -94,6 +103,10 @@ fun DatePickerDialogCompose(
         onDateSelect = onDateSelect
     )
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                           content                                              //
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
 fun DatePickerDialogComposeContent(
@@ -272,10 +285,18 @@ fun DatePickerDialogComposeContent(
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                           preview                                              //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 @Preview
 @Composable
 fun DatePickerDialogPreview() {
     DatePickerDialogCompose(
+        initialDay = null,
+        initialMonth = null,
+        initialYear = null,
+        yearRange = 1380..1410,
         onDateSelect = {
             // nothing to do yet
         }

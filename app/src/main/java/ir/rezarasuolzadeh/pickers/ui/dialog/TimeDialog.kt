@@ -9,7 +9,7 @@ import androidx.compose.ui.window.DialogProperties
 import ir.rezarasuolzadeh.pickers.ui.compose.time.TimePickerDialogCompose
 import ir.rezarasuolzadeh.pickers.utils.extensions.orZero
 import ir.rezarasuolzadeh.pickers.utils.extensions.toast
-import ir.rezarasuolzadeh.pickers.utils.managers.ValidationManager
+import ir.rezarasuolzadeh.pickers.utils.managers.TimeValidationManager
 
 @Composable
 fun TimeDialog(
@@ -22,7 +22,7 @@ fun TimeDialog(
     val context = LocalContext.current
 
     if (
-        ValidationManager.isTimeValid(
+        TimeValidationManager.isTimeValid(
             second = initialSecond.orZero(),
             minute = initialMinute.orZero(),
             hour = initialHour.orZero(),

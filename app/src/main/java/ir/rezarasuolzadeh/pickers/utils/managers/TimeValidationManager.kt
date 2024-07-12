@@ -1,6 +1,6 @@
 package ir.rezarasuolzadeh.pickers.utils.managers
 
-object ValidationManager {
+object TimeValidationManager {
 
     /**
      * check the time all sections validation and return the result in boolean format.
@@ -20,7 +20,7 @@ object ValidationManager {
     /**
      * check the given hour and if it's in valid range return true else return false.
      */
-    fun isHourValid(hour: Int, is12Hour: Boolean): Boolean = if(is12Hour) {
+    fun isHourValid(hour: Int, is12Hour: Boolean): Boolean = if (is12Hour) {
         hour in 0..12
     } else {
         hour in 0..23
