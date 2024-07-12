@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
 //                    DateDialog()
                     TimeDialog(
                         is12Hour = true,
-                        showSeconds = true
+                        showSeconds = false
                     )
                 }
             }

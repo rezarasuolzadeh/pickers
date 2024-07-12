@@ -10,7 +10,9 @@ class TimeViewModel : ViewModel() {
     //                                       defaults                                             //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private var defaultHours = (0..12).map { if (it < 10) "0$it" else "$it" }
+    private var defaultHours24 = (0..23).map { if (it < 10) "0$it" else "$it" }
+
+    private var defaultHours12 = (0..12).map { if (it < 10) "0$it" else "$it" }
 
     private var defaultMinutes = (0..59).map { if (it < 10) "0$it" else "$it" }
 
@@ -20,10 +22,13 @@ class TimeViewModel : ViewModel() {
     //                                       variables                                            //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    var is12Hour = MutableStateFlow(value = false)
+        private set
+
     var timeType = MutableStateFlow(value = TimeType.AM)
         private set
 
-    var hours = MutableStateFlow(value = defaultHours)
+    var hours = MutableStateFlow(value = defaultHours24)
         private set
 
     var minutes = MutableStateFlow(value = defaultMinutes)
@@ -41,15 +46,16 @@ class TimeViewModel : ViewModel() {
      */
     fun onEvent(event: TimeEvent) {
         when (event) {
-            is TimeEvent.UpdateCurrentTime -> {
-                // nothing to do yet
+            is TimeEvent.SetTimeFormat -> {
+                is12Hour.value = event.is12Hour
             }
             is TimeEvent.SetTimeType -> {
                 timeType.value = event.timeType
             }
             is TimeEvent.SetInitTime -> {
+                hours.value = if (is12Hour.value) defaultHours24 else defaultHours12
                 event.initialHour?.let { initialHour ->
-                    hours.value = (initialHour..12).map { if (it < 10) "0$it" else "$it" } + (0..<initialHour).map { if (it < 10) "0$it" else "$it" }
+                    hours.value = (initialHour..if (is12Hour.value) 12 else 23).map { if (it < 10) "0$it" else "$it" } + (0..<initialHour).map { if (it < 10) "0$it" else "$it" }
                 }
                 event.initialMinute?.let { initialMinute ->
                     minutes.value = (initialMinute..59).map { if (it < 10) "0$it" else "$it" } + (0..<initialMinute).map { if (it < 10) "0$it" else "$it" }

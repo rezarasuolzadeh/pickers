@@ -2,7 +2,10 @@ package ir.rezarasuolzadeh.pickers.ui.utility.manager
 
 object ValidationManager {
 
-    fun isTimeValid(second: Int, minute: Int, hour: Int) = isSecondValid(second = second) && isMinuteValid(minute = minute) && isHourValid(hour = hour)
+    /**
+     * check the time all sections validation and return the result in boolean format.
+     */
+    fun isTimeValid(second: Int, minute: Int, hour: Int, is12Hour: Boolean) = isSecondValid(second = second) && isMinuteValid(minute = minute) && isHourValid(hour = hour, is12Hour = is12Hour)
 
     /**
      * check the given second and if it's in valid range return true else return false.
@@ -17,6 +20,10 @@ object ValidationManager {
     /**
      * check the given hour and if it's in valid range return true else return false.
      */
-    fun isHourValid(hour: Int): Boolean = hour in 0..23
+    fun isHourValid(hour: Int, is12Hour: Boolean): Boolean = if(is12Hour) {
+        hour in 0..12
+    } else {
+        hour in 0..23
+    }
 
 }

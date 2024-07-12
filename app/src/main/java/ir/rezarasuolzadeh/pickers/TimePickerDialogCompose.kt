@@ -58,13 +58,20 @@ fun TimePickerDialogCompose(
     val seconds by timeViewModel.seconds.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = Unit) {
-        timeViewModel.onEvent(
-            event = TimeEvent.SetInitTime(
-                initialHour = initialHour,
-                initialMinute = initialMinute,
-                initialSecond = initialSecond
+        timeViewModel.apply {
+            onEvent(
+                event = TimeEvent.SetTimeFormat(
+                    is12Hour = is12Hour
+                )
             )
-        )
+            onEvent(
+                event = TimeEvent.SetInitTime(
+                    initialHour = initialHour,
+                    initialMinute = initialMinute,
+                    initialSecond = initialSecond
+                )
+            )
+        }
     }
 
     TimePickerDialogComposeContent(

@@ -21,11 +21,12 @@ fun TimeDialog(
 ) {
     val context = LocalContext.current
 
-    if(
+    if (
         ValidationManager.isTimeValid(
             second = initialSecond.orZero(),
             minute = initialMinute.orZero(),
-            hour = initialHour.orZero()
+            hour = initialHour.orZero(),
+            is12Hour = is12Hour
         )
     ) {
         Dialog(
