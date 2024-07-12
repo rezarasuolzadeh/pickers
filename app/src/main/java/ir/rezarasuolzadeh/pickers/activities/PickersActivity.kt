@@ -21,7 +21,10 @@ class PickersActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = White
                 ) {
-                    DateDialog()
+                    DateDialog(
+                        initialYear = 1402,
+                        yearRange = 1375..1403
+                    )
 //                    TimeDialog()
                 }
             }

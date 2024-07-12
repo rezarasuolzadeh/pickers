@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,6 +41,7 @@ import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
 import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
 import ir.rezarasuolzadeh.pickers.viewmodels.date.DateEvent
 import ir.rezarasuolzadeh.pickers.viewmodels.date.DateViewModel
+import ir.rezarasuolzadeh.pickers.viewmodels.time.TimeEvent
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            screen                                              //
@@ -54,13 +56,30 @@ fun DatePickerDialogCompose(
     onDateSelect: (String) -> Unit,
     dateViewModel: DateViewModel = viewModel()
 ) {
-
-    val years = remember { (yearRange).map { if (it < 10) "0$it" else "$it" } }
+    val years by dateViewModel.years.collectAsStateWithLifecycle()
     val months = remember { listOf("فروردین", "اردیبهشت", "خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند")}
     val yearPickerState = rememberPickerState()
     val monthPickerState = rememberPickerState()
     val dayPickerState = rememberPickerState()
     val days by dateViewModel.days.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = Unit) {
+        dateViewModel.apply {
+            onEvent(
+                event = DateEvent.SetYearRange(
+                    yearRange = yearRange
+                )
+            )
+            onEvent(
+                event = DateEvent.SetInitialDate(
+                    initialDay = initialDay,
+                    initialMonth = initialMonth,
+                    initialYear = initialYear,
+                    yearRange = yearRange
+                )
+            )
+        }
+    }
 
     DatePickerDialogComposeContent(
         years = years,
