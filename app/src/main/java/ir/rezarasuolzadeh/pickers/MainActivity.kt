@@ -22,9 +22,8 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    DateDialog()
                     TimeDialog(
-                        initialHour = 10,
-                        initialMinute = 53,
-                        initialSecond = 27,
+                        is12Hour = true,
+                        showSeconds = true
                     )
                 }
             }

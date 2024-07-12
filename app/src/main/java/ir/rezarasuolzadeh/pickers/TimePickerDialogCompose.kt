@@ -43,10 +43,11 @@ import ir.rezarasuolzadeh.pickers.ui.viewmodel.time.TimeViewModel
 
 @Composable
 fun TimePickerDialogCompose(
-    initialHour: Int? = null,
-    initialMinute: Int? = null,
-    initialSecond: Int? = null,
-    showSeconds: Boolean = true,
+    initialHour: Int?,
+    initialMinute: Int?,
+    initialSecond: Int?,
+    is12Hour: Boolean,
+    showSeconds: Boolean,
     onTimeSelect: (String) -> Unit,
     onCancel: () -> Unit,
     timeViewModel: TimeViewModel = viewModel()
@@ -70,6 +71,7 @@ fun TimePickerDialogCompose(
         hours = hours,
         minutes = minutes,
         seconds = seconds,
+        is12Hour = is12Hour,
         showSeconds = showSeconds,
         timeType = timeType,
         onTimeSelect = onTimeSelect,
@@ -85,6 +87,7 @@ fun TimePickerDialogComposeContent(
     hours: List<String>,
     minutes: List<String>,
     seconds: List<String>,
+    is12Hour: Boolean,
     showSeconds: Boolean,
     timeType: TimeType,
     onTimeSelect: (String) -> Unit,
@@ -171,90 +174,92 @@ fun TimePickerDialogComposeContent(
                     textStyle = TextStyle(fontSize = 20.sp)
                 )
             }
-            Column(
-                modifier = Modifier
-                    .padding(top = 15.dp)
-                    .height(height = 60.dp)
-                    .width(width = 45.dp)
-                    .border(width = 0.4.dp, color = White, shape = RoundedCornerShape(10.dp))
-            ) {
-                Text(
-                    modifier = if(timeType == TimeType.AM) {
-                        Modifier
-                            .width(width = 45.dp)
-                            .height(height = 30.dp)
-                            .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
-                            .background(color = TransparentWhite)
-                            .noRippleClickable {
-                                onEvent(
-                                    TimeEvent.SetTimeType(
-                                        timeType = TimeType.AM
-                                    )
-                                )
-                            }
-                    } else {
-                        Modifier
-                            .width(width = 45.dp)
-                            .height(height = 30.dp)
-                            .noRippleClickable {
-                                onEvent(
-                                    TimeEvent.SetTimeType(
-                                        timeType = TimeType.AM
-                                    )
-                                )
-                            }
-                    },
-                    text = "ق.ظ",
-                    color = if(timeType == TimeType.AM) White else Gray,
-                    fontFamily = FontFamily(Font(R.font.vazir)),
-                    fontWeight = FontWeight.Light,
-                    textAlign = TextAlign.Center,
-                    fontSize = 13.sp
-                )
-                Box(
+            if (is12Hour) {
+                Column(
                     modifier = Modifier
-                        .height(height = 0.3.dp)
-                        .fillMaxWidth()
-                        .background(color = White)
-                )
-                Text(
-                    modifier = if(timeType == TimeType.PM) {
-                        Modifier
-                            .width(width = 45.dp)
-                            .height(height = 30.dp)
-                            .clip(
-                                shape = RoundedCornerShape(
-                                    bottomStart = 10.dp,
-                                    bottomEnd = 10.dp
-                                )
-                            )
-                            .background(color = TransparentWhite)
-                            .noRippleClickable {
-                                onEvent(
-                                    TimeEvent.SetTimeType(
-                                        timeType = TimeType.PM
+                        .padding(top = 15.dp)
+                        .height(height = 60.dp)
+                        .width(width = 45.dp)
+                        .border(width = 0.4.dp, color = White, shape = RoundedCornerShape(10.dp))
+                ) {
+                    Text(
+                        modifier = if (timeType == TimeType.AM) {
+                            Modifier
+                                .width(width = 45.dp)
+                                .height(height = 30.dp)
+                                .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
+                                .background(color = TransparentWhite)
+                                .noRippleClickable {
+                                    onEvent(
+                                        TimeEvent.SetTimeType(
+                                            timeType = TimeType.AM
+                                        )
+                                    )
+                                }
+                        } else {
+                            Modifier
+                                .width(width = 45.dp)
+                                .height(height = 30.dp)
+                                .noRippleClickable {
+                                    onEvent(
+                                        TimeEvent.SetTimeType(
+                                            timeType = TimeType.AM
+                                        )
+                                    )
+                                }
+                        },
+                        text = "ق.ظ",
+                        color = if (timeType == TimeType.AM) White else Gray,
+                        fontFamily = FontFamily(Font(R.font.vazir)),
+                        fontWeight = FontWeight.Light,
+                        textAlign = TextAlign.Center,
+                        fontSize = 13.sp
+                    )
+                    Box(
+                        modifier = Modifier
+                            .height(height = 0.3.dp)
+                            .fillMaxWidth()
+                            .background(color = White)
+                    )
+                    Text(
+                        modifier = if (timeType == TimeType.PM) {
+                            Modifier
+                                .width(width = 45.dp)
+                                .height(height = 30.dp)
+                                .clip(
+                                    shape = RoundedCornerShape(
+                                        bottomStart = 10.dp,
+                                        bottomEnd = 10.dp
                                     )
                                 )
-                            }
-                    } else {
-                        Modifier
-                            .width(width = 45.dp)
-                            .height(height = 30.dp)
-                            .noRippleClickable {
-                                onEvent(
-                                    TimeEvent.SetTimeType(
-                                        timeType = TimeType.PM
+                                .background(color = TransparentWhite)
+                                .noRippleClickable {
+                                    onEvent(
+                                        TimeEvent.SetTimeType(
+                                            timeType = TimeType.PM
+                                        )
                                     )
-                                )
-                            }
-                    },
-                    text = "ب.ظ",
-                    color = if(timeType == TimeType.PM) White else Gray,
-                    fontFamily = FontFamily(Font(R.font.vazir)),
-                    fontWeight = FontWeight.Light,
-                    textAlign = TextAlign.Center,
-                    fontSize = 13.sp
-                )
+                                }
+                        } else {
+                            Modifier
+                                .width(width = 45.dp)
+                                .height(height = 30.dp)
+                                .noRippleClickable {
+                                    onEvent(
+                                        TimeEvent.SetTimeType(
+                                            timeType = TimeType.PM
+                                        )
+                                    )
+                                }
+                        },
+                        text = "ب.ظ",
+                        color = if (timeType == TimeType.PM) White else Gray,
+                        fontFamily = FontFamily(Font(R.font.vazir)),
+                        fontWeight = FontWeight.Light,
+                        textAlign = TextAlign.Center,
+                        fontSize = 13.sp
+                    )
+                }
             }
         }
         Box(
@@ -335,6 +340,11 @@ fun TimePickerDialogComposeContent(
 @Composable
 fun TimePickerDialogPreview() {
     TimePickerDialogCompose(
+        initialHour = null,
+        initialMinute = null,
+        initialSecond = null,
+        is12Hour = false,
+        showSeconds = true,
         onTimeSelect = {},
         onCancel = {}
     )

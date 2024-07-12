@@ -15,7 +15,9 @@ import ir.rezarasuolzadeh.pickers.ui.utility.manager.ValidationManager
 fun TimeDialog(
     initialHour: Int? = null,
     initialMinute: Int? = null,
-    initialSecond: Int? = null
+    initialSecond: Int? = null,
+    is12Hour: Boolean = false,
+    showSeconds: Boolean = true
 ) {
     val context = LocalContext.current
 
@@ -39,7 +41,8 @@ fun TimeDialog(
                 initialHour = initialHour,
                 initialMinute = initialMinute,
                 initialSecond = initialSecond,
-                showSeconds = true,
+                is12Hour = is12Hour,
+                showSeconds = showSeconds,
                 onTimeSelect = { selectedTime ->
                     Toast.makeText(context, selectedTime, Toast.LENGTH_SHORT).show()
                 },
