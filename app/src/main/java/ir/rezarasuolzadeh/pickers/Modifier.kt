@@ -32,7 +32,8 @@ fun Modifier.fadingEdge(brush: Brush) = this
 fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
     this.clickable(
         indication = null,
-        interactionSource = remember { MutableInteractionSource() }) {
+        interactionSource = remember { MutableInteractionSource() }
+    ) {
         onClick()
     }
 }

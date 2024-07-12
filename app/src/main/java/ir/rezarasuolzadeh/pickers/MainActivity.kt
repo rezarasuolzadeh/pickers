@@ -21,10 +21,7 @@ class MainActivity : ComponentActivity() {
                     color = White
                 ) {
 //                    DateDialog()
-                    TimeDialog(
-                        is12Hour = true,
-                        showSeconds = false
-                    )
+                    TimeDialog()
                 }
             }
         }

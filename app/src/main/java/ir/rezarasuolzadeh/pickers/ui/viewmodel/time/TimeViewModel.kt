@@ -52,8 +52,8 @@ class TimeViewModel : ViewModel() {
             is TimeEvent.SetTimeType -> {
                 timeType.value = event.timeType
             }
-            is TimeEvent.SetInitTime -> {
-                hours.value = if (is12Hour.value) defaultHours24 else defaultHours12
+            is TimeEvent.SetInitialTime -> {
+                hours.value = if (is12Hour.value) defaultHours12 else defaultHours24
                 event.initialHour?.let { initialHour ->
                     hours.value = (initialHour..if (is12Hour.value) 12 else 23).map { if (it < 10) "0$it" else "$it" } + (0..<initialHour).map { if (it < 10) "0$it" else "$it" }
                 }

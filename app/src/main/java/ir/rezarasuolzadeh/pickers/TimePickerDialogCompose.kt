@@ -30,8 +30,6 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.eniac.sorena.ui.util.picker.Picker
-import com.eniac.sorena.ui.util.picker.rememberPickerState
 import ir.rezarasuolzadeh.pickers.ui.theme.DarkBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.Gray
 import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
@@ -40,6 +38,10 @@ import ir.rezarasuolzadeh.pickers.ui.theme.White
 import ir.rezarasuolzadeh.pickers.ui.utility.enums.TimeType
 import ir.rezarasuolzadeh.pickers.ui.viewmodel.time.TimeEvent
 import ir.rezarasuolzadeh.pickers.ui.viewmodel.time.TimeViewModel
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//                                         screen                                             //
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
 fun TimePickerDialogCompose(
@@ -65,7 +67,7 @@ fun TimePickerDialogCompose(
                 )
             )
             onEvent(
-                event = TimeEvent.SetInitTime(
+                event = TimeEvent.SetInitialTime(
                     initialHour = initialHour,
                     initialMinute = initialMinute,
                     initialSecond = initialSecond
@@ -88,6 +90,10 @@ fun TimePickerDialogCompose(
         }
     )
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//                                        content                                             //
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
 fun TimePickerDialogComposeContent(
@@ -342,6 +348,10 @@ fun TimePickerDialogComposeContent(
         }
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//                                        preview                                             //
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Preview
 @Composable
