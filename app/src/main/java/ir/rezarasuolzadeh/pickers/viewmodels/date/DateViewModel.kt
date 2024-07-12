@@ -1,4 +1,4 @@
-package ir.rezarasuolzadeh.pickers.ui.viewmodel.date
+package ir.rezarasuolzadeh.pickers.viewmodels.date
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

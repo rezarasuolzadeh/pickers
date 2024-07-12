@@ -1,6 +1,6 @@
-package ir.rezarasuolzadeh.pickers.ui.viewmodel.time
+package ir.rezarasuolzadeh.pickers.viewmodels.time
 
-import ir.rezarasuolzadeh.pickers.ui.utility.enums.TimeType
+import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
 
 sealed class TimeEvent {
     data class SetTimeFormat(val is12Hour: Boolean): TimeEvent()

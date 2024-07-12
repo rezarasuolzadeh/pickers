@@ -6,7 +6,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import ir.rezarasuolzadeh.pickers.DatePickerDialogCompose
+import ir.rezarasuolzadeh.pickers.ui.compose.date.DatePickerDialogCompose
 
 @Composable
 fun DateDialog() {

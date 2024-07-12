@@ -1,7 +1,7 @@
-package ir.rezarasuolzadeh.pickers.ui.viewmodel.time
+package ir.rezarasuolzadeh.pickers.viewmodels.time
 
 import androidx.lifecycle.ViewModel
-import ir.rezarasuolzadeh.pickers.ui.utility.enums.TimeType
+import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class TimeViewModel : ViewModel() {

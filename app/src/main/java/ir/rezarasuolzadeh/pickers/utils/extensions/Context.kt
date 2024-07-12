@@ -1,8 +1,7 @@
-package ir.rezarasuolzadeh.pickers.ui.utility.extensions
+package ir.rezarasuolzadeh.pickers.utils.extensions
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.ui.platform.LocalDensity
 
 /**
  * show toast message with short length in current context.

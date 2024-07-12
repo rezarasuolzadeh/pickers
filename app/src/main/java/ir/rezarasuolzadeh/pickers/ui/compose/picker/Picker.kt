@@ -1,4 +1,4 @@
-package ir.rezarasuolzadeh.pickers
+package ir.rezarasuolzadeh.pickers.ui.compose.picker
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
@@ -27,6 +27,9 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import ir.rezarasuolzadeh.pickers.R
+import ir.rezarasuolzadeh.pickers.utils.extensions.fadingEdge
+import ir.rezarasuolzadeh.pickers.utils.extensions.pixelsToDp
 import ir.rezarasuolzadeh.pickers.ui.theme.White
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map

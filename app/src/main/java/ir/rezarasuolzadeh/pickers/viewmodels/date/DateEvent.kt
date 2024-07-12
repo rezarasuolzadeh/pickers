@@ -1,4 +1,4 @@
-package ir.rezarasuolzadeh.pickers.ui.viewmodel.date
+package ir.rezarasuolzadeh.pickers.viewmodels.date
 
 sealed class DateEvent {
     data class OnUpdateDays(val days: List<String>) : DateEvent()

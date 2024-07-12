@@ -1,4 +1,4 @@
-package ir.rezarasuolzadeh.pickers
+package ir.rezarasuolzadeh.pickers.utils.extensions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity

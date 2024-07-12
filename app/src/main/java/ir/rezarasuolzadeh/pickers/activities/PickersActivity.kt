@@ -1,4 +1,4 @@
-package ir.rezarasuolzadeh.pickers
+package ir.rezarasuolzadeh.pickers.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import ir.rezarasuolzadeh.pickers.ui.dialog.TimeDialog
 import ir.rezarasuolzadeh.pickers.ui.theme.PickersTheme
 import ir.rezarasuolzadeh.pickers.ui.theme.White
 
-class MainActivity : ComponentActivity() {
+class PickersActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

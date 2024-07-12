@@ -6,10 +6,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import ir.rezarasuolzadeh.pickers.TimePickerDialogCompose
-import ir.rezarasuolzadeh.pickers.ui.utility.extensions.orZero
-import ir.rezarasuolzadeh.pickers.ui.utility.extensions.toast
-import ir.rezarasuolzadeh.pickers.ui.utility.manager.ValidationManager
+import ir.rezarasuolzadeh.pickers.ui.compose.time.TimePickerDialogCompose
+import ir.rezarasuolzadeh.pickers.utils.extensions.orZero
+import ir.rezarasuolzadeh.pickers.utils.extensions.toast
+import ir.rezarasuolzadeh.pickers.utils.managers.ValidationManager
 
 @Composable
 fun TimeDialog(

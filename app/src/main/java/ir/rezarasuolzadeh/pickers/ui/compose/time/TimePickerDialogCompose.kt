@@ -1,4 +1,4 @@
-package ir.rezarasuolzadeh.pickers
+package ir.rezarasuolzadeh.pickers.ui.compose.time
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,14 +30,18 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ir.rezarasuolzadeh.pickers.ui.compose.picker.Picker
+import ir.rezarasuolzadeh.pickers.R
+import ir.rezarasuolzadeh.pickers.utils.extensions.noRippleClickable
+import ir.rezarasuolzadeh.pickers.ui.compose.picker.rememberPickerState
 import ir.rezarasuolzadeh.pickers.ui.theme.DarkBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.Gray
 import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.TransparentWhite
 import ir.rezarasuolzadeh.pickers.ui.theme.White
-import ir.rezarasuolzadeh.pickers.ui.utility.enums.TimeType
-import ir.rezarasuolzadeh.pickers.ui.viewmodel.time.TimeEvent
-import ir.rezarasuolzadeh.pickers.ui.viewmodel.time.TimeViewModel
+import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
+import ir.rezarasuolzadeh.pickers.viewmodels.time.TimeEvent
+import ir.rezarasuolzadeh.pickers.viewmodels.time.TimeViewModel
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //                                         screen                                             //

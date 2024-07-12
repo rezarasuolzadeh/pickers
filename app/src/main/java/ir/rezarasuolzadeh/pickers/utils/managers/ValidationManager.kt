@@ -1,4 +1,4 @@
-package ir.rezarasuolzadeh.pickers.ui.utility.manager
+package ir.rezarasuolzadeh.pickers.utils.managers
 
 object ValidationManager {
 
