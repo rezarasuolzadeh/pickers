@@ -13,8 +13,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,20 +38,38 @@ import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.TransparentWhite
 import ir.rezarasuolzadeh.pickers.ui.theme.White
 import ir.rezarasuolzadeh.pickers.ui.utility.enums.TimeType
-import ir.rezarasuolzadeh.pickers.ui.viewmodel.date.DateEvent
 import ir.rezarasuolzadeh.pickers.ui.viewmodel.time.TimeEvent
 import ir.rezarasuolzadeh.pickers.ui.viewmodel.time.TimeViewModel
 
 @Composable
 fun TimePickerDialogCompose(
+    initialHour: Int? = null,
+    initialMinute: Int? = null,
+    initialSecond: Int? = null,
     showSeconds: Boolean = true,
     onTimeSelect: (String) -> Unit,
     onCancel: () -> Unit,
     timeViewModel: TimeViewModel = viewModel()
 ) {
     val timeType by timeViewModel.timeType.collectAsStateWithLifecycle()
+    val hours by timeViewModel.hours.collectAsStateWithLifecycle()
+    val minutes by timeViewModel.minutes.collectAsStateWithLifecycle()
+    val seconds by timeViewModel.seconds.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = Unit) {
+        timeViewModel.onEvent(
+            event = TimeEvent.SetInitTime(
+                initialHour = initialHour,
+                initialMinute = initialMinute,
+                initialSecond = initialSecond
+            )
+        )
+    }
 
     TimePickerDialogComposeContent(
+        hours = hours,
+        minutes = minutes,
+        seconds = seconds,
         showSeconds = showSeconds,
         timeType = timeType,
         onTimeSelect = onTimeSelect,
@@ -64,6 +82,9 @@ fun TimePickerDialogCompose(
 
 @Composable
 fun TimePickerDialogComposeContent(
+    hours: List<String>,
+    minutes: List<String>,
+    seconds: List<String>,
     showSeconds: Boolean,
     timeType: TimeType,
     onTimeSelect: (String) -> Unit,
@@ -83,9 +104,6 @@ fun TimePickerDialogComposeContent(
                 )
             )
     ) {
-        val hours = remember { (0..23).map { if (it < 10) "0$it" else "$it" } }
-        val minutes = remember { (0..59).map { if (it < 10) "0$it" else "$it" } }
-        val seconds = remember { (0..59).map { if (it < 10) "0$it" else "$it" } }
         val hourPickerState = rememberPickerState()
         val minutePickerState = rememberPickerState()
         val secondPickerState = rememberPickerState()
@@ -204,7 +222,12 @@ fun TimePickerDialogComposeContent(
                         Modifier
                             .width(width = 45.dp)
                             .height(height = 30.dp)
-                            .clip(shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
+                            .clip(
+                                shape = RoundedCornerShape(
+                                    bottomStart = 10.dp,
+                                    bottomEnd = 10.dp
+                                )
+                            )
                             .background(color = TransparentWhite)
                             .noRippleClickable {
                                 onEvent(

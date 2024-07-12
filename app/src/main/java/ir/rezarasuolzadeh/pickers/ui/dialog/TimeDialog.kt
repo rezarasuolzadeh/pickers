@@ -7,27 +7,47 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import ir.rezarasuolzadeh.pickers.TimePickerDialogCompose
+import ir.rezarasuolzadeh.pickers.ui.utility.extensions.orZero
+import ir.rezarasuolzadeh.pickers.ui.utility.extensions.toast
+import ir.rezarasuolzadeh.pickers.ui.utility.manager.ValidationManager
 
 @Composable
-fun TimeDialog() {
+fun TimeDialog(
+    initialHour: Int? = null,
+    initialMinute: Int? = null,
+    initialSecond: Int? = null
+) {
     val context = LocalContext.current
 
-    Dialog(
-        onDismissRequest = {
-            // nothing to do yet
-        },
-        properties = DialogProperties(
-            dismissOnBackPress = false,
-            dismissOnClickOutside = false
+    if(
+        ValidationManager.isTimeValid(
+            second = initialSecond.orZero(),
+            minute = initialMinute.orZero(),
+            hour = initialHour.orZero()
         )
     ) {
-        TimePickerDialogCompose(
-            showSeconds = true,
-            onTimeSelect = { selectedTime ->
-                Toast.makeText(context, selectedTime, Toast.LENGTH_SHORT).show()
+        Dialog(
+            onDismissRequest = {
+                // nothing to do yet
             },
-            onCancel = {}
-        )
+            properties = DialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false
+            )
+        ) {
+            TimePickerDialogCompose(
+                initialHour = initialHour,
+                initialMinute = initialMinute,
+                initialSecond = initialSecond,
+                showSeconds = true,
+                onTimeSelect = { selectedTime ->
+                    Toast.makeText(context, selectedTime, Toast.LENGTH_SHORT).show()
+                },
+                onCancel = {}
+            )
+        }
+    } else {
+        context.toast(message = "زمان اولیه نامعتبر می باشد")
     }
 }
 
