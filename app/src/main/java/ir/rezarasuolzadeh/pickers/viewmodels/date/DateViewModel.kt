@@ -22,7 +22,7 @@ class DateViewModel : ViewModel() {
     var days = MutableStateFlow(value = defaultDays)
         private set
 
-    var years = MutableStateFlow(value = defaultYears)
+    var years = MutableStateFlow(value = emptyList<String>())
         private set
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

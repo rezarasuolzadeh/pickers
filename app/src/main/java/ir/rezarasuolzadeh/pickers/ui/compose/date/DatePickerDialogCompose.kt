@@ -168,17 +168,19 @@ fun DatePickerDialogComposeContent(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            Picker(
-                state = yearPickerState,
-                items = years,
-                visibleItemsCount = 3,
-                modifier = Modifier
-                    .padding(top = 25.dp)
-                    .width(90.dp),
-                textModifier = Modifier.padding(8.dp),
-                textStyle = TextStyle(fontSize = 16.sp),
-                onItemChanged = onYearChanged
-            )
+            if(years.isNotEmpty()) {
+                Picker(
+                    state = yearPickerState,
+                    items = years,
+                    visibleItemsCount = 3,
+                    modifier = Modifier
+                        .padding(top = 25.dp)
+                        .width(90.dp),
+                    textModifier = Modifier.padding(8.dp),
+                    textStyle = TextStyle(fontSize = 16.sp),
+                    onItemChanged = onYearChanged
+                )
+            }
             Text(
                 modifier = Modifier
                     .padding(top = 20.dp),
