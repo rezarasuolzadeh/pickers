@@ -58,10 +58,10 @@ fun DatePickerDialogCompose(
 ) {
     val years by dateViewModel.years.collectAsStateWithLifecycle()
     val months by dateViewModel.months.collectAsStateWithLifecycle()
+    val days by dateViewModel.days.collectAsStateWithLifecycle()
     val yearPickerState = rememberPickerState()
     val monthPickerState = rememberPickerState()
     val dayPickerState = rememberPickerState()
-    val days by dateViewModel.days.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = Unit) {
         dateViewModel.apply {

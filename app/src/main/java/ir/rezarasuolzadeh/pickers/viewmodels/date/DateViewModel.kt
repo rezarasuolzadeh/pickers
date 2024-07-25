@@ -3,6 +3,7 @@ package ir.rezarasuolzadeh.pickers.viewmodels.date
 import androidx.lifecycle.ViewModel
 import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
 import ir.rezarasuolzadeh.pickers.utils.extensions.isLeapYear
+import ir.rezarasuolzadeh.pickers.utils.extensions.orFarvardin
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class DateViewModel : ViewModel() {
@@ -64,7 +65,30 @@ class DateViewModel : ViewModel() {
                     months.value = defaultMonths.subList(fromIndex = defaultMonths.indexOfFirst { it == initialMonth.title }, toIndex = 12) + defaultMonths.subList(fromIndex = 0, toIndex = defaultMonths.indexOfFirst { it == initialMonth.title })
                 }
                 event.initialDay?.let { initialDay ->
-//                    seconds.value = (initialSecond..59).map { if (it < 10) "0$it" else "$it" } + (0..<initialSecond).map { if (it < 10) "0$it" else "$it" }
+                    when (event.initialMonth.orFarvardin()) {
+                        MonthType.FARVARDIN,
+                        MonthType.ORDIBEHESHT,
+                        MonthType.KHORDAD,
+                        MonthType.TIR,
+                        MonthType.MORDAD,
+                        MonthType.SHAHRIVAR -> {
+                            days.value = (initialDay..31).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
+                        }
+                        MonthType.MEHR,
+                        MonthType.ABAN,
+                        MonthType.AZAR,
+                        MonthType.DEY,
+                        MonthType.BAHMAN -> {
+                            days.value = (initialDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
+                        }
+                        MonthType.ESFAND -> {
+                            if((event.initialYear ?: event.yearRange.first).isLeapYear()) {
+                                days.value = (initialDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
+                            } else {
+                                days.value = (initialDay..29).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
+                            }
+                        }
+                    }
                 }
             }
         }
