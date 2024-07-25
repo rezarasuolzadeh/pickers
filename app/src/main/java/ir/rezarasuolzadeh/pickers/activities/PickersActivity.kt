@@ -10,6 +10,7 @@ import ir.rezarasuolzadeh.pickers.ui.dialog.DateDialog
 import ir.rezarasuolzadeh.pickers.ui.dialog.TimeDialog
 import ir.rezarasuolzadeh.pickers.ui.theme.PickersTheme
 import ir.rezarasuolzadeh.pickers.ui.theme.White
+import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
 
 class PickersActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +24,7 @@ class PickersActivity : ComponentActivity() {
                 ) {
                     DateDialog(
                         initialYear = 1402,
+                        initialMonth = MonthType.SHAHRIVAR,
                         yearRange = 1375..1403
                     )
 //                    TimeDialog()

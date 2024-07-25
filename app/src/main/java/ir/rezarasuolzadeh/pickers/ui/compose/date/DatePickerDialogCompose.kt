@@ -57,7 +57,7 @@ fun DatePickerDialogCompose(
     dateViewModel: DateViewModel = viewModel()
 ) {
     val years by dateViewModel.years.collectAsStateWithLifecycle()
-    val months = remember { listOf("فروردین", "اردیبهشت", "خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند")}
+    val months by dateViewModel.months.collectAsStateWithLifecycle()
     val yearPickerState = rememberPickerState()
     val monthPickerState = rememberPickerState()
     val dayPickerState = rememberPickerState()
@@ -190,17 +190,19 @@ fun DatePickerDialogComposeContent(
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )
-            Picker(
-                state = monthPickerState,
-                items = months,
-                visibleItemsCount = 3,
-                modifier = Modifier
-                    .padding(top = 25.dp)
-                    .width(90.dp),
-                textModifier = Modifier.padding(8.dp),
-                textStyle = TextStyle(fontSize = 16.sp),
-                onItemChanged = onMonthChanged
-            )
+            if(years.isNotEmpty()) {
+                Picker(
+                    state = monthPickerState,
+                    items = months,
+                    visibleItemsCount = 3,
+                    modifier = Modifier
+                        .padding(top = 25.dp)
+                        .width(90.dp),
+                    textModifier = Modifier.padding(8.dp),
+                    textStyle = TextStyle(fontSize = 16.sp),
+                    onItemChanged = onMonthChanged
+                )
+            }
             Text(
                 modifier = Modifier
                     .padding(top = 20.dp),

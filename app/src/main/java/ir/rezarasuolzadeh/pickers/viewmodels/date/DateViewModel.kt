@@ -13,6 +13,8 @@ class DateViewModel : ViewModel() {
 
     var defaultDays = (1..31).map { if (it < 10) "0$it" else "$it" }
 
+    var defaultMonths = listOf("فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند")
+
     var defaultYears = (1380..1410).map { if (it < 10) "0$it" else "$it" }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,6 +22,9 @@ class DateViewModel : ViewModel() {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     var days = MutableStateFlow(value = defaultDays)
+        private set
+
+    var months = MutableStateFlow(value = emptyList<String>())
         private set
 
     var years = MutableStateFlow(value = emptyList<String>())
@@ -56,7 +61,7 @@ class DateViewModel : ViewModel() {
                     years.value = (initialYear..event.yearRange.last).map { if (it < 10) "0$it" else "$it" } + (event.yearRange.first..<initialYear).map { if (it < 10) "0$it" else "$it" }
                 }
                 event.initialMonth?.let { initialMonth ->
-//                    minutes.value = (initialYear..59).map { if (it < 10) "0$it" else "$it" } + (0..<initialMinute).map { if (it < 10) "0$it" else "$it" }
+                    months.value = defaultMonths.subList(fromIndex = defaultMonths.indexOfFirst { it == initialMonth.title }, toIndex = 12) + defaultMonths.subList(fromIndex = 0, toIndex = defaultMonths.indexOfFirst { it == initialMonth.title })
                 }
                 event.initialDay?.let { initialDay ->
 //                    seconds.value = (initialSecond..59).map { if (it < 10) "0$it" else "$it" } + (0..<initialSecond).map { if (it < 10) "0$it" else "$it" }
