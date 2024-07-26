@@ -212,19 +212,7 @@ fun DatePickerDialogComposeContent(
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )
-            if(days.size == 31) {
-                Picker(
-                    state = dayPickerState,
-                    items = days,
-                    visibleItemsCount = 3,
-                    modifier = Modifier
-                        .padding(top = 25.dp)
-                        .width(90.dp),
-                    startIndex = 0,
-                    textModifier = Modifier.padding(8.dp),
-                    textStyle = TextStyle(fontSize = 16.sp)
-                )
-            } else {
+            if(days.isNotEmpty()) {
                 Picker(
                     state = dayPickerState,
                     items = days,
