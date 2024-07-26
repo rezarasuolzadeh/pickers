@@ -22,7 +22,7 @@ class DateViewModel : ViewModel() {
     //                                       variables                                            //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    var days = MutableStateFlow(value = defaultDays)
+    var days = MutableStateFlow(value = emptyList<String>())
         private set
 
     var months = MutableStateFlow(value = emptyList<String>())
@@ -44,15 +44,18 @@ class DateViewModel : ViewModel() {
                 years.value = event.yearRange.map { if (it < 10) "0$it" else "$it"  }
             }
             is DateEvent.OnUpdateDays -> {
+                days.value = emptyList()
                 days.value = event.days
             }
             is DateEvent.CheckLeapYear -> {
                 if(event.year.toInt().isLeapYear()) {
                     if(event.month == MonthType.ESFAND.title) {
+                        days.value = emptyList()
                         days.value = (1..30).map { if (it < 10) "0$it" else "$it" }
                     }
                 } else {
                     if(event.month == MonthType.ESFAND.title) {
+                        days.value = emptyList()
                         days.value = (1..29).map { if (it < 10) "0$it" else "$it" }
                     }
                 }
@@ -72,6 +75,7 @@ class DateViewModel : ViewModel() {
                         MonthType.TIR,
                         MonthType.MORDAD,
                         MonthType.SHAHRIVAR -> {
+                            days.value = emptyList()
                             days.value = (initialDay..31).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
                         }
                         MonthType.MEHR,
@@ -83,14 +87,17 @@ class DateViewModel : ViewModel() {
                         }
                         MonthType.ESFAND -> {
                             if((event.initialYear ?: event.yearRange.first).isLeapYear()) {
+                                days.value = emptyList()
                                 days.value = (initialDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
                             } else {
+                                days.value = emptyList()
                                 days.value = (initialDay..29).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
                             }
                         }
                     }
                 }
             }
+            else -> Unit
         }
     }
 
