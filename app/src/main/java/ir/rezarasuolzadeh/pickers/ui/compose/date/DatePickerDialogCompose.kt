@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,7 +40,6 @@ import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
 import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
 import ir.rezarasuolzadeh.pickers.viewmodels.date.DateEvent
 import ir.rezarasuolzadeh.pickers.viewmodels.date.DateViewModel
-import ir.rezarasuolzadeh.pickers.viewmodels.time.TimeEvent
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            screen                                              //
@@ -59,6 +57,7 @@ fun DatePickerDialogCompose(
     val years by dateViewModel.years.collectAsStateWithLifecycle()
     val months by dateViewModel.months.collectAsStateWithLifecycle()
     val days by dateViewModel.days.collectAsStateWithLifecycle()
+    val currentSelectedDay by dateViewModel.currentSelectedDay.collectAsStateWithLifecycle()
     val yearPickerState = rememberPickerState()
     val monthPickerState = rememberPickerState()
     val dayPickerState = rememberPickerState()
@@ -92,20 +91,29 @@ fun DatePickerDialogCompose(
             dateViewModel.onEvent(
                 DateEvent.OnUpdateDays(
                     days = when(it) {
-                        "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور" -> {
-                            (1..31).map { if (it < 10) "0$it" else "$it" }
+                        MonthType.FARVARDIN.title,
+                        MonthType.ORDIBEHESHT.title,
+                        MonthType.KHORDAD.title,
+                        MonthType.TIR.title,
+                        MonthType.MORDAD.title,
+                        MonthType.SHAHRIVAR.title -> {
+                            (currentSelectedDay..31).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
                         }
 
-                        "مهر", "آبان", "آذر", "دی", "بهمن" -> {
-                            (1..30).map { if (it < 10) "0$it" else "$it" }
+                        MonthType.MEHR.title,
+                        MonthType.ABAN.title,
+                        MonthType.AZAR.title,
+                        MonthType.DEY.title,
+                        MonthType.BAHMAN.title -> {
+                            (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
                         }
 
-                        "اسفند" -> {
-                            (1..29).map { if (it < 10) "0$it" else "$it" }
+                        MonthType.ESFAND.title -> {
+                            (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
                         }
 
                         else -> {
-                            (1..31).map { if (it < 10) "0$it" else "$it" }
+                            (currentSelectedDay..29).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
                         }
                     }
                 )

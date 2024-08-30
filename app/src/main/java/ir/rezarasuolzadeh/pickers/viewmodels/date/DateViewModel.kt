@@ -31,6 +31,9 @@ class DateViewModel : ViewModel() {
     var years = MutableStateFlow(value = emptyList<String>())
         private set
 
+    var currentSelectedDay = MutableStateFlow(value = 1)
+        private set
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //                                        configs                                             //
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,6 +71,7 @@ class DateViewModel : ViewModel() {
                     months.value = defaultMonths.subList(fromIndex = defaultMonths.indexOfFirst { it == initialMonth.title }, toIndex = 12) + defaultMonths.subList(fromIndex = 0, toIndex = defaultMonths.indexOfFirst { it == initialMonth.title })
                 }
                 event.initialDay?.let { initialDay ->
+                    currentSelectedDay.value = initialDay
                     when (event.initialMonth.orFarvardin()) {
                         MonthType.FARVARDIN,
                         MonthType.ORDIBEHESHT,
@@ -97,7 +101,6 @@ class DateViewModel : ViewModel() {
                     }
                 }
             }
-            else -> Unit
         }
     }
 

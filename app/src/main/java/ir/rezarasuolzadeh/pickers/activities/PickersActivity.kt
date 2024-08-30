@@ -25,7 +25,7 @@ class PickersActivity : ComponentActivity() {
                     DateDialog(
                         initialYear = 1402,
                         initialMonth = MonthType.SHAHRIVAR,
-                        initialDay = 25,
+                        initialDay = 30,
                         yearRange = 1375..1403
                     )
 //                    TimeDialog()
