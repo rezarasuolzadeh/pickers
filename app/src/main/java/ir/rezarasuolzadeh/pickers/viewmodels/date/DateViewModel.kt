@@ -1,6 +1,6 @@
 package ir.rezarasuolzadeh.pickers.viewmodels.date
 
-import androidx.lifecycle.ViewModel
+import ir.rezarasuolzadeh.pickers.utils.base.BaseViewModel
 import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
 import ir.rezarasuolzadeh.pickers.utils.extensions.isLeapYear
 import ir.rezarasuolzadeh.pickers.utils.extensions.orFarvardin
@@ -10,7 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class DateViewModel : ViewModel() {
+class DateViewModel : BaseViewModel<DateEvent>() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //                                       defaults                                             //
@@ -34,13 +34,13 @@ class DateViewModel : ViewModel() {
         private set
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    //                                        configs                                             //
+    //                                       overrides                                            //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * handle the event that's given from composable function.
      */
-    fun onEvent(event: DateEvent) {
+    override fun onEvent(event: DateEvent) {
         when (event) {
             is DateEvent.SetYearRange -> {
                 years.value = event.yearRange.map { if (it < 10) "0$it" else "$it"  }
@@ -133,5 +133,9 @@ class DateViewModel : ViewModel() {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                        helpers                                             //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
 }

@@ -1,10 +1,10 @@
 package ir.rezarasuolzadeh.pickers.viewmodels.time
 
-import androidx.lifecycle.ViewModel
+import ir.rezarasuolzadeh.pickers.utils.base.BaseViewModel
 import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class TimeViewModel : ViewModel() {
+class TimeViewModel : BaseViewModel<TimeEvent>() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //                                       defaults                                             //
@@ -38,28 +38,27 @@ class TimeViewModel : ViewModel() {
         private set
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    //                                        configs                                             //
+    //                                       overrides                                            //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * handle the event that's given from composable function.
-     */
-    fun onEvent(event: TimeEvent) {
-        when (event) {
-            is TimeEvent.SetTimeFormat -> {
-                setTimeFormat(is12Hour = event.is12Hour)
-            }
-            is TimeEvent.SetTimeType -> {
-                setTimeType(timeType = event.timeType)
-            }
-            is TimeEvent.SetInitialTime -> {
-                setHour(hour = event.initialHour)
-                setMinute(minute = event.initialMinute)
-                setSecond(second = event.initialSecond)
-                setTimeType(timeType = event.initialTimeType)
-            }
+    override fun onEvent(event: TimeEvent) = when (event) {
+        is TimeEvent.SetTimeFormat -> {
+            setTimeFormat(is12Hour = event.is12Hour)
+        }
+        is TimeEvent.SetTimeType -> {
+            setTimeType(timeType = event.timeType)
+        }
+        is TimeEvent.SetInitialTime -> {
+            setHour(hour = event.initialHour)
+            setMinute(minute = event.initialMinute)
+            setSecond(second = event.initialSecond)
+            setTimeType(timeType = event.initialTimeType)
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                        helpers                                             //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * set the time format with given value.
