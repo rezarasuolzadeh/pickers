@@ -53,7 +53,20 @@ fun Picker(
     val listScrollCount = Integer.MAX_VALUE
     val listScrollMiddle = listScrollCount / 2
     val listStartIndex = listScrollMiddle - listScrollMiddle % items.size - visibleItemsMiddle + startIndex
-    val listState = rememberLazyListState(initialFirstVisibleItemIndex = listStartIndex)
+    val listState = when (items.size) {
+        31 -> {
+            rememberLazyListState(initialFirstVisibleItemIndex = listStartIndex)
+        }
+        30 -> {
+            rememberLazyListState(initialFirstVisibleItemIndex = listStartIndex)
+        }
+        29 -> {
+            rememberLazyListState(initialFirstVisibleItemIndex = listStartIndex)
+        }
+        else -> {
+            rememberLazyListState(initialFirstVisibleItemIndex = listStartIndex)
+        }
+    }
     val flingBehavior = rememberSnapFlingBehavior(lazyListState = listState)
     val itemHeightPixels = remember { mutableStateOf(0) }
     val itemHeightDp = pixelsToDp(itemHeightPixels.value)
