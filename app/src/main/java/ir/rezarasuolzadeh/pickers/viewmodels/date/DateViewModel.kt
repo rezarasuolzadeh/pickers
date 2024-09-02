@@ -4,7 +4,11 @@ import androidx.lifecycle.ViewModel
 import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
 import ir.rezarasuolzadeh.pickers.utils.extensions.isLeapYear
 import ir.rezarasuolzadeh.pickers.utils.extensions.orFarvardin
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 class DateViewModel : ViewModel() {
 
@@ -42,31 +46,34 @@ class DateViewModel : ViewModel() {
                 years.value = event.yearRange.map { if (it < 10) "0$it" else "$it"  }
             }
             is DateEvent.OnUpdateDays -> {
-                days.value = emptyList()
-                days.value = when(event.selectedMonth) {
-                    MonthType.FARVARDIN.title,
-                    MonthType.ORDIBEHESHT.title,
-                    MonthType.KHORDAD.title,
-                    MonthType.TIR.title,
-                    MonthType.MORDAD.title,
-                    MonthType.SHAHRIVAR.title -> {
-                        (currentSelectedDay..31).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
-                    }
+                CoroutineScope(Dispatchers.Main).launch {
+                    days.value = (currentSelectedDay..32).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+                    delay(timeMillis = 30)
+                    days.value = when (event.selectedMonth) {
+                        MonthType.FARVARDIN.title,
+                        MonthType.ORDIBEHESHT.title,
+                        MonthType.KHORDAD.title,
+                        MonthType.TIR.title,
+                        MonthType.MORDAD.title,
+                        MonthType.SHAHRIVAR.title -> {
+                            (currentSelectedDay..31).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+                        }
 
-                    MonthType.MEHR.title,
-                    MonthType.ABAN.title,
-                    MonthType.AZAR.title,
-                    MonthType.DEY.title,
-                    MonthType.BAHMAN.title -> {
-                        (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
-                    }
+                        MonthType.MEHR.title,
+                        MonthType.ABAN.title,
+                        MonthType.AZAR.title,
+                        MonthType.DEY.title,
+                        MonthType.BAHMAN.title -> {
+                            (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+                        }
 
-                    MonthType.ESFAND.title -> {
-                        (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
-                    }
+                        MonthType.ESFAND.title -> {
+                            (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+                        }
 
-                    else -> {
-                        (currentSelectedDay..29).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+                        else -> {
+                            (currentSelectedDay..29).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+                        }
                     }
                 }
             }
