@@ -12,11 +12,9 @@ class DateViewModel : ViewModel() {
     //                                       defaults                                             //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    var defaultDays = (1..31).map { if (it < 10) "0$it" else "$it" }
+    private var defaultMonths = listOf("فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند")
 
-    var defaultMonths = listOf("فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند")
-
-    var defaultYears = (1380..1410).map { if (it < 10) "0$it" else "$it" }
+    private var currentSelectedDay: Int = 1
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //                                       variables                                            //
@@ -29,9 +27,6 @@ class DateViewModel : ViewModel() {
         private set
 
     var years = MutableStateFlow(value = emptyList<String>())
-        private set
-
-    var currentSelectedDay = MutableStateFlow(value = 1)
         private set
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +43,32 @@ class DateViewModel : ViewModel() {
             }
             is DateEvent.OnUpdateDays -> {
                 days.value = emptyList()
-                days.value = event.days
+                days.value = when(event.selectedMonth) {
+                    MonthType.FARVARDIN.title,
+                    MonthType.ORDIBEHESHT.title,
+                    MonthType.KHORDAD.title,
+                    MonthType.TIR.title,
+                    MonthType.MORDAD.title,
+                    MonthType.SHAHRIVAR.title -> {
+                        (currentSelectedDay..31).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+                    }
+
+                    MonthType.MEHR.title,
+                    MonthType.ABAN.title,
+                    MonthType.AZAR.title,
+                    MonthType.DEY.title,
+                    MonthType.BAHMAN.title -> {
+                        (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+                    }
+
+                    MonthType.ESFAND.title -> {
+                        (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+                    }
+
+                    else -> {
+                        (currentSelectedDay..29).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+                    }
+                }
             }
             is DateEvent.CheckLeapYear -> {
                 if(event.year.toInt().isLeapYear()) {
@@ -63,6 +83,9 @@ class DateViewModel : ViewModel() {
                     }
                 }
             }
+            is DateEvent.UpdateSelectedDay -> {
+                currentSelectedDay = event.selectedDay
+            }
             is DateEvent.SetInitialDate -> {
                 event.initialYear?.let { initialYear ->
                     years.value = (initialYear..event.yearRange.last).map { if (it < 10) "0$it" else "$it" } + (event.yearRange.first..<initialYear).map { if (it < 10) "0$it" else "$it" }
@@ -71,7 +94,7 @@ class DateViewModel : ViewModel() {
                     months.value = defaultMonths.subList(fromIndex = defaultMonths.indexOfFirst { it == initialMonth.title }, toIndex = 12) + defaultMonths.subList(fromIndex = 0, toIndex = defaultMonths.indexOfFirst { it == initialMonth.title })
                 }
                 event.initialDay?.let { initialDay ->
-                    currentSelectedDay.value = initialDay
+                    currentSelectedDay = initialDay
                     when (event.initialMonth.orFarvardin()) {
                         MonthType.FARVARDIN,
                         MonthType.ORDIBEHESHT,

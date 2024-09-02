@@ -1,5 +1,6 @@
 package ir.rezarasuolzadeh.pickers.ui.compose.date
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -57,7 +58,6 @@ fun DatePickerDialogCompose(
     val years by dateViewModel.years.collectAsStateWithLifecycle()
     val months by dateViewModel.months.collectAsStateWithLifecycle()
     val days by dateViewModel.days.collectAsStateWithLifecycle()
-    val currentSelectedDay by dateViewModel.currentSelectedDay.collectAsStateWithLifecycle()
     val yearPickerState = rememberPickerState()
     val monthPickerState = rememberPickerState()
     val dayPickerState = rememberPickerState()
@@ -87,35 +87,17 @@ fun DatePickerDialogCompose(
         yearPickerState = yearPickerState,
         monthPickerState = monthPickerState,
         dayPickerState = dayPickerState,
+        onDayChanged = {
+            dateViewModel.onEvent(
+                DateEvent.UpdateSelectedDay(
+                    selectedDay = it.toInt()
+                )
+            )
+        },
         onMonthChanged = {
             dateViewModel.onEvent(
                 DateEvent.OnUpdateDays(
-                    days = when(it) {
-                        MonthType.FARVARDIN.title,
-                        MonthType.ORDIBEHESHT.title,
-                        MonthType.KHORDAD.title,
-                        MonthType.TIR.title,
-                        MonthType.MORDAD.title,
-                        MonthType.SHAHRIVAR.title -> {
-                            (currentSelectedDay..31).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
-                        }
-
-                        MonthType.MEHR.title,
-                        MonthType.ABAN.title,
-                        MonthType.AZAR.title,
-                        MonthType.DEY.title,
-                        MonthType.BAHMAN.title -> {
-                            (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
-                        }
-
-                        MonthType.ESFAND.title -> {
-                            (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
-                        }
-
-                        else -> {
-                            (currentSelectedDay..29).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
-                        }
-                    }
+                    selectedMonth = it
                 )
             )
         },
@@ -143,6 +125,7 @@ fun DatePickerDialogComposeContent(
     yearPickerState: PickerState,
     monthPickerState: PickerState,
     dayPickerState: PickerState,
+    onDayChanged: (String) -> Unit,
     onMonthChanged: (String) -> Unit,
     onYearChanged: (String) -> Unit,
     onDateSelect: (String) -> Unit
@@ -230,7 +213,8 @@ fun DatePickerDialogComposeContent(
                         .width(90.dp),
                     startIndex = 0,
                     textModifier = Modifier.padding(8.dp),
-                    textStyle = TextStyle(fontSize = 16.sp)
+                    textStyle = TextStyle(fontSize = 16.sp),
+                    onItemChanged = onDayChanged
                 )
             }
         }
