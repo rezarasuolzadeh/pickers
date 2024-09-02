@@ -1,6 +1,5 @@
 package ir.rezarasuolzadeh.pickers.ui.compose.date
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -96,7 +95,7 @@ fun DatePickerDialogCompose(
         },
         onMonthChanged = {
             dateViewModel.onEvent(
-                DateEvent.OnUpdateDays(
+                DateEvent.UpdateDays(
                     selectedMonth = it
                 )
             )

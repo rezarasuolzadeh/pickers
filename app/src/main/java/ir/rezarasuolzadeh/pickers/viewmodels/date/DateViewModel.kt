@@ -16,7 +16,7 @@ class DateViewModel : BaseViewModel<DateEvent>() {
     //                                       defaults                                             //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private var defaultMonths = listOf("فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند")
+    private var defaultMonths = listOf(MonthType.FARVARDIN.title, MonthType.ORDIBEHESHT.title, MonthType.KHORDAD.title, MonthType.TIR.title, MonthType.MORDAD.title, MonthType.SHAHRIVAR.title, MonthType.MEHR.title, MonthType.ABAN.title, MonthType.AZAR.title, MonthType.DEY.title, MonthType.BAHMAN.title, MonthType.ESFAND.title)
 
     private var currentSelectedDay: Int = 1
 
@@ -43,93 +43,27 @@ class DateViewModel : BaseViewModel<DateEvent>() {
     override fun onEvent(event: DateEvent) {
         when (event) {
             is DateEvent.SetYearRange -> {
-                years.value = event.yearRange.map { if (it < 10) "0$it" else "$it"  }
+                setYears(yearRange = event.yearRange)
             }
-            is DateEvent.OnUpdateDays -> {
-                CoroutineScope(Dispatchers.Main).launch {
-                    days.value = (currentSelectedDay..32).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
-                    delay(timeMillis = 30)
-                    days.value = when (event.selectedMonth) {
-                        MonthType.FARVARDIN.title,
-                        MonthType.ORDIBEHESHT.title,
-                        MonthType.KHORDAD.title,
-                        MonthType.TIR.title,
-                        MonthType.MORDAD.title,
-                        MonthType.SHAHRIVAR.title -> {
-                            (currentSelectedDay..31).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
-                        }
-
-                        MonthType.MEHR.title,
-                        MonthType.ABAN.title,
-                        MonthType.AZAR.title,
-                        MonthType.DEY.title,
-                        MonthType.BAHMAN.title -> {
-                            (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
-                        }
-
-                        MonthType.ESFAND.title -> {
-                            (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
-                        }
-
-                        else -> {
-                            (currentSelectedDay..29).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
-                        }
-                    }
-                }
+            is DateEvent.UpdateDays -> {
+                setDay(month = event.selectedMonth)
             }
             is DateEvent.CheckLeapYear -> {
-                if(event.year.toInt().isLeapYear()) {
-                    if(event.month == MonthType.ESFAND.title) {
-                        days.value = emptyList()
-                        days.value = (1..30).map { if (it < 10) "0$it" else "$it" }
-                    }
-                } else {
-                    if(event.month == MonthType.ESFAND.title) {
-                        days.value = emptyList()
-                        days.value = (1..29).map { if (it < 10) "0$it" else "$it" }
-                    }
-                }
+                checkLeapYear(
+                    year = event.year,
+                    month = event.month
+                )
             }
             is DateEvent.UpdateSelectedDay -> {
-                currentSelectedDay = event.selectedDay
+                setSelectedDay(day = event.selectedDay)
             }
             is DateEvent.SetInitialDate -> {
-                event.initialYear?.let { initialYear ->
-                    years.value = (initialYear..event.yearRange.last).map { if (it < 10) "0$it" else "$it" } + (event.yearRange.first..<initialYear).map { if (it < 10) "0$it" else "$it" }
-                }
-                event.initialMonth?.let { initialMonth ->
-                    months.value = defaultMonths.subList(fromIndex = defaultMonths.indexOfFirst { it == initialMonth.title }, toIndex = 12) + defaultMonths.subList(fromIndex = 0, toIndex = defaultMonths.indexOfFirst { it == initialMonth.title })
-                }
-                event.initialDay?.let { initialDay ->
-                    currentSelectedDay = initialDay
-                    when (event.initialMonth.orFarvardin()) {
-                        MonthType.FARVARDIN,
-                        MonthType.ORDIBEHESHT,
-                        MonthType.KHORDAD,
-                        MonthType.TIR,
-                        MonthType.MORDAD,
-                        MonthType.SHAHRIVAR -> {
-                            days.value = emptyList()
-                            days.value = (initialDay..31).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
-                        }
-                        MonthType.MEHR,
-                        MonthType.ABAN,
-                        MonthType.AZAR,
-                        MonthType.DEY,
-                        MonthType.BAHMAN -> {
-                            days.value = (initialDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
-                        }
-                        MonthType.ESFAND -> {
-                            if((event.initialYear ?: event.yearRange.first).isLeapYear()) {
-                                days.value = emptyList()
-                                days.value = (initialDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
-                            } else {
-                                days.value = emptyList()
-                                days.value = (initialDay..29).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
-                            }
-                        }
-                    }
-                }
+                setDate(
+                    year = event.initialYear,
+                    month = event.initialMonth,
+                    day = event.initialDay,
+                    yearRange = event.yearRange
+                )
             }
         }
     }
@@ -137,5 +71,112 @@ class DateViewModel : BaseViewModel<DateEvent>() {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //                                        helpers                                             //
     ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * set the years with given years range value.
+     */
+    private fun setYears(yearRange: IntRange) {
+        years.value = yearRange.map { if (it < 10) "0$it" else "$it"  }
+    }
+
+    /**
+     * set selected day with given day.
+     */
+    private fun setSelectedDay(day: Int) {
+        currentSelectedDay = day
+    }
+
+    /**
+     * check the leap year situation then update days.
+     */
+    private fun checkLeapYear(year: String, month: String) {
+        if (year.toInt().isLeapYear()) {
+            if (month == MonthType.ESFAND.title) {
+                days.value = emptyList()
+                days.value = (1..30).map { if (it < 10) "0$it" else "$it" }
+            }
+        } else {
+            if (month == MonthType.ESFAND.title) {
+                days.value = emptyList()
+                days.value = (1..29).map { if (it < 10) "0$it" else "$it" }
+            }
+        }
+    }
+
+    /**
+     * set the days according to the given month.
+     */
+    private fun setDay(month: String) = CoroutineScope(Dispatchers.Main).launch {
+        days.value = (currentSelectedDay..32).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+        delay(timeMillis = 30)
+        days.value = when (month) {
+            MonthType.FARVARDIN.title,
+            MonthType.ORDIBEHESHT.title,
+            MonthType.KHORDAD.title,
+            MonthType.TIR.title,
+            MonthType.MORDAD.title,
+            MonthType.SHAHRIVAR.title -> {
+                (currentSelectedDay..31).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+            }
+
+            MonthType.MEHR.title,
+            MonthType.ABAN.title,
+            MonthType.AZAR.title,
+            MonthType.DEY.title,
+            MonthType.BAHMAN.title -> {
+                (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+            }
+
+            MonthType.ESFAND.title -> {
+                (currentSelectedDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+            }
+
+            else -> {
+                (currentSelectedDay..29).map { if (it < 10) "0$it" else "$it" } + (1..<currentSelectedDay).map { if (it < 10) "0$it" else "$it" }
+            }
+        }
+    }
+
+    /**
+     * set the year, month and day with given values.
+     */
+    private fun setDate(year: Int?, month: MonthType?, day: Int?, yearRange: IntRange) {
+        year?.let { initialYear ->
+            years.value = (initialYear..yearRange.last).map { if (it < 10) "0$it" else "$it" } + (yearRange.first..<initialYear).map { if (it < 10) "0$it" else "$it" }
+        }
+        month?.let { initialMonth ->
+            months.value = defaultMonths.subList(fromIndex = defaultMonths.indexOfFirst { it == initialMonth.title }, toIndex = 12) + defaultMonths.subList(fromIndex = 0, toIndex = defaultMonths.indexOfFirst { it == initialMonth.title })
+        }
+        day?.let { initialDay ->
+            currentSelectedDay = initialDay
+            when (month.orFarvardin()) {
+                MonthType.FARVARDIN,
+                MonthType.ORDIBEHESHT,
+                MonthType.KHORDAD,
+                MonthType.TIR,
+                MonthType.MORDAD,
+                MonthType.SHAHRIVAR -> {
+                    days.value = emptyList()
+                    days.value = (initialDay..31).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
+                }
+                MonthType.MEHR,
+                MonthType.ABAN,
+                MonthType.AZAR,
+                MonthType.DEY,
+                MonthType.BAHMAN -> {
+                    days.value = (initialDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
+                }
+                MonthType.ESFAND -> {
+                    if((year ?: yearRange.first).isLeapYear()) {
+                        days.value = emptyList()
+                        days.value = (initialDay..30).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
+                    } else {
+                        days.value = emptyList()
+                        days.value = (initialDay..29).map { if (it < 10) "0$it" else "$it" } + (1..<initialDay).map { if (it < 10) "0$it" else "$it" }
+                    }
+                }
+            }
+        }
+    }
 
 }
