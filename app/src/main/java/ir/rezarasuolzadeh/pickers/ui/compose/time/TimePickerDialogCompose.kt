@@ -52,6 +52,7 @@ fun TimePickerDialogCompose(
     initialHour: Int?,
     initialMinute: Int?,
     initialSecond: Int?,
+    initialTimeType: TimeType?,
     is12Hour: Boolean,
     showSeconds: Boolean,
     onTimeSelect: (String) -> Unit,
@@ -74,7 +75,8 @@ fun TimePickerDialogCompose(
                 event = TimeEvent.SetInitialTime(
                     initialHour = initialHour,
                     initialMinute = initialMinute,
-                    initialSecond = initialSecond
+                    initialSecond = initialSecond,
+                    initialTimeType = initialTimeType
                 )
             )
         }
@@ -143,16 +145,18 @@ fun TimePickerDialogComposeContent(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            Picker(
-                state = hourPickerState,
-                items = hours,
-                visibleItemsCount = 3,
-                modifier = Modifier
-                    .padding(top = 25.dp)
-                    .width(65.dp),
-                textModifier = Modifier.padding(8.dp),
-                textStyle = TextStyle(fontSize = 20.sp)
-            )
+            if (hours.isNotEmpty()) {
+                Picker(
+                    state = hourPickerState,
+                    items = hours,
+                    visibleItemsCount = 3,
+                    modifier = Modifier
+                        .padding(top = 25.dp)
+                        .width(65.dp),
+                    textModifier = Modifier.padding(8.dp),
+                    textStyle = TextStyle(fontSize = 20.sp)
+                )
+            }
             Text(
                 modifier = Modifier
                     .padding(top = 20.dp),
@@ -161,16 +165,18 @@ fun TimePickerDialogComposeContent(
                 fontFamily = FontFamily(Font(R.font.vazir_num)),
                 fontWeight = FontWeight.ExtraBold
             )
-            Picker(
-                state = minutePickerState,
-                items = minutes,
-                visibleItemsCount = 3,
-                modifier = Modifier
-                    .padding(top = 25.dp)
-                    .width(65.dp),
-                textModifier = Modifier.padding(8.dp),
-                textStyle = TextStyle(fontSize = 20.sp)
-            )
+            if (hours.isNotEmpty()) {
+                Picker(
+                    state = minutePickerState,
+                    items = minutes,
+                    visibleItemsCount = 3,
+                    modifier = Modifier
+                        .padding(top = 25.dp)
+                        .width(65.dp),
+                    textModifier = Modifier.padding(8.dp),
+                    textStyle = TextStyle(fontSize = 20.sp)
+                )
+            }
             if (showSeconds) {
                 Text(
                     modifier = Modifier
@@ -180,16 +186,18 @@ fun TimePickerDialogComposeContent(
                     fontFamily = FontFamily(Font(R.font.vazir_num)),
                     fontWeight = FontWeight.ExtraBold
                 )
-                Picker(
-                    state = secondPickerState,
-                    items = seconds,
-                    visibleItemsCount = 3,
-                    modifier = Modifier
-                        .padding(top = 25.dp)
-                        .width(65.dp),
-                    textModifier = Modifier.padding(8.dp),
-                    textStyle = TextStyle(fontSize = 20.sp)
-                )
+                if (hours.isNotEmpty()) {
+                    Picker(
+                        state = secondPickerState,
+                        items = seconds,
+                        visibleItemsCount = 3,
+                        modifier = Modifier
+                            .padding(top = 25.dp)
+                            .width(65.dp),
+                        textModifier = Modifier.padding(8.dp),
+                        textStyle = TextStyle(fontSize = 20.sp)
+                    )
+                }
             }
             if (is12Hour) {
                 Column(
@@ -364,6 +372,7 @@ fun TimePickerDialogPreview() {
         initialHour = null,
         initialMinute = null,
         initialSecond = null,
+        initialTimeType = null,
         is12Hour = false,
         showSeconds = true,
         onTimeSelect = {},

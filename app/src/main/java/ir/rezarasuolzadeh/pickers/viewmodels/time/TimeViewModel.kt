@@ -28,13 +28,13 @@ class TimeViewModel : ViewModel() {
     var timeType = MutableStateFlow(value = TimeType.AM)
         private set
 
-    var hours = MutableStateFlow(value = defaultHours24)
+    var hours = MutableStateFlow(value = emptyList<String>())
         private set
 
-    var minutes = MutableStateFlow(value = defaultMinutes)
+    var minutes = MutableStateFlow(value = emptyList<String>())
         private set
 
-    var seconds = MutableStateFlow(value = defaultSeconds)
+    var seconds = MutableStateFlow(value = emptyList<String>())
         private set
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,15 +53,25 @@ class TimeViewModel : ViewModel() {
                 timeType.value = event.timeType
             }
             is TimeEvent.SetInitialTime -> {
-                hours.value = if (is12Hour.value) defaultHours12 else defaultHours24
                 event.initialHour?.let { initialHour ->
                     hours.value = (initialHour..if (is12Hour.value) 12 else 23).map { if (it < 10) "0$it" else "$it" } + (0..<initialHour).map { if (it < 10) "0$it" else "$it" }
+                } ?: run {
+                    hours.value = if (is12Hour.value) defaultHours12 else defaultHours24
                 }
                 event.initialMinute?.let { initialMinute ->
                     minutes.value = (initialMinute..59).map { if (it < 10) "0$it" else "$it" } + (0..<initialMinute).map { if (it < 10) "0$it" else "$it" }
+                } ?: run {
+                    minutes.value = defaultMinutes
                 }
                 event.initialSecond?.let { initialSecond ->
                     seconds.value = (initialSecond..59).map { if (it < 10) "0$it" else "$it" } + (0..<initialSecond).map { if (it < 10) "0$it" else "$it" }
+                } ?: {
+                    seconds.value = defaultSeconds
+                }
+                event.initialTimeType?.let { initialTimeType ->
+                    timeType.value = initialTimeType
+                } ?: {
+                    timeType.value = TimeType.AM
                 }
             }
         }

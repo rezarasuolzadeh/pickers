@@ -7,6 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import ir.rezarasuolzadeh.pickers.ui.compose.time.TimePickerDialogCompose
+import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
 import ir.rezarasuolzadeh.pickers.utils.extensions.orZero
 import ir.rezarasuolzadeh.pickers.utils.extensions.toast
 import ir.rezarasuolzadeh.pickers.utils.managers.TimeValidationManager
@@ -16,6 +17,7 @@ fun TimeDialog(
     initialHour: Int? = null,
     initialMinute: Int? = null,
     initialSecond: Int? = null,
+    initialTimeType: TimeType? = null,
     is12Hour: Boolean = false,
     showSeconds: Boolean = true
 ) {
@@ -42,6 +44,7 @@ fun TimeDialog(
                 initialHour = initialHour,
                 initialMinute = initialMinute,
                 initialSecond = initialSecond,
+                initialTimeType = initialTimeType,
                 is12Hour = is12Hour,
                 showSeconds = showSeconds,
                 onTimeSelect = { selectedTime ->
