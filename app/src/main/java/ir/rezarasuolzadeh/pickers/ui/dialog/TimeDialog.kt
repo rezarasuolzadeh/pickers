@@ -2,11 +2,14 @@ package ir.rezarasuolzadeh.pickers.ui.dialog
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import ir.rezarasuolzadeh.pickers.ui.compose.time.TimePickerDialogCompose
+import ir.rezarasuolzadeh.pickers.utils.enums.TimeOutputType
 import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
 import ir.rezarasuolzadeh.pickers.utils.extensions.orZero
 import ir.rezarasuolzadeh.pickers.utils.extensions.toast
@@ -14,12 +17,28 @@ import ir.rezarasuolzadeh.pickers.utils.managers.TimeValidationManager
 
 @Composable
 fun TimeDialog(
+    title: String? = null,
+    confirmTitle: String? = null,
+    cancelTitle: String? = null,
     initialHour: Int? = null,
     initialMinute: Int? = null,
     initialSecond: Int? = null,
     initialTimeType: TimeType? = null,
     is12Hour: Boolean = false,
-    showSeconds: Boolean = true
+    showSeconds: Boolean = true,
+    titleColor: Color? = null,
+    hourColor: Color? = null,
+    minuteColor: Color? = null,
+    secondColor: Color? = null,
+    timeTypeColor: Color? = null,
+    colonColor: Color? = null,
+    confirmColor: Color? = null,
+    cancelColor: Color? = null,
+    dividerColor: Color? = null,
+    backgroundColor: Color? = null,
+    backgroundBrush: Brush? = null,
+    outputType: TimeOutputType? = null,
+    outputSeparator: Char? = null
 ) {
     val context = LocalContext.current
 

@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -47,10 +48,21 @@ import ir.rezarasuolzadeh.pickers.viewmodels.date.DateViewModel
 
 @Composable
 fun DatePickerDialogCompose(
+    title: String?,
+    confirmTitle: String?,
+    cancelTitle: String?,
     initialDay: Int?,
     initialMonth: MonthType?,
     initialYear: Int?,
     yearRange: IntRange,
+    titleColor: Color?,
+    yearColor: Color?,
+    monthColor: Color?,
+    dayColor: Color?,
+    slashColor: Color?,
+    confirmColor: Color?,
+    cancelColor: Color?,
+    dividerColor: Color?,
     onDateSelect: (String) -> Unit,
     dateViewModel: DateViewModel = viewModel()
 ) {
@@ -80,6 +92,17 @@ fun DatePickerDialogCompose(
     }
 
     DatePickerDialogComposeContent(
+        title = title,
+        confirmTitle = confirmTitle,
+        cancelTitle = cancelTitle,
+        titleColor = titleColor,
+        yearColor = yearColor,
+        monthColor = monthColor,
+        dayColor = dayColor,
+        slashColor = slashColor,
+        confirmColor = confirmColor,
+        cancelColor = cancelColor,
+        dividerColor = dividerColor,
         years = years,
         months = months,
         days = days,
@@ -118,6 +141,17 @@ fun DatePickerDialogCompose(
 
 @Composable
 fun DatePickerDialogComposeContent(
+    title: String?,
+    confirmTitle: String?,
+    cancelTitle: String?,
+    titleColor: Color?,
+    yearColor: Color?,
+    monthColor: Color?,
+    dayColor: Color?,
+    slashColor: Color?,
+    confirmColor: Color?,
+    cancelColor: Color?,
+    dividerColor: Color?,
     years: List<String>,
     months: List<String>,
     days: List<String>,
@@ -146,8 +180,8 @@ fun DatePickerDialogComposeContent(
             modifier = Modifier
                 .padding(top = 10.dp)
                 .fillMaxWidth(),
-            text = "انتخاب تاریخ",
-            color = White,
+            text = title ?: "انتخاب تاریخ",
+            color = titleColor ?: White,
             fontFamily = FontFamily(Font(R.font.vazir_num)),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
@@ -175,7 +209,7 @@ fun DatePickerDialogComposeContent(
                 modifier = Modifier
                     .padding(top = 20.dp),
                 text = "/",
-                color = White,
+                color = slashColor ?: White,
                 fontFamily = FontFamily(Font(R.font.vazir_num)),
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
@@ -197,7 +231,7 @@ fun DatePickerDialogComposeContent(
                 modifier = Modifier
                     .padding(top = 20.dp),
                 text = "/",
-                color = White,
+                color = slashColor ?: White,
                 fontFamily = FontFamily(Font(R.font.vazir_num)),
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
@@ -244,8 +278,8 @@ fun DatePickerDialogComposeContent(
                     .noRippleClickable {
                         // nothing to do yet
                     },
-                text = "انصراف",
-                color = White,
+                text = cancelTitle ?: "انصراف",
+                color = cancelColor ?: White,
                 fontFamily = FontFamily(Font(R.font.vazir_num)),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -277,8 +311,8 @@ fun DatePickerDialogComposeContent(
                     .noRippleClickable {
                         onDateSelect("${yearPickerState.selectedItem}/${monthPickerState.selectedItem}/${dayPickerState.selectedItem}")
                     },
-                text = "ثبت",
-                color = White,
+                text = confirmTitle ?: "ثبت",
+                color = confirmColor ?: White,
                 fontFamily = FontFamily(Font(R.font.vazir_num)),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -295,10 +329,21 @@ fun DatePickerDialogComposeContent(
 @Composable
 fun DatePickerDialogPreview() {
     DatePickerDialogCompose(
+        title = null,
+        confirmTitle = null,
+        cancelTitle = null,
         initialDay = null,
         initialMonth = null,
         initialYear = null,
         yearRange = 1380..1410,
+        titleColor = null,
+        yearColor = null,
+        monthColor = null,
+        dayColor = null,
+        slashColor = null,
+        confirmColor = null,
+        cancelColor = null,
+        dividerColor = null,
         onDateSelect = {
             // nothing to do yet
         }
