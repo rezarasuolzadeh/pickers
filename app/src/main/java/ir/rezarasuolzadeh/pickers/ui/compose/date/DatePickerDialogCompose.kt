@@ -63,6 +63,8 @@ fun DatePickerDialogCompose(
     confirmColor: Color?,
     cancelColor: Color?,
     dividerColor: Color?,
+    backgroundColor: Color?,
+    backgroundBrush: Brush?,
     onDateSelect: (String) -> Unit,
     dateViewModel: DateViewModel = viewModel()
 ) {
@@ -103,6 +105,8 @@ fun DatePickerDialogCompose(
         confirmColor = confirmColor,
         cancelColor = cancelColor,
         dividerColor = dividerColor,
+        backgroundColor = backgroundColor,
+        backgroundBrush = backgroundBrush,
         years = years,
         months = months,
         days = days,
@@ -152,6 +156,8 @@ fun DatePickerDialogComposeContent(
     confirmColor: Color?,
     cancelColor: Color?,
     dividerColor: Color?,
+    backgroundColor: Color?,
+    backgroundBrush: Brush?,
     years: List<String>,
     months: List<String>,
     days: List<String>,
@@ -164,17 +170,38 @@ fun DatePickerDialogComposeContent(
     onDateSelect: (String) -> Unit
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(15.dp))
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        LightBlue,
-                        DarkBlue
+        modifier = when {
+            backgroundBrush == null && backgroundColor == null -> {
+                Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(15.dp))
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                LightBlue,
+                                DarkBlue
+                            )
+                        )
                     )
-                )
-            )
+            }
+            backgroundBrush != null && backgroundColor == null -> {
+                Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(15.dp))
+                    .background(
+                        brush = backgroundBrush
+                    )
+            }
+            backgroundBrush == null && backgroundColor != null -> {
+                Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(15.dp))
+                    .background(
+                        color = backgroundColor
+                    )
+            }
+            else -> Modifier
+        }
     ) {
         Text(
             modifier = Modifier
@@ -200,6 +227,7 @@ fun DatePickerDialogComposeContent(
                     modifier = Modifier
                         .padding(top = 25.dp)
                         .width(90.dp),
+                    itemColor = yearColor ?: White,
                     textModifier = Modifier.padding(8.dp),
                     textStyle = TextStyle(fontSize = 16.sp),
                     onItemChanged = onYearChanged
@@ -222,6 +250,7 @@ fun DatePickerDialogComposeContent(
                     modifier = Modifier
                         .padding(top = 25.dp)
                         .width(90.dp),
+                    itemColor = monthColor ?: White,
                     textModifier = Modifier.padding(8.dp),
                     textStyle = TextStyle(fontSize = 16.sp),
                     onItemChanged = onMonthChanged
@@ -244,6 +273,7 @@ fun DatePickerDialogComposeContent(
                     modifier = Modifier
                         .padding(top = 25.dp)
                         .width(90.dp),
+                    itemColor = dayColor ?: White,
                     startIndex = 0,
                     textModifier = Modifier.padding(8.dp),
                     textStyle = TextStyle(fontSize = 16.sp),
@@ -256,7 +286,7 @@ fun DatePickerDialogComposeContent(
                 .padding(top = 25.dp)
                 .height(height = 0.3.dp)
                 .fillMaxWidth()
-                .background(color = White)
+                .background(color = dividerColor ?: White)
         )
         ConstraintLayout(
             modifier = Modifier
@@ -289,7 +319,7 @@ fun DatePickerDialogComposeContent(
                     .padding(vertical = 10.dp)
                     .height(height = 50.dp)
                     .width(width = 0.3.dp)
-                    .background(color = White)
+                    .background(color = dividerColor ?: White)
                     .constrainAs(divider) {
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
@@ -344,6 +374,8 @@ fun DatePickerDialogPreview() {
         confirmColor = null,
         cancelColor = null,
         dividerColor = null,
+        backgroundColor = null,
+        backgroundBrush = null,
         onDateSelect = {
             // nothing to do yet
         }
