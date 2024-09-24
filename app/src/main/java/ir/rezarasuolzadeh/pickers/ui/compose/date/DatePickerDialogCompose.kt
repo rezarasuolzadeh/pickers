@@ -65,6 +65,7 @@ fun DatePickerDialogCompose(
     dividerColor: Color?,
     backgroundColor: Color?,
     backgroundBrush: Brush?,
+    outputSeparator: Char?,
     onDateSelect: (String) -> Unit,
     dateViewModel: DateViewModel = viewModel()
 ) {
@@ -107,6 +108,7 @@ fun DatePickerDialogCompose(
         dividerColor = dividerColor,
         backgroundColor = backgroundColor,
         backgroundBrush = backgroundBrush,
+        outputSeparator = outputSeparator,
         years = years,
         months = months,
         days = days,
@@ -158,6 +160,7 @@ fun DatePickerDialogComposeContent(
     dividerColor: Color?,
     backgroundColor: Color?,
     backgroundBrush: Brush?,
+    outputSeparator: Char?,
     years: List<String>,
     months: List<String>,
     days: List<String>,
@@ -339,7 +342,7 @@ fun DatePickerDialogComposeContent(
                         top.linkTo(parent.top)
                     }
                     .noRippleClickable {
-                        onDateSelect("${yearPickerState.selectedItem}/${monthPickerState.selectedItem}/${dayPickerState.selectedItem}")
+                        onDateSelect("${yearPickerState.selectedItem}${outputSeparator ?: "/"}${monthPickerState.selectedItem}${outputSeparator ?: "/"}${dayPickerState.selectedItem}")
                     },
                 text = confirmTitle ?: "ثبت",
                 color = confirmColor ?: White,
@@ -376,6 +379,7 @@ fun DatePickerDialogPreview() {
         dividerColor = null,
         backgroundColor = null,
         backgroundBrush = null,
+        outputSeparator = null,
         onDateSelect = {
             // nothing to do yet
         }
