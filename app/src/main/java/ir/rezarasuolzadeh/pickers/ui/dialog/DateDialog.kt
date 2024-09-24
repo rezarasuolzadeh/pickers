@@ -75,6 +75,7 @@ fun DateDialog(
                 backgroundColor = backgroundColor,
                 backgroundBrush = backgroundBrush,
                 outputSeparator = outputSeparator,
+                outputType = outputType,
                 onDateSelect = { selectedDate ->
                     Toast.makeText(context, selectedDate, Toast.LENGTH_SHORT).show()
                 }

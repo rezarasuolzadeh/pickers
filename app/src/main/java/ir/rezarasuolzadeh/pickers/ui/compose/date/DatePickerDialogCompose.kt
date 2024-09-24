@@ -38,7 +38,9 @@ import ir.rezarasuolzadeh.pickers.utils.extensions.noRippleClickable
 import ir.rezarasuolzadeh.pickers.ui.compose.picker.rememberPickerState
 import ir.rezarasuolzadeh.pickers.ui.theme.DarkBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
+import ir.rezarasuolzadeh.pickers.utils.enums.DateOutputType
 import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
+import ir.rezarasuolzadeh.pickers.utils.extensions.toNumericMonth
 import ir.rezarasuolzadeh.pickers.viewmodels.date.DateEvent
 import ir.rezarasuolzadeh.pickers.viewmodels.date.DateViewModel
 
@@ -66,6 +68,7 @@ fun DatePickerDialogCompose(
     backgroundColor: Color?,
     backgroundBrush: Brush?,
     outputSeparator: Char?,
+    outputType: DateOutputType?,
     onDateSelect: (String) -> Unit,
     dateViewModel: DateViewModel = viewModel()
 ) {
@@ -109,6 +112,7 @@ fun DatePickerDialogCompose(
         backgroundColor = backgroundColor,
         backgroundBrush = backgroundBrush,
         outputSeparator = outputSeparator,
+        outputType = outputType,
         years = years,
         months = months,
         days = days,
@@ -161,6 +165,7 @@ fun DatePickerDialogComposeContent(
     backgroundColor: Color?,
     backgroundBrush: Brush?,
     outputSeparator: Char?,
+    outputType: DateOutputType?,
     years: List<String>,
     months: List<String>,
     days: List<String>,
@@ -342,7 +347,17 @@ fun DatePickerDialogComposeContent(
                         top.linkTo(parent.top)
                     }
                     .noRippleClickable {
-                        onDateSelect("${yearPickerState.selectedItem}${outputSeparator ?: "/"}${monthPickerState.selectedItem}${outputSeparator ?: "/"}${dayPickerState.selectedItem}")
+                        when (outputType) {
+                            DateOutputType.PERSIAN -> {
+                                onDateSelect("${yearPickerState.selectedItem}${outputSeparator ?: "/"}${monthPickerState.selectedItem}${outputSeparator ?: "/"}${dayPickerState.selectedItem}")
+                            }
+                            DateOutputType.NUMERIC -> {
+                                onDateSelect("${yearPickerState.selectedItem}${outputSeparator ?: "/"}${monthPickerState.selectedItem.toNumericMonth()}${outputSeparator ?: "/"}${dayPickerState.selectedItem}")
+                            }
+                            else -> {
+                                onDateSelect("${yearPickerState.selectedItem}${outputSeparator ?: "/"}${monthPickerState.selectedItem}${outputSeparator ?: "/"}${dayPickerState.selectedItem}")
+                            }
+                        }
                     },
                 text = confirmTitle ?: "ثبت",
                 color = confirmColor ?: White,
@@ -380,6 +395,7 @@ fun DatePickerDialogPreview() {
         backgroundColor = null,
         backgroundBrush = null,
         outputSeparator = null,
+        outputType = null,
         onDateSelect = {
             // nothing to do yet
         }
