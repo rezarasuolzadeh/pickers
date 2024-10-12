@@ -60,12 +60,28 @@ fun TimeDialog(
             )
         ) {
             TimePickerDialogCompose(
+                title = title,
+                confirmTitle = confirmTitle,
+                cancelTitle = cancelTitle,
                 initialHour = initialHour,
                 initialMinute = initialMinute,
                 initialSecond = initialSecond,
                 initialTimeType = initialTimeType,
                 is12Hour = is12Hour,
                 showSeconds = showSeconds,
+                titleColor = titleColor,
+                hourColor = hourColor,
+                minuteColor = minuteColor,
+                secondColor = secondColor,
+                timeTypeColor = timeTypeColor,
+                colonColor = colonColor,
+                confirmColor = confirmColor,
+                cancelColor = cancelColor,
+                dividerColor = dividerColor,
+                backgroundColor = backgroundColor,
+                backgroundBrush = backgroundBrush,
+                outputType = outputType,
+                outputSeparator = outputSeparator,
                 onTimeSelect = { selectedTime ->
                     Toast.makeText(context, selectedTime, Toast.LENGTH_SHORT).show()
                 },

@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -39,6 +40,7 @@ import ir.rezarasuolzadeh.pickers.ui.theme.Gray
 import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.TransparentWhite
 import ir.rezarasuolzadeh.pickers.ui.theme.White
+import ir.rezarasuolzadeh.pickers.utils.enums.TimeOutputType
 import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
 import ir.rezarasuolzadeh.pickers.viewmodels.time.TimeEvent
 import ir.rezarasuolzadeh.pickers.viewmodels.time.TimeViewModel
@@ -49,12 +51,28 @@ import ir.rezarasuolzadeh.pickers.viewmodels.time.TimeViewModel
 
 @Composable
 fun TimePickerDialogCompose(
+    title: String?,
+    confirmTitle: String?,
+    cancelTitle: String?,
     initialHour: Int?,
     initialMinute: Int?,
     initialSecond: Int?,
     initialTimeType: TimeType?,
     is12Hour: Boolean,
     showSeconds: Boolean,
+    titleColor: Color?,
+    hourColor: Color?,
+    minuteColor: Color?,
+    secondColor: Color?,
+    timeTypeColor: Color?,
+    colonColor: Color?,
+    confirmColor: Color?,
+    cancelColor: Color?,
+    dividerColor: Color?,
+    backgroundColor: Color?,
+    backgroundBrush: Brush?,
+    outputType: TimeOutputType?,
+    outputSeparator: Char?,
     onTimeSelect: (String) -> Unit,
     onCancel: () -> Unit,
     timeViewModel: TimeViewModel = viewModel()
@@ -83,11 +101,27 @@ fun TimePickerDialogCompose(
     }
 
     TimePickerDialogComposeContent(
+        title = title,
+        confirmTitle = confirmTitle,
+        cancelTitle = cancelTitle,
         hours = hours,
         minutes = minutes,
         seconds = seconds,
         is12Hour = is12Hour,
         showSeconds = showSeconds,
+        titleColor = titleColor,
+        hourColor = hourColor,
+        minuteColor = minuteColor,
+        secondColor = secondColor,
+        timeTypeColor = timeTypeColor,
+        colonColor = colonColor,
+        confirmColor = confirmColor,
+        cancelColor = cancelColor,
+        dividerColor = dividerColor,
+        backgroundColor = backgroundColor,
+        backgroundBrush = backgroundBrush,
+        outputType = outputType,
+        outputSeparator = outputSeparator,
         timeType = timeType,
         onTimeSelect = onTimeSelect,
         onCancel = onCancel,
@@ -103,28 +137,65 @@ fun TimePickerDialogCompose(
 
 @Composable
 fun TimePickerDialogComposeContent(
+    title: String?,
+    confirmTitle: String?,
+    cancelTitle: String?,
     hours: List<String>,
     minutes: List<String>,
     seconds: List<String>,
     is12Hour: Boolean,
     showSeconds: Boolean,
+    titleColor: Color?,
+    hourColor: Color?,
+    minuteColor: Color?,
+    secondColor: Color?,
+    timeTypeColor: Color?,
+    colonColor: Color?,
+    confirmColor: Color?,
+    cancelColor: Color?,
+    dividerColor: Color?,
+    backgroundColor: Color?,
+    backgroundBrush: Brush?,
+    outputType: TimeOutputType?,
+    outputSeparator: Char?,
     timeType: TimeType,
     onTimeSelect: (String) -> Unit,
     onCancel: () -> Unit,
     onEvent: (TimeEvent) -> Unit
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(15.dp))
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        LightBlue,
-                        DarkBlue
+        modifier = when {
+            backgroundBrush == null && backgroundColor == null -> {
+                Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(15.dp))
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                LightBlue,
+                                DarkBlue
+                            )
+                        )
                     )
-                )
-            )
+            }
+            backgroundBrush != null && backgroundColor == null -> {
+                Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(15.dp))
+                    .background(
+                        brush = backgroundBrush
+                    )
+            }
+            backgroundBrush == null && backgroundColor != null -> {
+                Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(15.dp))
+                    .background(
+                        color = backgroundColor
+                    )
+            }
+            else -> Modifier
+        }
     ) {
         val hourPickerState = rememberPickerState()
         val minutePickerState = rememberPickerState()
@@ -133,8 +204,8 @@ fun TimePickerDialogComposeContent(
             modifier = Modifier
                 .padding(top = 10.dp)
                 .fillMaxWidth(),
-            text = "انتخاب زمان",
-            color = White,
+            text = title ?: "انتخاب زمان",
+            color = titleColor ?: White,
             fontFamily = FontFamily(Font(R.font.vazir_num)),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
@@ -153,6 +224,7 @@ fun TimePickerDialogComposeContent(
                     modifier = Modifier
                         .padding(top = 25.dp)
                         .width(65.dp),
+                    itemColor = hourColor ?: White,
                     textModifier = Modifier.padding(8.dp),
                     textStyle = TextStyle(fontSize = 20.sp)
                 )
@@ -161,7 +233,7 @@ fun TimePickerDialogComposeContent(
                 modifier = Modifier
                     .padding(top = 20.dp),
                 text = ":",
-                color = White,
+                color = colonColor ?: White,
                 fontFamily = FontFamily(Font(R.font.vazir_num)),
                 fontWeight = FontWeight.ExtraBold
             )
@@ -173,6 +245,7 @@ fun TimePickerDialogComposeContent(
                     modifier = Modifier
                         .padding(top = 25.dp)
                         .width(65.dp),
+                    itemColor = minuteColor ?: White,
                     textModifier = Modifier.padding(8.dp),
                     textStyle = TextStyle(fontSize = 20.sp)
                 )
@@ -182,7 +255,7 @@ fun TimePickerDialogComposeContent(
                     modifier = Modifier
                         .padding(top = 20.dp),
                     text = ":",
-                    color = White,
+                    color = colonColor ?: White,
                     fontFamily = FontFamily(Font(R.font.vazir_num)),
                     fontWeight = FontWeight.ExtraBold
                 )
@@ -194,6 +267,7 @@ fun TimePickerDialogComposeContent(
                         modifier = Modifier
                             .padding(top = 25.dp)
                             .width(65.dp),
+                        itemColor = secondColor ?: White,
                         textModifier = Modifier.padding(8.dp),
                         textStyle = TextStyle(fontSize = 20.sp)
                     )
@@ -292,7 +366,7 @@ fun TimePickerDialogComposeContent(
                 .padding(top = 25.dp)
                 .height(height = 0.3.dp)
                 .fillMaxWidth()
-                .background(color = White)
+                .background(color = dividerColor ?: White)
         )
         ConstraintLayout(
             modifier = Modifier
@@ -314,8 +388,8 @@ fun TimePickerDialogComposeContent(
                     .noRippleClickable {
                         onCancel()
                     },
-                text = "انصراف",
-                color = White,
+                text = cancelTitle ?: "انصراف",
+                color = cancelColor ?: White,
                 fontFamily = FontFamily(Font(R.font.vazir_num)),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -325,7 +399,7 @@ fun TimePickerDialogComposeContent(
                     .padding(vertical = 10.dp)
                     .height(height = 50.dp)
                     .width(width = 0.3.dp)
-                    .background(color = White)
+                    .background(color = dividerColor ?: White)
                     .constrainAs(divider) {
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
@@ -346,13 +420,13 @@ fun TimePickerDialogComposeContent(
                     }
                     .noRippleClickable {
                         if (showSeconds) {
-                            onTimeSelect("${hourPickerState.selectedItem}:${minutePickerState.selectedItem}:${secondPickerState.selectedItem}")
+                            onTimeSelect("${hourPickerState.selectedItem}${outputSeparator ?: ":"}${minutePickerState.selectedItem}${outputSeparator ?: ":"}${secondPickerState.selectedItem}")
                         } else {
-                            onTimeSelect("${hourPickerState.selectedItem}:${minutePickerState.selectedItem}")
+                            onTimeSelect("${hourPickerState.selectedItem}${outputSeparator ?: ":"}${minutePickerState.selectedItem}")
                         }
                     },
-                text = "ثبت",
-                color = White,
+                text = confirmTitle ?: "ثبت",
+                color = confirmColor ?: White,
                 fontFamily = FontFamily(Font(R.font.vazir_num)),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -369,12 +443,28 @@ fun TimePickerDialogComposeContent(
 @Composable
 fun TimePickerDialogPreview() {
     TimePickerDialogCompose(
+        title = null,
+        confirmTitle = null,
+        cancelTitle = null,
         initialHour = null,
         initialMinute = null,
         initialSecond = null,
         initialTimeType = null,
         is12Hour = false,
         showSeconds = true,
+        titleColor = null,
+        hourColor = null,
+        minuteColor = null,
+        secondColor = null,
+        timeTypeColor = null,
+        colonColor = null,
+        confirmColor = null,
+        cancelColor = null,
+        dividerColor = null,
+        backgroundColor = null,
+        backgroundBrush = null,
+        outputType = null,
+        outputSeparator = null,
         onTimeSelect = {},
         onCancel = {}
     )
