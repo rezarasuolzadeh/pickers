@@ -38,7 +38,6 @@ import ir.rezarasuolzadeh.pickers.ui.compose.picker.rememberPickerState
 import ir.rezarasuolzadeh.pickers.ui.theme.DarkBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.Gray
 import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
-import ir.rezarasuolzadeh.pickers.ui.theme.TransparentWhite
 import ir.rezarasuolzadeh.pickers.ui.theme.White
 import ir.rezarasuolzadeh.pickers.utils.enums.TimeOutputType
 import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
@@ -168,7 +167,7 @@ fun TimePickerDialogComposeContent(
             backgroundBrush == null && backgroundColor == null -> {
                 Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(15.dp))
+                    .clip(shape = RoundedCornerShape(size = 15.dp))
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
@@ -181,18 +180,14 @@ fun TimePickerDialogComposeContent(
             backgroundBrush != null && backgroundColor == null -> {
                 Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(15.dp))
-                    .background(
-                        brush = backgroundBrush
-                    )
+                    .clip(shape = RoundedCornerShape(size = 15.dp))
+                    .background(brush = backgroundBrush)
             }
             backgroundBrush == null && backgroundColor != null -> {
                 Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(15.dp))
-                    .background(
-                        color = backgroundColor
-                    )
+                    .clip(shape = RoundedCornerShape(size = 15.dp))
+                    .background(color = backgroundColor)
             }
             else -> Modifier
         }
@@ -206,7 +201,7 @@ fun TimePickerDialogComposeContent(
                 .fillMaxWidth(),
             text = title ?: "انتخاب زمان",
             color = titleColor ?: White,
-            fontFamily = FontFamily(Font(R.font.vazir_num)),
+            fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -223,9 +218,9 @@ fun TimePickerDialogComposeContent(
                     visibleItemsCount = 3,
                     modifier = Modifier
                         .padding(top = 25.dp)
-                        .width(65.dp),
+                        .width(width = 65.dp),
                     itemColor = hourColor ?: White,
-                    textModifier = Modifier.padding(8.dp),
+                    textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 20.sp)
                 )
             }
@@ -234,7 +229,7 @@ fun TimePickerDialogComposeContent(
                     .padding(top = 20.dp),
                 text = ":",
                 color = colonColor ?: White,
-                fontFamily = FontFamily(Font(R.font.vazir_num)),
+                fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.ExtraBold
             )
             if (hours.isNotEmpty()) {
@@ -244,9 +239,9 @@ fun TimePickerDialogComposeContent(
                     visibleItemsCount = 3,
                     modifier = Modifier
                         .padding(top = 25.dp)
-                        .width(65.dp),
+                        .width(width = 65.dp),
                     itemColor = minuteColor ?: White,
-                    textModifier = Modifier.padding(8.dp),
+                    textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 20.sp)
                 )
             }
@@ -256,7 +251,7 @@ fun TimePickerDialogComposeContent(
                         .padding(top = 20.dp),
                     text = ":",
                     color = colonColor ?: White,
-                    fontFamily = FontFamily(Font(R.font.vazir_num)),
+                    fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
                     fontWeight = FontWeight.ExtraBold
                 )
                 if (hours.isNotEmpty()) {
@@ -266,9 +261,9 @@ fun TimePickerDialogComposeContent(
                         visibleItemsCount = 3,
                         modifier = Modifier
                             .padding(top = 25.dp)
-                            .width(65.dp),
+                            .width(width = 65.dp),
                         itemColor = secondColor ?: White,
-                        textModifier = Modifier.padding(8.dp),
+                        textModifier = Modifier.padding(all = 8.dp),
                         textStyle = TextStyle(fontSize = 20.sp)
                     )
                 }
@@ -309,7 +304,7 @@ fun TimePickerDialogComposeContent(
                         },
                         text = "ق.ظ",
                         color = if (timeType == TimeType.AM) timeTypeColor ?: White else Gray,
-                        fontFamily = FontFamily(Font(R.font.vazir)),
+                        fontFamily = FontFamily(Font(resId = R.font.vazir)),
                         fontWeight = FontWeight.Light,
                         textAlign = TextAlign.Center,
                         fontSize = 13.sp
@@ -353,7 +348,7 @@ fun TimePickerDialogComposeContent(
                         },
                         text = "ب.ظ",
                         color = if (timeType == TimeType.PM) timeTypeColor ?: White else Gray,
-                        fontFamily = FontFamily(Font(R.font.vazir)),
+                        fontFamily = FontFamily(Font(resId = R.font.vazir)),
                         fontWeight = FontWeight.Light,
                         textAlign = TextAlign.Center,
                         fontSize = 13.sp
@@ -379,18 +374,18 @@ fun TimePickerDialogComposeContent(
                     .width(width = 60.dp)
                     .height(height = 50.dp)
                     .padding(top = 5.dp)
-                    .constrainAs(confirm) {
-                        start.linkTo(parent.start)
-                        end.linkTo(divider.start)
-                        bottom.linkTo(parent.bottom)
-                        top.linkTo(parent.top)
+                    .constrainAs(ref = confirm) {
+                        start.linkTo(anchor = parent.start)
+                        end.linkTo(anchor = divider.start)
+                        bottom.linkTo(anchor = parent.bottom)
+                        top.linkTo(anchor = parent.top)
                     }
                     .noRippleClickable {
                         onCancel()
                     },
                 text = cancelTitle ?: "انصراف",
                 color = cancelColor ?: White,
-                fontFamily = FontFamily(Font(R.font.vazir_num)),
+                fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
@@ -400,11 +395,11 @@ fun TimePickerDialogComposeContent(
                     .height(height = 50.dp)
                     .width(width = 0.3.dp)
                     .background(color = dividerColor ?: White)
-                    .constrainAs(divider) {
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                        top.linkTo(parent.top)
+                    .constrainAs(ref = divider) {
+                        start.linkTo(anchor = parent.start)
+                        end.linkTo(anchor = parent.end)
+                        bottom.linkTo(anchor = parent.bottom)
+                        top.linkTo(anchor = parent.top)
                     }
             )
             Text(
@@ -412,11 +407,11 @@ fun TimePickerDialogComposeContent(
                     .width(width = 60.dp)
                     .height(height = 50.dp)
                     .padding(top = 5.dp)
-                    .constrainAs(cancel) {
-                        end.linkTo(parent.end)
-                        start.linkTo(divider.end)
-                        bottom.linkTo(parent.bottom)
-                        top.linkTo(parent.top)
+                    .constrainAs(ref = cancel) {
+                        end.linkTo(anchor = parent.end)
+                        start.linkTo(anchor = divider.end)
+                        bottom.linkTo(anchor = parent.bottom)
+                        top.linkTo(anchor = parent.top)
                     }
                     .noRippleClickable {
                         if (showSeconds) {
@@ -455,7 +450,7 @@ fun TimePickerDialogComposeContent(
                     },
                 text = confirmTitle ?: "ثبت",
                 color = confirmColor ?: White,
-                fontFamily = FontFamily(Font(R.font.vazir_num)),
+                fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
