@@ -279,7 +279,7 @@ fun TimePickerDialogComposeContent(
                         .padding(top = 15.dp)
                         .height(height = 60.dp)
                         .width(width = 45.dp)
-                        .border(width = 0.4.dp, color = White, shape = RoundedCornerShape(10.dp))
+                        .border(width = 0.4.dp, color = timeTypeColor ?: White, shape = RoundedCornerShape(10.dp))
                 ) {
                     Text(
                         modifier = if (timeType == TimeType.AM) {
@@ -287,7 +287,7 @@ fun TimePickerDialogComposeContent(
                                 .width(width = 45.dp)
                                 .height(height = 30.dp)
                                 .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
-                                .background(color = TransparentWhite)
+                                .background(color = timeTypeColor?.copy(alpha = 0.3f) ?: White.copy(alpha = 0.3f))
                                 .noRippleClickable {
                                     onEvent(
                                         TimeEvent.SetTimeType(
@@ -308,7 +308,7 @@ fun TimePickerDialogComposeContent(
                                 }
                         },
                         text = "ق.ظ",
-                        color = if (timeType == TimeType.AM) White else Gray,
+                        color = if (timeType == TimeType.AM) timeTypeColor ?: White else Gray,
                         fontFamily = FontFamily(Font(R.font.vazir)),
                         fontWeight = FontWeight.Light,
                         textAlign = TextAlign.Center,
@@ -318,7 +318,7 @@ fun TimePickerDialogComposeContent(
                         modifier = Modifier
                             .height(height = 0.3.dp)
                             .fillMaxWidth()
-                            .background(color = White)
+                            .background(color = timeTypeColor ?: White)
                     )
                     Text(
                         modifier = if (timeType == TimeType.PM) {
@@ -331,7 +331,7 @@ fun TimePickerDialogComposeContent(
                                         bottomEnd = 10.dp
                                     )
                                 )
-                                .background(color = TransparentWhite)
+                                .background(color = timeTypeColor?.copy(alpha = 0.3f) ?: White.copy(alpha = 0.3f))
                                 .noRippleClickable {
                                     onEvent(
                                         TimeEvent.SetTimeType(
@@ -352,7 +352,7 @@ fun TimePickerDialogComposeContent(
                                 }
                         },
                         text = "ب.ظ",
-                        color = if (timeType == TimeType.PM) White else Gray,
+                        color = if (timeType == TimeType.PM) timeTypeColor ?: White else Gray,
                         fontFamily = FontFamily(Font(R.font.vazir)),
                         fontWeight = FontWeight.Light,
                         textAlign = TextAlign.Center,
