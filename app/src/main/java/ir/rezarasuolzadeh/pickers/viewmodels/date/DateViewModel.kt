@@ -10,7 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class DateViewModel : BaseViewModel<DateEvent>() {
+internal class DateViewModel : BaseViewModel<DateEvent>() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //                                       defaults                                             //

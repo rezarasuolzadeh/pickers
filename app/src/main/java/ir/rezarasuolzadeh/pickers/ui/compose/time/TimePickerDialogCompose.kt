@@ -49,7 +49,7 @@ import ir.rezarasuolzadeh.pickers.viewmodels.time.TimeViewModel
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
-fun TimePickerDialogCompose(
+internal fun TimePickerDialogCompose(
     title: String?,
     confirmTitle: String?,
     cancelTitle: String?,
@@ -135,7 +135,7 @@ fun TimePickerDialogCompose(
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
-fun TimePickerDialogComposeContent(
+internal fun TimePickerDialogComposeContent(
     title: String?,
     confirmTitle: String?,
     cancelTitle: String?,
@@ -464,7 +464,7 @@ fun TimePickerDialogComposeContent(
 
 @Preview
 @Composable
-fun TimePickerDialogPreview() {
+internal fun TimePickerDialogPreview() {
     TimePickerDialogCompose(
         title = null,
         confirmTitle = null,

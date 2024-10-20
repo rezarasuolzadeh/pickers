@@ -90,7 +90,7 @@ fun DateDialog(
 
 @Preview
 @Composable
-fun DateDialogPreview() {
+internal fun DateDialogPreview() {
     DateDialog(
         onCancel = {
             // nothing to do yet

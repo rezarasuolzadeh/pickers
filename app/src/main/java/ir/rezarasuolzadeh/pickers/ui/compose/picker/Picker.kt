@@ -36,7 +36,7 @@ import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Picker(
+internal fun Picker(
     items: List<String>,
     state: PickerState = rememberPickerState(),
     modifier: Modifier = Modifier,

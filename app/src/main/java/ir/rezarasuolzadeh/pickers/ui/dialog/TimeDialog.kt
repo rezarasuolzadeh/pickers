@@ -96,7 +96,7 @@ fun TimeDialog(
 
 @Preview
 @Composable
-fun TimeDialogPreview() {
+internal fun TimeDialogPreview() {
     TimeDialog(
         onCancel = {
             // nothing to do yet

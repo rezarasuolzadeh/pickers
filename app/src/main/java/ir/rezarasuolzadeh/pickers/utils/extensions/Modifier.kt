@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 /**
  * set fading for edge of component with set on it's modifier.
  */
-fun Modifier.fadingEdge(brush: Brush) = this
+internal fun Modifier.fadingEdge(brush: Brush) = this
     .graphicsLayer(
         compositingStrategy = CompositingStrategy.Offscreen
     )
@@ -29,7 +29,7 @@ fun Modifier.fadingEdge(brush: Brush) = this
 /**
  * set no ripple effect clickable on Modifier value.
  */
-fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
+internal fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
     this.clickable(
         indication = null,
         interactionSource = remember { MutableInteractionSource() }

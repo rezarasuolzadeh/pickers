@@ -5,7 +5,7 @@ import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
 /**
  * convert the string month to the numeric one and return it in string format.
  */
-fun String.toNumericMonth(): String = when (this) {
+internal fun String.toNumericMonth(): String = when (this) {
     MonthType.FARVARDIN.title -> "01"
     MonthType.ORDIBEHESHT.title -> "02"
     MonthType.KHORDAD.title -> "03"

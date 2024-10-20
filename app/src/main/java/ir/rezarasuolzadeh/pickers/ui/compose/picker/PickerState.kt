@@ -7,8 +7,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
 @Composable
-fun rememberPickerState() = remember { PickerState() }
+internal fun rememberPickerState() = remember { PickerState() }
 
-class PickerState {
+internal class PickerState {
     var selectedItem by mutableStateOf("")
 }

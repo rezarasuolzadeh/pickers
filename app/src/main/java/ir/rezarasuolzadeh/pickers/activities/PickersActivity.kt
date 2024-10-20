@@ -27,8 +27,8 @@ class PickersActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = White
                 ) {
-                    val isTimeDialogVisible = remember { mutableStateOf(false) }
-                    val isDateDialogVisible = remember { mutableStateOf(true) }
+                    val isTimeDialogVisible = remember { mutableStateOf(value = true) }
+                    val isDateDialogVisible = remember { mutableStateOf(value = false) }
 
                     if (isTimeDialogVisible.value) {
                         ShowTimeDialog {

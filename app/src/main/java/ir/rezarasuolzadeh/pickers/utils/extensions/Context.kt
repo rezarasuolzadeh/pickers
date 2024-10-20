@@ -6,6 +6,6 @@ import android.widget.Toast
 /**
  * show toast message with short length in current context.
  */
-fun Context.toast(message: String) {
+internal fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }

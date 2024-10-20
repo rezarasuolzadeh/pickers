@@ -49,7 +49,7 @@ import ir.rezarasuolzadeh.pickers.viewmodels.date.DateViewModel
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
-fun DatePickerDialogCompose(
+internal fun DatePickerDialogCompose(
     title: String?,
     confirmTitle: String?,
     cancelTitle: String?,
@@ -152,7 +152,7 @@ fun DatePickerDialogCompose(
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
-fun DatePickerDialogComposeContent(
+internal fun DatePickerDialogComposeContent(
     title: String?,
     confirmTitle: String?,
     cancelTitle: String?,
@@ -374,7 +374,7 @@ fun DatePickerDialogComposeContent(
 
 @Preview
 @Composable
-fun DatePickerDialogPreview() {
+internal fun DatePickerDialogPreview() {
     DatePickerDialogCompose(
         title = null,
         confirmTitle = null,

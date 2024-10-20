@@ -7,4 +7,4 @@ import androidx.compose.ui.platform.LocalDensity
  * convert the pixel to dp then return the result.
  */
 @Composable
-fun pixelsToDp(pixels: Int) = with(LocalDensity.current) { pixels.toDp() }
+internal fun pixelsToDp(pixels: Int) = with(LocalDensity.current) { pixels.toDp() }

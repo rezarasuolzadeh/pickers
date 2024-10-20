@@ -4,7 +4,7 @@ import ir.rezarasuolzadeh.pickers.utils.base.BaseViewModel
 import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class TimeViewModel : BaseViewModel<TimeEvent>() {
+internal class TimeViewModel : BaseViewModel<TimeEvent>() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //                                       defaults                                             //
