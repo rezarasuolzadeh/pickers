@@ -35,7 +35,8 @@ fun DateDialog(
     backgroundColor: Color? = null,
     backgroundBrush: Brush? = null,
     outputType: DateOutputType? = null,
-    outputSeparator: Char? = null
+    outputSeparator: Char? = null,
+    onCancel: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -76,6 +77,7 @@ fun DateDialog(
                 backgroundBrush = backgroundBrush,
                 outputSeparator = outputSeparator,
                 outputType = outputType,
+                onCancel = onCancel,
                 onDateSelect = { selectedDate ->
                     Toast.makeText(context, selectedDate, Toast.LENGTH_SHORT).show()
                 }
@@ -89,5 +91,9 @@ fun DateDialog(
 @Preview
 @Composable
 fun DateDialogPreview() {
-    DateDialog()
+    DateDialog(
+        onCancel = {
+            // nothing to do yet
+        }
+    )
 }

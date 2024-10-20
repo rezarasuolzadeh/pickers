@@ -70,6 +70,7 @@ fun DatePickerDialogCompose(
     outputSeparator: Char?,
     outputType: DateOutputType?,
     onDateSelect: (String) -> Unit,
+    onCancel: () -> Unit,
     dateViewModel: DateViewModel = viewModel()
 ) {
     val years by dateViewModel.years.collectAsStateWithLifecycle()
@@ -141,7 +142,8 @@ fun DatePickerDialogCompose(
                 )
             )
         },
-        onDateSelect = onDateSelect
+        onDateSelect = onDateSelect,
+        onCancel = onCancel
     )
 }
 
@@ -175,7 +177,8 @@ fun DatePickerDialogComposeContent(
     onDayChanged: (String) -> Unit,
     onMonthChanged: (String) -> Unit,
     onYearChanged: (String) -> Unit,
-    onDateSelect: (String) -> Unit
+    onDateSelect: (String) -> Unit,
+    onCancel: () -> Unit
 ) {
     Column(
         modifier = when {
@@ -310,7 +313,7 @@ fun DatePickerDialogComposeContent(
                         top.linkTo(anchor = parent.top)
                     }
                     .noRippleClickable {
-                        // nothing to do yet
+                        onCancel()
                     },
                 text = cancelTitle ?: "انصراف",
                 color = cancelColor ?: White,
@@ -393,6 +396,9 @@ fun DatePickerDialogPreview() {
         outputSeparator = null,
         outputType = null,
         onDateSelect = {
+            // nothing to do yet
+        },
+        onCancel = {
             // nothing to do yet
         }
     )

@@ -488,7 +488,11 @@ fun TimePickerDialogPreview() {
         backgroundBrush = null,
         outputType = null,
         outputSeparator = null,
-        onTimeSelect = {},
-        onCancel = {}
+        onTimeSelect = {
+            // nothing to do yet
+        },
+        onCancel = {
+            // nothing to do yet
+        }
     )
 }

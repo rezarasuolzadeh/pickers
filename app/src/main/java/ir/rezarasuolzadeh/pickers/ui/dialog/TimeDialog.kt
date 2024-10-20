@@ -38,7 +38,8 @@ fun TimeDialog(
     backgroundColor: Color? = null,
     backgroundBrush: Brush? = null,
     outputType: TimeOutputType? = null,
-    outputSeparator: Char? = null
+    outputSeparator: Char? = null,
+    onCancel: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -85,7 +86,7 @@ fun TimeDialog(
                 onTimeSelect = { selectedTime ->
                     Toast.makeText(context, selectedTime, Toast.LENGTH_SHORT).show()
                 },
-                onCancel = {}
+                onCancel = onCancel
             )
         }
     } else {
@@ -96,5 +97,9 @@ fun TimeDialog(
 @Preview
 @Composable
 fun TimeDialogPreview() {
-    TimeDialog()
+    TimeDialog(
+        onCancel = {
+            // nothing to do yet
+        }
+    )
 }
