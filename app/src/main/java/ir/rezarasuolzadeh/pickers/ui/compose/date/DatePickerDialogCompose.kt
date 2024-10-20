@@ -182,7 +182,7 @@ fun DatePickerDialogComposeContent(
             backgroundBrush == null && backgroundColor == null -> {
                 Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(15.dp))
+                    .clip(shape = RoundedCornerShape(size = 15.dp))
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
@@ -195,18 +195,14 @@ fun DatePickerDialogComposeContent(
             backgroundBrush != null && backgroundColor == null -> {
                 Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(15.dp))
-                    .background(
-                        brush = backgroundBrush
-                    )
+                    .clip(shape = RoundedCornerShape(size = 15.dp))
+                    .background(brush = backgroundBrush)
             }
             backgroundBrush == null && backgroundColor != null -> {
                 Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(15.dp))
-                    .background(
-                        color = backgroundColor
-                    )
+                    .clip(shape = RoundedCornerShape(size = 15.dp))
+                    .background(color = backgroundColor)
             }
             else -> Modifier
         }
@@ -217,7 +213,7 @@ fun DatePickerDialogComposeContent(
                 .fillMaxWidth(),
             text = title ?: "انتخاب تاریخ",
             color = titleColor ?: White,
-            fontFamily = FontFamily(Font(R.font.vazir_num)),
+            fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -234,9 +230,9 @@ fun DatePickerDialogComposeContent(
                     visibleItemsCount = 3,
                     modifier = Modifier
                         .padding(top = 25.dp)
-                        .width(90.dp),
+                        .width(width = 90.dp),
                     itemColor = yearColor ?: White,
-                    textModifier = Modifier.padding(8.dp),
+                    textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 16.sp),
                     onItemChanged = onYearChanged
                 )
@@ -246,7 +242,7 @@ fun DatePickerDialogComposeContent(
                     .padding(top = 20.dp),
                 text = "/",
                 color = slashColor ?: White,
-                fontFamily = FontFamily(Font(R.font.vazir_num)),
+                fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )
@@ -257,9 +253,9 @@ fun DatePickerDialogComposeContent(
                     visibleItemsCount = 3,
                     modifier = Modifier
                         .padding(top = 25.dp)
-                        .width(90.dp),
+                        .width(width = 90.dp),
                     itemColor = monthColor ?: White,
-                    textModifier = Modifier.padding(8.dp),
+                    textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 16.sp),
                     onItemChanged = onMonthChanged
                 )
@@ -269,7 +265,7 @@ fun DatePickerDialogComposeContent(
                     .padding(top = 20.dp),
                 text = "/",
                 color = slashColor ?: White,
-                fontFamily = FontFamily(Font(R.font.vazir_num)),
+                fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )
@@ -280,10 +276,10 @@ fun DatePickerDialogComposeContent(
                     visibleItemsCount = 3,
                     modifier = Modifier
                         .padding(top = 25.dp)
-                        .width(90.dp),
+                        .width(width = 90.dp),
                     itemColor = dayColor ?: White,
                     startIndex = 0,
-                    textModifier = Modifier.padding(8.dp),
+                    textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 16.sp),
                     onItemChanged = onDayChanged
                 )
@@ -308,17 +304,17 @@ fun DatePickerDialogComposeContent(
                     .height(height = 50.dp)
                     .padding(top = 5.dp)
                     .constrainAs(confirm) {
-                        start.linkTo(parent.start)
-                        end.linkTo(divider.start)
-                        bottom.linkTo(parent.bottom)
-                        top.linkTo(parent.top)
+                        start.linkTo(anchor = parent.start)
+                        end.linkTo(anchor = divider.start)
+                        bottom.linkTo(anchor = parent.bottom)
+                        top.linkTo(anchor = parent.top)
                     }
                     .noRippleClickable {
                         // nothing to do yet
                     },
                 text = cancelTitle ?: "انصراف",
                 color = cancelColor ?: White,
-                fontFamily = FontFamily(Font(R.font.vazir_num)),
+                fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
@@ -328,11 +324,11 @@ fun DatePickerDialogComposeContent(
                     .height(height = 50.dp)
                     .width(width = 0.3.dp)
                     .background(color = dividerColor ?: White)
-                    .constrainAs(divider) {
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                        top.linkTo(parent.top)
+                    .constrainAs(ref = divider) {
+                        start.linkTo(anchor = parent.start)
+                        end.linkTo(anchor = parent.end)
+                        bottom.linkTo(anchor = parent.bottom)
+                        top.linkTo(anchor = parent.top)
                     }
             )
             Text(
@@ -340,11 +336,11 @@ fun DatePickerDialogComposeContent(
                     .width(width = 60.dp)
                     .height(height = 50.dp)
                     .padding(top = 5.dp)
-                    .constrainAs(cancel) {
-                        end.linkTo(parent.end)
-                        start.linkTo(divider.end)
-                        bottom.linkTo(parent.bottom)
-                        top.linkTo(parent.top)
+                    .constrainAs(ref = cancel) {
+                        end.linkTo(anchor = parent.end)
+                        start.linkTo(anchor = divider.end)
+                        bottom.linkTo(anchor = parent.bottom)
+                        top.linkTo(anchor = parent.top)
                     }
                     .noRippleClickable {
                         when (outputType) {
@@ -361,7 +357,7 @@ fun DatePickerDialogComposeContent(
                     },
                 text = confirmTitle ?: "ثبت",
                 color = confirmColor ?: White,
-                fontFamily = FontFamily(Font(R.font.vazir_num)),
+                fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
