@@ -29,19 +29,24 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -50,7 +55,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -68,18 +72,20 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+    val lifecycleKTX = "2.5.1"
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleKTX")
 
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.0-rc01")
+    val lifecycleCompose = "2.6.0-rc01"
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleCompose")
 
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    val constraintLayout = "1.0.1"
+    implementation("androidx.constraintlayout:constraintlayout-compose:$constraintLayout")
 
-    val lifecycle_version = "2.4.1"
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    val viewmodel = "2.4.1"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel")
 
-    // Kotlin Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1") //For runBlockingTest, CoroutineDispatcher
-
+    val coroutines = "1.7.1"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines")
 }
