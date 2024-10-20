@@ -420,9 +420,37 @@ fun TimePickerDialogComposeContent(
                     }
                     .noRippleClickable {
                         if (showSeconds) {
-                            onTimeSelect("${hourPickerState.selectedItem}${outputSeparator ?: ":"}${minutePickerState.selectedItem}${outputSeparator ?: ":"}${secondPickerState.selectedItem}")
+                            if (is12Hour) {
+                                when (outputType) {
+                                    TimeOutputType.PERSIAN -> {
+                                        onTimeSelect("${hourPickerState.selectedItem}${outputSeparator ?: ":"}${minutePickerState.selectedItem}${outputSeparator ?: ":"}${secondPickerState.selectedItem}${outputSeparator ?: ":"}${timeType.persianTitle}")
+                                    }
+                                    TimeOutputType.ENGLISH -> {
+                                        onTimeSelect("${hourPickerState.selectedItem}${outputSeparator ?: ":"}${minutePickerState.selectedItem}${outputSeparator ?: ":"}${secondPickerState.selectedItem}${outputSeparator ?: ":"}${timeType.englishTitle}")
+                                    }
+                                    else -> {
+                                        onTimeSelect("${hourPickerState.selectedItem}${outputSeparator ?: ":"}${minutePickerState.selectedItem}${outputSeparator ?: ":"}${secondPickerState.selectedItem}${outputSeparator ?: ":"}${timeType.englishTitle}")
+                                    }
+                                }
+                            } else {
+                                onTimeSelect("${hourPickerState.selectedItem}${outputSeparator ?: ":"}${minutePickerState.selectedItem}${outputSeparator ?: ":"}${secondPickerState.selectedItem}")
+                            }
                         } else {
-                            onTimeSelect("${hourPickerState.selectedItem}${outputSeparator ?: ":"}${minutePickerState.selectedItem}")
+                            if (is12Hour) {
+                                when (outputType) {
+                                    TimeOutputType.PERSIAN -> {
+                                        onTimeSelect("${hourPickerState.selectedItem}${outputSeparator ?: ":"}${minutePickerState.selectedItem}${outputSeparator ?: ":"}${timeType.persianTitle}")
+                                    }
+                                    TimeOutputType.ENGLISH -> {
+                                        onTimeSelect("${hourPickerState.selectedItem}${outputSeparator ?: ":"}${minutePickerState.selectedItem}${outputSeparator ?: ":"}${timeType.englishTitle}")
+                                    }
+                                    else -> {
+                                        onTimeSelect("${hourPickerState.selectedItem}${outputSeparator ?: ":"}${minutePickerState.selectedItem}${outputSeparator ?: ":"}${timeType.englishTitle}")
+                                    }
+                                }
+                            } else {
+                                onTimeSelect("${hourPickerState.selectedItem}${outputSeparator ?: ":"}${minutePickerState.selectedItem}")
+                            }
                         }
                     },
                 text = confirmTitle ?: "ثبت",
