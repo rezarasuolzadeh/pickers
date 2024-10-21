@@ -189,6 +189,12 @@ internal fun TimePickerDialogComposeContent(
                     .clip(shape = RoundedCornerShape(size = 15.dp))
                     .background(color = backgroundColor)
             }
+            backgroundBrush != null && backgroundColor != null -> {
+                Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(size = 15.dp))
+                    .background(color = backgroundColor)
+            }
             else -> Modifier
         }
     ) {
