@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -24,6 +25,7 @@ fun TimeDialog(
     initialMinute: Int? = null,
     initialSecond: Int? = null,
     initialTimeType: TimeType? = null,
+    fontFamily: FontFamily? = null,
     is12Hour: Boolean = false,
     showSeconds: Boolean = true,
     titleColor: Color? = null,
@@ -68,6 +70,7 @@ fun TimeDialog(
                 initialMinute = initialMinute,
                 initialSecond = initialSecond,
                 initialTimeType = initialTimeType,
+                fontFamily = fontFamily,
                 is12Hour = is12Hour,
                 showSeconds = showSeconds,
                 titleColor = titleColor,

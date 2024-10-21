@@ -40,6 +40,7 @@ internal fun Picker(
     items: List<String>,
     state: PickerState = rememberPickerState(),
     modifier: Modifier = Modifier,
+    fontFamily: FontFamily,
     itemColor: Color = White,
     startIndex: Int = 0,
     visibleItemsCount: Int = 3,
@@ -116,7 +117,7 @@ internal fun Picker(
                     overflow = TextOverflow.Ellipsis,
                     style = textStyle,
                     color = itemColor,
-                    fontFamily = FontFamily(Font(R.font.vazir_num)),
+                    fontFamily = fontFamily,
                     modifier = Modifier
                         .onSizeChanged { size ->
                             itemHeightPixels.value = size.height

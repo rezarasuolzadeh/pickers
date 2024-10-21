@@ -57,6 +57,7 @@ internal fun DatePickerDialogCompose(
     initialMonth: MonthType?,
     initialYear: Int?,
     yearRange: IntRange,
+    fontFamily: FontFamily?,
     titleColor: Color?,
     yearColor: Color?,
     monthColor: Color?,
@@ -102,6 +103,7 @@ internal fun DatePickerDialogCompose(
         title = title,
         confirmTitle = confirmTitle,
         cancelTitle = cancelTitle,
+        fontFamily = fontFamily,
         titleColor = titleColor,
         yearColor = yearColor,
         monthColor = monthColor,
@@ -156,6 +158,7 @@ internal fun DatePickerDialogComposeContent(
     title: String?,
     confirmTitle: String?,
     cancelTitle: String?,
+    fontFamily: FontFamily?,
     titleColor: Color?,
     yearColor: Color?,
     monthColor: Color?,
@@ -222,7 +225,7 @@ internal fun DatePickerDialogComposeContent(
                 .fillMaxWidth(),
             text = title ?: "انتخاب تاریخ",
             color = titleColor ?: White,
-            fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
+            fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -240,6 +243,7 @@ internal fun DatePickerDialogComposeContent(
                     modifier = Modifier
                         .padding(top = 25.dp)
                         .width(width = 90.dp),
+                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                     itemColor = yearColor ?: White,
                     textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 16.sp),
@@ -251,7 +255,7 @@ internal fun DatePickerDialogComposeContent(
                     .padding(top = 20.dp),
                 text = "/",
                 color = slashColor ?: White,
-                fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
+                fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )
@@ -263,6 +267,7 @@ internal fun DatePickerDialogComposeContent(
                     modifier = Modifier
                         .padding(top = 25.dp)
                         .width(width = 90.dp),
+                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                     itemColor = monthColor ?: White,
                     textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 16.sp),
@@ -274,7 +279,7 @@ internal fun DatePickerDialogComposeContent(
                     .padding(top = 20.dp),
                 text = "/",
                 color = slashColor ?: White,
-                fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
+                fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )
@@ -286,6 +291,7 @@ internal fun DatePickerDialogComposeContent(
                     modifier = Modifier
                         .padding(top = 25.dp)
                         .width(width = 90.dp),
+                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                     itemColor = dayColor ?: White,
                     startIndex = 0,
                     textModifier = Modifier.padding(all = 8.dp),
@@ -323,7 +329,7 @@ internal fun DatePickerDialogComposeContent(
                     },
                 text = cancelTitle ?: "انصراف",
                 color = cancelColor ?: White,
-                fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
+                fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
@@ -366,7 +372,7 @@ internal fun DatePickerDialogComposeContent(
                     },
                 text = confirmTitle ?: "ثبت",
                 color = confirmColor ?: White,
-                fontFamily = FontFamily(Font(resId = R.font.vazir_num)),
+                fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
@@ -389,6 +395,7 @@ internal fun DatePickerDialogPreview() {
         initialMonth = null,
         initialYear = null,
         yearRange = 1380..1410,
+        fontFamily = null,
         titleColor = null,
         yearColor = null,
         monthColor = null,

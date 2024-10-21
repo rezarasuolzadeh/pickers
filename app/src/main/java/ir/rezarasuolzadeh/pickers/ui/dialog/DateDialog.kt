@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -24,6 +25,7 @@ fun DateDialog(
     initialMonth: MonthType? = null,
     initialYear: Int? = null,
     yearRange: IntRange = 1380..1410,
+    fontFamily: FontFamily? = null,
     titleColor: Color? = null,
     yearColor: Color? = null,
     monthColor: Color? = null,
@@ -65,6 +67,7 @@ fun DateDialog(
                 initialMonth = initialMonth,
                 initialYear = initialYear,
                 yearRange = yearRange,
+                fontFamily = fontFamily,
                 titleColor = titleColor,
                 yearColor = yearColor,
                 monthColor = monthColor,
