@@ -64,6 +64,12 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.androidx.lifecycle.compose)
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.android)
+    implementation(libs.coroutines.test)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,21 +77,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    val lifecycleKTX = "2.5.1"
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleKTX")
-
-    val lifecycleCompose = "2.6.0-rc01"
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleCompose")
-
-    val constraintLayout = "1.0.1"
-    implementation("androidx.constraintlayout:constraintlayout-compose:$constraintLayout")
-
-    val viewmodel = "2.4.1"
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel")
-
-    val coroutines = "1.7.1"
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines")
 }
