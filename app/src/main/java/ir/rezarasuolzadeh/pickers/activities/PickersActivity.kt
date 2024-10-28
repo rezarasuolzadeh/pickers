@@ -1,6 +1,7 @@
 package ir.rezarasuolzadeh.pickers.activities
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,15 +32,25 @@ class PickersActivity : ComponentActivity() {
                     val isDateDialogVisible = remember { mutableStateOf(value = true) }
 
                     if (isTimeDialogVisible.value) {
-                        ShowTimeDialog {
-                            isTimeDialogVisible.value = false
-                        }
+                        ShowTimeDialog (
+                            onCancel = {
+                                isTimeDialogVisible.value = false
+                            },
+                            onTimeSelect = { selectedTime ->
+                                Toast.makeText(this@PickersActivity, selectedTime, Toast.LENGTH_SHORT).show()
+                            }
+                        )
                     }
 
                     if (isDateDialogVisible.value) {
-                        ShowDateDialog {
-                            isDateDialogVisible.value = false
-                        }
+                        ShowDateDialog(
+                            onCancel = {
+                                isDateDialogVisible.value = false
+                            },
+                            onDateSelect = { selectedDate ->
+                                Toast.makeText(this@PickersActivity, selectedDate, Toast.LENGTH_SHORT).show()
+                            }
+                        )
                     }
                 }
             }
@@ -50,7 +61,10 @@ class PickersActivity : ComponentActivity() {
      * show the time picker dialog with it's parameters.
      */
     @Composable
-    private fun ShowTimeDialog(onCancel: () -> Unit) {
+    private fun ShowTimeDialog(
+        onCancel: () -> Unit,
+        onTimeSelect: (String) -> Unit
+    ) {
         TimeDialog(
             initialHour = 2,
             initialMinute = 13,
@@ -59,7 +73,8 @@ class PickersActivity : ComponentActivity() {
             outputType = TimeOutputType.ENGLISH,
             is12Hour = true,
             showSeconds = true,
-            onCancel = onCancel
+            onCancel = onCancel,
+            onTimeSelect = onTimeSelect
         )
     }
 
@@ -67,13 +82,17 @@ class PickersActivity : ComponentActivity() {
      * show the date picker dialog with it's parameters.
      */
     @Composable
-    private fun ShowDateDialog(onCancel: () -> Unit) {
+    private fun ShowDateDialog(
+        onCancel: () -> Unit,
+        onDateSelect: (String) -> Unit
+    ) {
         DateDialog(
             initialYear = 1401,
             initialMonth = MonthType.ABAN,
             initialDay = 23,
             yearRange = 1375..1403,
-            onCancel = onCancel
+            onCancel = onCancel,
+            onDateSelect = onDateSelect
         )
     }
 

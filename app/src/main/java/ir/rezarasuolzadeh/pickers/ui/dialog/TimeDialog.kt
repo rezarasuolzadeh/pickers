@@ -1,6 +1,5 @@
 package ir.rezarasuolzadeh.pickers.ui.dialog
 
-import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -41,7 +40,8 @@ fun TimeDialog(
     backgroundBrush: Brush? = null,
     outputType: TimeOutputType? = null,
     outputSeparator: Char? = null,
-    onCancel: () -> Unit
+    onCancel: () -> Unit,
+    onTimeSelect: (String) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -86,9 +86,7 @@ fun TimeDialog(
                 backgroundBrush = backgroundBrush,
                 outputType = outputType,
                 outputSeparator = outputSeparator,
-                onTimeSelect = { selectedTime ->
-                    Toast.makeText(context, selectedTime, Toast.LENGTH_SHORT).show()
-                },
+                onTimeSelect = onTimeSelect,
                 onCancel = onCancel
             )
         }
@@ -102,6 +100,9 @@ fun TimeDialog(
 internal fun TimeDialogPreview() {
     TimeDialog(
         onCancel = {
+            // nothing to do yet
+        },
+        onTimeSelect = {
             // nothing to do yet
         }
     )

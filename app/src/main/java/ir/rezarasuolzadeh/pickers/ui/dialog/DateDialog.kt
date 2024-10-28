@@ -38,7 +38,8 @@ fun DateDialog(
     backgroundBrush: Brush? = null,
     outputType: DateOutputType? = null,
     outputSeparator: Char? = null,
-    onCancel: () -> Unit
+    onCancel: () -> Unit,
+    onDateSelect: (String) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -81,9 +82,7 @@ fun DateDialog(
                 outputSeparator = outputSeparator,
                 outputType = outputType,
                 onCancel = onCancel,
-                onDateSelect = { selectedDate ->
-                    Toast.makeText(context, selectedDate, Toast.LENGTH_SHORT).show()
-                }
+                onDateSelect = onDateSelect
             )
         }
     } else {
@@ -96,6 +95,9 @@ fun DateDialog(
 internal fun DateDialogPreview() {
     DateDialog(
         onCancel = {
+            // nothing to do yet
+        },
+        onDateSelect = {
             // nothing to do yet
         }
     )
