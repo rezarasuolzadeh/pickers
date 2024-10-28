@@ -1,6 +1,6 @@
 ### تابع انتخاب زمان
 <p align="center">
-    <img alt="Date Dialog" src="/time_dialog.png"  width="400" height="300"> 
+    <img alt="Date Dialog" src="/shots/time_dialog.png"  width="400" height="300"> 
 </p>
 
 
@@ -51,7 +51,7 @@ onTimeSelect = { selectedTime ->
 
 ### تابع انتخاب تاریخ
 <p align="center">
-    <img alt="Time Dialog" src="/date_dialog.png"  width="400" height="300"> 
+    <img alt="Time Dialog" src="/shots/date_dialog.png"  width="400" height="300"> 
 </p>
 
 
