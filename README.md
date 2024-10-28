@@ -1,4 +1,4 @@
-### Time Picker (Dialog)
+### تابع انتخاب زمان
 
 
 ```kotlin
@@ -17,7 +17,7 @@ TimeDialog(
     hourColor = null,
     minuteColor = null,
     secondColor = null,
-    timeTypeColor= null,
+    timeTypeColor = null,
     colonColor = null,
     confirmColor = null,
     cancelColor = null,
@@ -26,11 +26,27 @@ TimeDialog(
     backgroundBrush = null,
     outputType = null,
     outputSeparator = null,
-    onCancel = {}
+    onCancel = {},
+    onTimeSelect = {}
 )
 ```
+#### در این قسمت شما میتونید با استفاده از پارامترهای ورودی تابع (که اسمشم جوری گذاشتم که گویا باشه) استفاده کنید و تا جای ممکن دیالوگ رو برای خودتون شخصی سازی کنین. تو اینجا دو تا lambda function داریم که اولیش onCancel هست که وقتی روی دکمه انصراف (یا هر چیزی که اسمش رو خودتون توی cancelTitle بزارید) زده بشه فراخوانی میشه:
+```kotlin
+onCancel = {
+    // dismiss the dialog or do something
+}
+```
+#### دومیش هم onTimeSelect هست که وقتی روی دکمه ثبت (یا هر چیزی که اسمش رو خودتون توی confirmTitle بزارید) زده بشه فراخوانی میشه که مقدار selectedTime همون زمانی هست که انتخاب کردید:
+```kotlin
+onTimeSelect = { selectedTime ->
+    // show the time or do something
+}
+```
 
-### Date Picker (Dialog)
+
+
+
+### تابع انتخاب تاریخ
 
 
 ```kotlin
@@ -55,6 +71,7 @@ DateDialog(
     backgroundBrush = null,
     outputType = null,
     outputSeparator = null,
-    onCancel = {}
+    onCancel = {},
+    onDateSelect = {}
 )
 ```
