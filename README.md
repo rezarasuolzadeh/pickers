@@ -75,3 +75,15 @@ DateDialog(
     onDateSelect = {}
 )
 ```
+#### در این قسمت شما میتونید با استفاده از پارامترهای ورودی تابع (که اسمشم جوری گذاشتم که گویا باشه) استفاده کنید و تا جای ممکن دیالوگ رو برای خودتون شخصی سازی کنین. تو اینجا دو تا lambda function داریم که اولیش onCancel هست که وقتی روی دکمه انصراف (یا هر چیزی که اسمش رو خودتون توی cancelTitle بزارید) زده بشه فراخوانی میشه:
+```kotlin
+onCancel = {
+    // dismiss the dialog or do something
+}
+```
+#### دومیش هم onDateSelect هست که وقتی روی دکمه ثبت (یا هر چیزی که اسمش رو خودتون توی confirmTitle بزارید) زده بشه فراخوانی میشه که مقدار selectedDate همون زمانی هست که انتخاب کردید:
+```kotlin
+onDateSelect = { selectedDate ->
+    // show the time or do something
+}
+```
