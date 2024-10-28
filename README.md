@@ -1,3 +1,6 @@
+### درباره کتابخانه
+تو این کتابخونه که با jetpack compose توسعه داده شده، شما میتونید به راحتی time picker و date picker 
+### نحوه استفاده 
 ### تابع انتخاب زمان
 <p align="center">
     <img alt="Date Dialog" src="/shots/time_dialog.png"  width="400" height="300"> 
