@@ -1,4 +1,7 @@
 ### تابع انتخاب زمان
+<p align="center">
+    <img alt="Date Dialog" src="/time_dialog.png"  width="400" height="300"> 
+</p>
 
 
 ```kotlin
@@ -47,6 +50,9 @@ onTimeSelect = { selectedTime ->
 
 
 ### تابع انتخاب تاریخ
+<p align="center">
+    <img alt="Time Dialog" src="/date_dialog.png"  width="400" height="300"> 
+</p>
 
 
 ```kotlin
