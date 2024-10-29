@@ -35,6 +35,8 @@ dependencies {
     <img alt="Date Dialog" src="/shots/time_dialog.png"  width="400" height="300"> 
 </p>
 
+با فراخوانی تابع زیر، شما میتونید خروجی بالا رو تو هر جایی از کد compose تون که بخواین داشته باشین:
+
 ```kotlin
 TimeDialog(
     title = null,
@@ -83,6 +85,7 @@ onTimeSelect = { selectedTime ->
     <img alt="Time Dialog" src="/shots/date_dialog.png"  width="400" height="300"> 
 </p>
 
+با فراخوانی تابع زیر، شما میتونید خروجی بالا رو تو هر جایی از کد compose تون که بخواین داشته باشین:
 
 ```kotlin
 DateDialog(
