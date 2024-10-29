@@ -12,6 +12,23 @@
 <br>&nbsp;<br>
 
 ### نحوه استفاده 
+نحوه استفاده از کتابخونه هم خیلی سادس (البته خودتون بهتر از من میدونین 😁)، اول وارد فایل setting.gradle.kts میشین و تیکه کد زیر رو تو قسمتی که مشخص شده اضافه میکنید:
+```kotlin
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven("https://jitpack.io")
+    }
+}
+```
+بعدشم وارد فایل build.gradle.kts مربوط به app میشین و تیکه کد زیر رو هم تو قسمتی که مشخص شده اضافه میکنید:
+
+```kotlin
+dependencies {
+    implementation("com.github.rezarasuolzadeh:pickers:v1.0.0")
+}
+```
 <br>&nbsp;<br>
 ## تابع انتخاب تاریخ
 <p align="center">
