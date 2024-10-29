@@ -1,7 +1,18 @@
 ### درباره کتابخانه
-تو این کتابخونه که با jetpack compose توسعه داده شده، شما میتونید به راحتی time picker و date picker 
+تو این کتابخونه که با jetpack compose توسعه داده شده، شما میتونید به راحتی time picker و date picker رو به صورت dialog (البته فعلا) استفاده کنید. توی هر قسمت که تو ادامه بهش اشاره میشه، یک سری پارامترها برای هر تابع در نظر گرفته شده که به شما امکان شخصی سازی تا حد زیادی رو میده که با اپلیکیشن شما سازگاری داشته باشه. در حال حاضر توابع زیر قابل استفاده هستن:
+
+<div style="text-align: right;">
+    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب زمان
+</div>
+<div style="text-align: right;">
+    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب تاریخ
+</div>
+<br>&nbsp;<br>
+
+
 ### نحوه استفاده 
-### تابع انتخاب زمان
+<br>&nbsp;<br>
+## تابع انتخاب تاریخ
 <p align="center">
     <img alt="Date Dialog" src="/shots/time_dialog.png"  width="400" height="300"> 
 </p>
@@ -48,11 +59,9 @@ onTimeSelect = { selectedTime ->
     // show the time or do something
 }
 ```
+<br>&nbsp;<br>
 
-
-
-
-### تابع انتخاب تاریخ
+## تابع انتخاب تاریخ
 <p align="center">
     <img alt="Time Dialog" src="/shots/date_dialog.png"  width="400" height="300"> 
 </p>
