@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("maven-publish")
 }
 
 android {
@@ -28,12 +29,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 
     buildFeatures {
@@ -47,6 +48,16 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            groupId = "com.github.rezarasuolzadeh"
+            artifactId = "pickers"
+            version = "1.0.0"
         }
     }
 }
