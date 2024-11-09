@@ -242,7 +242,7 @@ internal fun TimePickerDialogComposeContent(
                 fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.ExtraBold
             )
-            if (hours.isNotEmpty()) {
+            if (minutes.isNotEmpty()) {
                 Picker(
                     state = minutePickerState,
                     items = minutes,
@@ -265,7 +265,7 @@ internal fun TimePickerDialogComposeContent(
                     fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                     fontWeight = FontWeight.ExtraBold
                 )
-                if (hours.isNotEmpty()) {
+                if (seconds.isNotEmpty()) {
                     Picker(
                         state = secondPickerState,
                         items = seconds,

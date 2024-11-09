@@ -259,7 +259,7 @@ internal fun DatePickerDialogComposeContent(
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )
-            if(years.isNotEmpty()) {
+            if(months.isNotEmpty()) {
                 Picker(
                     state = monthPickerState,
                     items = months,
