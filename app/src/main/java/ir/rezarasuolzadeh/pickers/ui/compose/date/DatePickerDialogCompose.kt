@@ -303,7 +303,7 @@ internal fun DatePickerDialogComposeContent(
         Box(
             modifier = Modifier
                 .padding(top = 25.dp)
-                .height(height = 0.3.dp)
+                .height(height = 1.dp)
                 .fillMaxWidth()
                 .background(color = dividerColor ?: White)
         )
@@ -337,7 +337,7 @@ internal fun DatePickerDialogComposeContent(
                 modifier = Modifier
                     .padding(vertical = 10.dp)
                     .height(height = 50.dp)
-                    .width(width = 0.3.dp)
+                    .width(width = 1.dp)
                     .background(color = dividerColor ?: White)
                     .constrainAs(ref = divider) {
                         start.linkTo(anchor = parent.start)
