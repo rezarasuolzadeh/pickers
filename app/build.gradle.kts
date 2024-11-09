@@ -57,7 +57,7 @@ publishing {
         create<MavenPublication>("release") {
             groupId = "com.github.rezarasuolzadeh"
             artifactId = "pickers"
-            version = "1.2.0"
+            version = "1.0.2"
             afterEvaluate {
                 from(components["release"])
             }
