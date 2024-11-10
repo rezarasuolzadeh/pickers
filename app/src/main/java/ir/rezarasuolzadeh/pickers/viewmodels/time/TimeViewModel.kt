@@ -106,7 +106,7 @@ internal class TimeViewModel : BaseViewModel<TimeEvent>() {
     private fun setSecond(second: Int?) {
         second?.let { initialSecond ->
             seconds.value = (initialSecond..59).map { if (it < 10) "0$it" else "$it" } + (0..<initialSecond).map { if (it < 10) "0$it" else "$it" }
-        } ?: {
+        } ?: run {
             seconds.value = defaultSeconds
         }
     }
