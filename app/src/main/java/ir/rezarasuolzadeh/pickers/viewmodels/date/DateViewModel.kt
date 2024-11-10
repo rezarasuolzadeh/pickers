@@ -146,6 +146,8 @@ internal class DateViewModel : BaseViewModel<DateEvent>() {
         }
         month?.let { initialMonth ->
             months.value = defaultMonths.subList(fromIndex = defaultMonths.indexOfFirst { it == initialMonth.title }, toIndex = 12) + defaultMonths.subList(fromIndex = 0, toIndex = defaultMonths.indexOfFirst { it == initialMonth.title })
+        } ?: apply {
+            months.value = defaultMonths
         }
         day?.let { initialDay ->
             currentSelectedDay = initialDay
