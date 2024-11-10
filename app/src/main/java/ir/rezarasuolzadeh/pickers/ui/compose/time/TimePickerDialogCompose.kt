@@ -287,7 +287,7 @@ internal fun TimePickerDialogComposeContent(
                         .height(height = 60.dp)
                         .width(width = 45.dp)
                         .border(
-                            width = 0.4.dp,
+                            width = 0.5.dp,
                             color = timeTypeColor ?: White,
                             shape = RoundedCornerShape(10.dp)
                         )
@@ -331,7 +331,7 @@ internal fun TimePickerDialogComposeContent(
                     )
                     Box(
                         modifier = Modifier
-                            .height(height = 0.3.dp)
+                            .height(height = 0.5.dp)
                             .fillMaxWidth()
                             .background(color = timeTypeColor ?: White)
                     )
@@ -383,7 +383,7 @@ internal fun TimePickerDialogComposeContent(
         Box(
             modifier = Modifier
                 .padding(top = 25.dp)
-                .height(height = 0.3.dp)
+                .height(height = 0.5.dp)
                 .fillMaxWidth()
                 .background(color = dividerColor ?: White)
         )
@@ -417,7 +417,7 @@ internal fun TimePickerDialogComposeContent(
                 modifier = Modifier
                     .padding(vertical = 10.dp)
                     .height(height = 50.dp)
-                    .width(width = 0.3.dp)
+                    .width(width = 0.5.dp)
                     .background(color = dividerColor ?: White)
                     .constrainAs(ref = divider) {
                         start.linkTo(anchor = parent.start)
