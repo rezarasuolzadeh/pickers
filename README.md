@@ -26,7 +26,7 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation("com.github.rezarasuolzadeh:pickers:1.0.12")
+    implementation("com.github.rezarasuolzadeh:pickers:1.0.13")
 }
 ```
 <br>&nbsp;<br>
