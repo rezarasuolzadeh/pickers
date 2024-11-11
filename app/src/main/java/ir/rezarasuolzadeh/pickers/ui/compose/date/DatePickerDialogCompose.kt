@@ -318,7 +318,7 @@ internal fun DatePickerDialogComposeContent(
                     .width(width = 60.dp)
                     .height(height = 50.dp)
                     .padding(top = 5.dp)
-                    .constrainAs(confirm) {
+                    .constrainAs(ref = confirm) {
                         start.linkTo(anchor = parent.start)
                         end.linkTo(anchor = divider.start)
                         bottom.linkTo(anchor = parent.bottom)

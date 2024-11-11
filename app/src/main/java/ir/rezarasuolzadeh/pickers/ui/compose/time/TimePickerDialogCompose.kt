@@ -228,7 +228,7 @@ internal fun TimePickerDialogComposeContent(
                     modifier = Modifier
                         .padding(top = 25.dp)
                         .width(width = 65.dp),
-                    fontFamily = fontFamily ?: FontFamily(Font(R.font.vazir_num)),
+                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                     itemColor = hourColor ?: White,
                     textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 20.sp)
@@ -250,7 +250,7 @@ internal fun TimePickerDialogComposeContent(
                     modifier = Modifier
                         .padding(top = 25.dp)
                         .width(width = 65.dp),
-                    fontFamily = fontFamily ?: FontFamily(Font(R.font.vazir_num)),
+                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                     itemColor = minuteColor ?: White,
                     textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 20.sp)
@@ -273,7 +273,7 @@ internal fun TimePickerDialogComposeContent(
                         modifier = Modifier
                             .padding(top = 25.dp)
                             .width(width = 65.dp),
-                        fontFamily = fontFamily ?: FontFamily(Font(R.font.vazir_num)),
+                        fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                         itemColor = secondColor ?: White,
                         textModifier = Modifier.padding(all = 8.dp),
                         textStyle = TextStyle(fontSize = 20.sp)
@@ -289,7 +289,7 @@ internal fun TimePickerDialogComposeContent(
                         .border(
                             width = 0.5.dp,
                             color = timeTypeColor ?: White,
-                            shape = RoundedCornerShape(10.dp)
+                            shape = RoundedCornerShape(size = 10.dp)
                         )
                 ) {
                     Text(
