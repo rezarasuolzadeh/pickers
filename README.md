@@ -30,7 +30,7 @@ dependencies {
 }
 ```
 <br>&nbsp;<br>
-## تابع انتخاب تاریخ
+## تابع انتخاب زمان
 <p align="center">
     <img alt="Date Dialog" src="/shots/time_dialog.png"  width="400" height="300"> 
 </p>
