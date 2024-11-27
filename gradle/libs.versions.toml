@@ -1,20 +1,20 @@
 [versions]
-agp = "8.3.0"
+agp = "8.3.2"
 library = "8.0.2"
-kotlin = "1.9.0"
-coreKtx = "1.12.0"
+kotlin = "2.0.21"
+coreKtx = "1.15.0"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.7.0"
-activityCompose = "1.8.2"
-composeBom = "2023.08.00"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.9.3"
+composeBom = "2024.11.00"
 composeFoundation = "1.7.5"
-lifecycleViewmodelCompose = "2.7.0"
-lifecycleCompose = "2.6.0-rc01"
-coroutines = "1.7.1"
-constraintLayoutCompose = "1.0.1"
-viewmodelKtx = "2.4.1"
+lifecycleViewmodelCompose = "2.8.7"
+lifecycleCompose = "2.8.7"
+coroutines = "1.7.3"
+constraintLayoutCompose = "1.1.0"
+viewmodelKtx = "2.8.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,3 +44,4 @@ coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "library" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
