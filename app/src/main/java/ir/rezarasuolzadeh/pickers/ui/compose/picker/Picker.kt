@@ -1,6 +1,5 @@
 package ir.rezarasuolzadeh.pickers.ui.compose.picker
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +13,7 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -23,18 +22,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import ir.rezarasuolzadeh.pickers.R
+import ir.rezarasuolzadeh.pickers.ui.theme.White
 import ir.rezarasuolzadeh.pickers.utils.extensions.fadingEdge
 import ir.rezarasuolzadeh.pickers.utils.extensions.pixelsToDp
-import ir.rezarasuolzadeh.pickers.ui.theme.White
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun Picker(
     items: List<String>,
@@ -69,8 +65,8 @@ internal fun Picker(
         }
     }
     val flingBehavior = rememberSnapFlingBehavior(lazyListState = listState)
-    val itemHeightPixels = remember { mutableStateOf(0) }
-    val itemHeightDp = pixelsToDp(itemHeightPixels.value)
+    val itemHeightPixels = remember { mutableIntStateOf(value = 0) }
+    val itemHeightDp = pixelsToDp(pixels = itemHeightPixels.intValue)
     val fadingEdgeGradient = remember {
         Brush.verticalGradient(
             0f to Color.Transparent,
@@ -89,7 +85,7 @@ internal fun Picker(
     LaunchedEffect(key1 = listState) {
         snapshotFlow { listState.firstVisibleItemIndex }
             .map { index ->
-                getItem(index + visibleItemsMiddle)
+                getItem(index = index + visibleItemsMiddle)
             }
             .distinctUntilChanged()
             .collect { item ->
@@ -120,7 +116,7 @@ internal fun Picker(
                     fontFamily = fontFamily,
                     modifier = Modifier
                         .onSizeChanged { size ->
-                            itemHeightPixels.value = size.height
+                            itemHeightPixels.intValue = size.height
                         }
                         .then(other = textModifier),
                     textAlign = TextAlign.Center
