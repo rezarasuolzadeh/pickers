@@ -10,48 +10,51 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
-import ir.rezarasuolzadeh.pickers.ui.compose.date.DatePickerBottomSheetCompose
-import ir.rezarasuolzadeh.pickers.utils.enums.DateOutputType
-import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
-import ir.rezarasuolzadeh.pickers.utils.extensions.orOne
+import ir.rezarasuolzadeh.pickers.ui.compose.time.TimePickerBottomSheetCompose
+import ir.rezarasuolzadeh.pickers.utils.enums.TimeOutputType
+import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
+import ir.rezarasuolzadeh.pickers.utils.extensions.orZero
 import ir.rezarasuolzadeh.pickers.utils.extensions.toast
-import ir.rezarasuolzadeh.pickers.utils.managers.DateValidationManager
+import ir.rezarasuolzadeh.pickers.utils.managers.TimeValidationManager
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DateBottomSheet(
+fun TimeBottomSheet(
     title: String? = null,
     confirmTitle: String? = null,
     cancelTitle: String? = null,
-    initialDay: Int? = null,
-    initialMonth: MonthType? = null,
-    initialYear: Int? = null,
-    yearRange: IntRange = 1380..1410,
+    initialHour: Int? = null,
+    initialMinute: Int? = null,
+    initialSecond: Int? = null,
+    initialTimeType: TimeType? = null,
     fontFamily: FontFamily? = null,
+    is12Hour: Boolean = false,
+    showSeconds: Boolean = true,
     titleColor: Color? = null,
-    yearColor: Color? = null,
-    monthColor: Color? = null,
-    dayColor: Color? = null,
-    slashColor: Color? = null,
+    hourColor: Color? = null,
+    minuteColor: Color? = null,
+    secondColor: Color? = null,
+    timeTypeColor: Color? = null,
+    colonColor: Color? = null,
     confirmColor: Color? = null,
     cancelColor: Color? = null,
     dividerColor: Color? = null,
     backgroundColor: Color? = null,
     backgroundBrush: Brush? = null,
-    outputType: DateOutputType? = null,
+    outputType: TimeOutputType? = null,
     outputSeparator: Char? = null,
     onCancel: () -> Unit,
-    onDateSelect: (String) -> Unit
+    onTimeSelect: (String) -> Unit
 ) {
     val context = LocalContext.current
 
     if (
-        DateValidationManager.isDateValid(
-            day = initialDay.orOne(),
-            month = initialMonth ?: MonthType.FARVARDIN,
-            year = initialYear ?: yearRange.first,
-            yearRange = yearRange
+        TimeValidationManager.isTimeValid(
+            second = initialSecond.orZero(),
+            minute = initialMinute.orZero(),
+            hour = initialHour.orZero(),
+            is12Hour = is12Hour
         )
     ) {
         val sheetState = rememberModalBottomSheetState()
@@ -62,44 +65,47 @@ fun DateBottomSheet(
             sheetState = sheetState,
             dragHandle = null
         ) {
-            DatePickerBottomSheetCompose(
+            TimePickerBottomSheetCompose(
                 title = title,
                 confirmTitle = confirmTitle,
                 cancelTitle = cancelTitle,
-                initialDay = initialDay,
-                initialMonth = initialMonth,
-                initialYear = initialYear,
-                yearRange = yearRange,
+                initialHour = initialHour,
+                initialMinute = initialMinute,
+                initialSecond = initialSecond,
+                initialTimeType = initialTimeType,
                 fontFamily = fontFamily,
+                is12Hour = is12Hour,
+                showSeconds = showSeconds,
                 titleColor = titleColor,
-                yearColor = yearColor,
-                monthColor = monthColor,
-                dayColor = dayColor,
-                slashColor = slashColor,
+                hourColor = hourColor,
+                minuteColor = minuteColor,
+                secondColor = secondColor,
+                timeTypeColor = timeTypeColor,
+                colonColor = colonColor,
                 confirmColor = confirmColor,
                 cancelColor = cancelColor,
                 dividerColor = dividerColor,
                 backgroundColor = backgroundColor,
                 backgroundBrush = backgroundBrush,
-                outputSeparator = outputSeparator,
                 outputType = outputType,
-                onCancel = onCancel,
-                onDateSelect = onDateSelect
+                outputSeparator = outputSeparator,
+                onTimeSelect = onTimeSelect,
+                onCancel = onCancel
             )
         }
     } else {
-        context.toast(message = "تاریخ اولیه نامعتبر می باشد")
+        context.toast(message = "زمان اولیه نامعتبر می باشد")
     }
 }
 
 @Preview
 @Composable
-internal fun DateBottomSheetPreview() {
-    DateBottomSheet(
+internal fun TimeBottomSheetPreview() {
+    TimeBottomSheet(
         onCancel = {
             // nothing to do yet
         },
-        onDateSelect = {
+        onTimeSelect = {
             // nothing to do yet
         }
     )

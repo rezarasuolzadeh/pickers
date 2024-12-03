@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import ir.rezarasuolzadeh.pickers.ui.bottomSheet.DateBottomSheet
+import ir.rezarasuolzadeh.pickers.ui.bottomSheet.TimeBottomSheet
 import ir.rezarasuolzadeh.pickers.ui.dialog.DateDialog
 import ir.rezarasuolzadeh.pickers.ui.dialog.TimeDialog
 import ir.rezarasuolzadeh.pickers.ui.theme.PickersTheme
@@ -31,6 +32,7 @@ class PickersActivity : ComponentActivity() {
                 ) {
                     val isTimeDialogVisible = remember { mutableStateOf(value = false) }
                     val isDateDialogVisible = remember { mutableStateOf(value = false) }
+                    val isTimeBottomSheetVisible = remember { mutableStateOf(value = false) }
                     val isDateBottomSheetVisible = remember { mutableStateOf(value = true) }
 
                     if (isTimeDialogVisible.value) {
@@ -51,6 +53,17 @@ class PickersActivity : ComponentActivity() {
                             },
                             onDateSelect = { selectedDate ->
                                 Toast.makeText(this@PickersActivity, selectedDate, Toast.LENGTH_SHORT).show()
+                            }
+                        )
+                    }
+
+                    if (isTimeBottomSheetVisible.value) {
+                        ShowTimeBottomSheet (
+                            onCancel = {
+                                isTimeBottomSheetVisible.value = false
+                            },
+                            onTimeSelect = { selectedTime ->
+                                Toast.makeText(this@PickersActivity, selectedTime, Toast.LENGTH_SHORT).show()
                             }
                         )
                     }
@@ -106,6 +119,27 @@ class PickersActivity : ComponentActivity() {
             yearRange = 1375..1403,
             onCancel = onCancel,
             onDateSelect = onDateSelect
+        )
+    }
+
+    /**
+     * show the time picker bottom sheet with it's parameters.
+     */
+    @Composable
+    private fun ShowTimeBottomSheet(
+        onCancel: () -> Unit,
+        onTimeSelect: (String) -> Unit
+    ) {
+        TimeBottomSheet(
+            initialHour = 2,
+            initialMinute = 13,
+            initialSecond = 7,
+            initialTimeType = TimeType.PM,
+            outputType = TimeOutputType.ENGLISH,
+            is12Hour = true,
+            showSeconds = true,
+            onCancel = onCancel,
+            onTimeSelect = onTimeSelect
         )
     }
 
