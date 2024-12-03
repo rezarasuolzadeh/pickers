@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import ir.rezarasuolzadeh.pickers.ui.bottomSheet.DateBottomSheet
 import ir.rezarasuolzadeh.pickers.ui.dialog.DateDialog
 import ir.rezarasuolzadeh.pickers.ui.dialog.TimeDialog
 import ir.rezarasuolzadeh.pickers.ui.theme.PickersTheme
@@ -29,7 +30,8 @@ class PickersActivity : ComponentActivity() {
                     color = White
                 ) {
                     val isTimeDialogVisible = remember { mutableStateOf(value = false) }
-                    val isDateDialogVisible = remember { mutableStateOf(value = true) }
+                    val isDateDialogVisible = remember { mutableStateOf(value = false) }
+                    val isDateBottomSheetVisible = remember { mutableStateOf(value = true) }
 
                     if (isTimeDialogVisible.value) {
                         ShowTimeDialog (
@@ -46,6 +48,17 @@ class PickersActivity : ComponentActivity() {
                         ShowDateDialog(
                             onCancel = {
                                 isDateDialogVisible.value = false
+                            },
+                            onDateSelect = { selectedDate ->
+                                Toast.makeText(this@PickersActivity, selectedDate, Toast.LENGTH_SHORT).show()
+                            }
+                        )
+                    }
+
+                    if (isDateBottomSheetVisible.value) {
+                        ShowDateBottomSheet(
+                            onCancel = {
+                                isDateBottomSheetVisible.value = false
                             },
                             onDateSelect = { selectedDate ->
                                 Toast.makeText(this@PickersActivity, selectedDate, Toast.LENGTH_SHORT).show()
@@ -87,6 +100,24 @@ class PickersActivity : ComponentActivity() {
         onDateSelect: (String) -> Unit
     ) {
         DateDialog(
+            initialYear = 1401,
+            initialMonth = MonthType.ABAN,
+            initialDay = 23,
+            yearRange = 1375..1403,
+            onCancel = onCancel,
+            onDateSelect = onDateSelect
+        )
+    }
+
+    /**
+     * show the date picker bottom sheet with it's parameters.
+     */
+    @Composable
+    private fun ShowDateBottomSheet(
+        onCancel: () -> Unit,
+        onDateSelect: (String) -> Unit
+    ) {
+        DateBottomSheet(
             initialYear = 1401,
             initialMonth = MonthType.ABAN,
             initialDay = 23,
