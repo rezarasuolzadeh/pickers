@@ -319,7 +319,6 @@ internal fun DatePickerBottomSheetComposeContent(
                 modifier = Modifier
                     .width(width = 60.dp)
                     .height(height = 50.dp)
-                    .padding(top = 5.dp)
                     .constrainAs(ref = confirm) {
                         start.linkTo(anchor = parent.start)
                         end.linkTo(anchor = divider.start)
@@ -358,7 +357,6 @@ internal fun DatePickerBottomSheetComposeContent(
                 modifier = Modifier
                     .width(width = 60.dp)
                     .height(height = 50.dp)
-                    .padding(top = 5.dp)
                     .constrainAs(ref = cancel) {
                         end.linkTo(anchor = parent.end)
                         start.linkTo(anchor = divider.end)
