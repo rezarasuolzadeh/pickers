@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -206,7 +207,7 @@ internal fun TimePickerBottomSheetComposeContent(
         val secondPickerState = rememberPickerState()
         Text(
             modifier = Modifier
-                .padding(top = 10.dp)
+                .padding(top = 20.dp)
                 .fillMaxWidth(),
             text = title ?: "انتخاب زمان",
             color = titleColor ?: White,
@@ -393,7 +394,7 @@ internal fun TimePickerBottomSheetComposeContent(
                 .fillMaxWidth()
         ) {
             val (confirm, cancel, divider) = createRefs()
-            Text(
+            Box(
                 modifier = Modifier
                     .width(width = 60.dp)
                     .height(height = 50.dp)
@@ -407,12 +408,18 @@ internal fun TimePickerBottomSheetComposeContent(
                     .noRippleClickable {
                         onCancel()
                     },
-                text = cancelTitle ?: "انصراف",
-                color = cancelColor ?: White,
-                fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    modifier = Modifier
+                        .wrapContentSize(),
+                    text = cancelTitle ?: "انصراف",
+                    color = cancelColor ?: White,
+                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
             Box(
                 modifier = Modifier
                     .padding(vertical = 10.dp)
@@ -426,7 +433,7 @@ internal fun TimePickerBottomSheetComposeContent(
                         top.linkTo(anchor = parent.top)
                     }
             )
-            Text(
+            Box(
                 modifier = Modifier
                     .width(width = 60.dp)
                     .height(height = 50.dp)
@@ -476,12 +483,18 @@ internal fun TimePickerBottomSheetComposeContent(
                             }
                         }
                     },
-                text = confirmTitle ?: "ثبت",
-                color = confirmColor ?: White,
-                fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    modifier = Modifier
+                        .wrapContentSize(),
+                    text = confirmTitle ?: "ثبت",
+                    color = confirmColor ?: White,
+                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
