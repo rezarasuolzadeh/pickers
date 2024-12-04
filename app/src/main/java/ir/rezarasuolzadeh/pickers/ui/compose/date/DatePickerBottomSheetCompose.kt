@@ -223,7 +223,7 @@ internal fun DatePickerBottomSheetComposeContent(
     ) {
         Text(
             modifier = Modifier
-                .padding(top = 20.dp)
+                .padding(top = 18.dp)
                 .fillMaxWidth(),
             text = title ?: "انتخاب تاریخ",
             color = titleColor ?: White,

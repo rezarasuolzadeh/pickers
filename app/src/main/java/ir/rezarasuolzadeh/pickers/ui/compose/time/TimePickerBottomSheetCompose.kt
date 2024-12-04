@@ -207,7 +207,7 @@ internal fun TimePickerBottomSheetComposeContent(
         val secondPickerState = rememberPickerState()
         Text(
             modifier = Modifier
-                .padding(top = 20.dp)
+                .padding(top = 18.dp)
                 .fillMaxWidth(),
             text = title ?: "انتخاب زمان",
             color = titleColor ?: White,
