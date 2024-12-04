@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -221,7 +223,7 @@ internal fun DatePickerBottomSheetComposeContent(
     ) {
         Text(
             modifier = Modifier
-                .padding(top = 10.dp)
+                .padding(top = 20.dp)
                 .fillMaxWidth(),
             text = title ?: "انتخاب تاریخ",
             color = titleColor ?: White,
@@ -313,7 +315,7 @@ internal fun DatePickerBottomSheetComposeContent(
                 .fillMaxWidth()
         ) {
             val (confirm, cancel, divider) = createRefs()
-            Text(
+            Box(
                 modifier = Modifier
                     .width(width = 60.dp)
                     .height(height = 50.dp)
@@ -327,12 +329,18 @@ internal fun DatePickerBottomSheetComposeContent(
                     .noRippleClickable {
                         onCancel()
                     },
-                text = cancelTitle ?: "انصراف",
-                color = cancelColor ?: White,
-                fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    modifier = Modifier
+                        .wrapContentSize(),
+                    text = cancelTitle ?: "انصراف",
+                    color = cancelColor ?: White,
+                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
             Box(
                 modifier = Modifier
                     .padding(vertical = 10.dp)
@@ -346,7 +354,7 @@ internal fun DatePickerBottomSheetComposeContent(
                         top.linkTo(anchor = parent.top)
                     }
             )
-            Text(
+            Box(
                 modifier = Modifier
                     .width(width = 60.dp)
                     .height(height = 50.dp)
@@ -362,20 +370,28 @@ internal fun DatePickerBottomSheetComposeContent(
                             DateOutputType.PERSIAN -> {
                                 onDateSelect("${yearPickerState.selectedItem}${outputSeparator ?: "/"}${monthPickerState.selectedItem}${outputSeparator ?: "/"}${dayPickerState.selectedItem}")
                             }
+
                             DateOutputType.NUMERIC -> {
                                 onDateSelect("${yearPickerState.selectedItem}${outputSeparator ?: "/"}${monthPickerState.selectedItem.toNumericMonth()}${outputSeparator ?: "/"}${dayPickerState.selectedItem}")
                             }
+
                             else -> {
                                 onDateSelect("${yearPickerState.selectedItem}${outputSeparator ?: "/"}${monthPickerState.selectedItem}${outputSeparator ?: "/"}${dayPickerState.selectedItem}")
                             }
                         }
                     },
-                text = confirmTitle ?: "ثبت",
-                color = confirmColor ?: White,
-                fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    modifier = Modifier
+                        .wrapContentSize(),
+                    text = confirmTitle ?: "ثبت",
+                    color = confirmColor ?: White,
+                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
