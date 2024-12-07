@@ -490,7 +490,7 @@ internal fun TimePickerBottomSheetComposeContent(
             ) {
                 Text(
                     modifier = Modifier
-                        .wrapContentSize(),
+                        .fillMaxWidth(),
                     text = confirmTitle ?: "ثبت",
                     color = confirmColor ?: White,
                     fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),

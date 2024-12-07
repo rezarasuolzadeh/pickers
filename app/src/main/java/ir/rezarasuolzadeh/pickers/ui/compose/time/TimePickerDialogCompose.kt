@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ir.rezarasuolzadeh.pickers.ui.compose.picker.Picker
@@ -396,31 +399,6 @@ internal fun TimePickerDialogComposeContent(
             val (confirm, cancel, divider) = createRefs()
             Box(
                 modifier = Modifier
-                    .width(width = 60.dp)
-                    .height(height = 50.dp)
-                    .constrainAs(ref = confirm) {
-                        start.linkTo(anchor = parent.start)
-                        end.linkTo(anchor = divider.start)
-                        bottom.linkTo(anchor = parent.bottom)
-                        top.linkTo(anchor = parent.top)
-                    }
-                    .noRippleClickable {
-                        onCancel()
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    modifier = Modifier
-                        .wrapContentSize(),
-                    text = cancelTitle ?: "انصراف",
-                    color = cancelColor ?: White,
-                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-            }
-            Box(
-                modifier = Modifier
                     .padding(vertical = 10.dp)
                     .height(height = 50.dp)
                     .width(width = 0.5.dp)
@@ -434,11 +412,38 @@ internal fun TimePickerDialogComposeContent(
             )
             Box(
                 modifier = Modifier
-                    .width(width = 60.dp)
+                    .fillMaxHeight()
+                    .height(height = 50.dp)
+                    .constrainAs(ref = confirm) {
+                        start.linkTo(anchor = cancel.end)
+                        end.linkTo(anchor = parent.end)
+                        width = Dimension.fillToConstraints
+                        bottom.linkTo(anchor = parent.bottom)
+                        top.linkTo(anchor = parent.top)
+                    }
+                    .noRippleClickable {
+                        onCancel()
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    text = cancelTitle ?: "انصراف",
+                    color = cancelColor ?: White,
+                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
                     .height(height = 50.dp)
                     .constrainAs(ref = cancel) {
-                        end.linkTo(anchor = parent.end)
-                        start.linkTo(anchor = divider.end)
+                        end.linkTo(anchor = confirm.start)
+                        start.linkTo(anchor = parent.start)
+                        width = Dimension.fillToConstraints
                         bottom.linkTo(anchor = parent.bottom)
                         top.linkTo(anchor = parent.top)
                     }
@@ -485,7 +490,7 @@ internal fun TimePickerDialogComposeContent(
             ) {
                 Text(
                     modifier = Modifier
-                        .wrapContentSize(),
+                        .fillMaxWidth(),
                     text = confirmTitle ?: "ثبت",
                     color = confirmColor ?: White,
                     fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
