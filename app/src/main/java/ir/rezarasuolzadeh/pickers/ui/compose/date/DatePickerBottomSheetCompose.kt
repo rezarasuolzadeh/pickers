@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ir.rezarasuolzadeh.pickers.ui.theme.White
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -317,31 +318,6 @@ internal fun DatePickerBottomSheetComposeContent(
             val (confirm, cancel, divider) = createRefs()
             Box(
                 modifier = Modifier
-                    .width(width = 60.dp)
-                    .height(height = 50.dp)
-                    .constrainAs(ref = confirm) {
-                        start.linkTo(anchor = parent.start)
-                        end.linkTo(anchor = divider.start)
-                        bottom.linkTo(anchor = parent.bottom)
-                        top.linkTo(anchor = parent.top)
-                    }
-                    .noRippleClickable {
-                        onCancel()
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    modifier = Modifier
-                        .wrapContentSize(),
-                    text = cancelTitle ?: "انصراف",
-                    color = cancelColor ?: White,
-                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-            }
-            Box(
-                modifier = Modifier
                     .padding(vertical = 10.dp)
                     .height(height = 50.dp)
                     .width(width = 0.5.dp)
@@ -355,11 +331,38 @@ internal fun DatePickerBottomSheetComposeContent(
             )
             Box(
                 modifier = Modifier
-                    .width(width = 60.dp)
+                    .fillMaxHeight()
+                    .height(height = 50.dp)
+                    .constrainAs(ref = confirm) {
+                        start.linkTo(anchor = cancel.end)
+                        end.linkTo(anchor = parent.end)
+                        width = Dimension.fillToConstraints
+                        bottom.linkTo(anchor = parent.bottom)
+                        top.linkTo(anchor = parent.top)
+                    }
+                    .noRippleClickable {
+                        onCancel()
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    text = cancelTitle ?: "انصراف",
+                    color = cancelColor ?: White,
+                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
                     .height(height = 50.dp)
                     .constrainAs(ref = cancel) {
-                        end.linkTo(anchor = parent.end)
-                        start.linkTo(anchor = divider.end)
+                        end.linkTo(anchor = confirm.start)
+                        start.linkTo(anchor = parent.start)
+                        width = Dimension.fillToConstraints
                         bottom.linkTo(anchor = parent.bottom)
                         top.linkTo(anchor = parent.top)
                     }
@@ -382,7 +385,7 @@ internal fun DatePickerBottomSheetComposeContent(
             ) {
                 Text(
                     modifier = Modifier
-                        .wrapContentSize(),
+                        .fillMaxWidth(),
                     text = confirmTitle ?: "ثبت",
                     color = confirmColor ?: White,
                     fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
