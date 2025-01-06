@@ -52,7 +52,7 @@ import ir.rezarasuolzadeh.pickers.viewmodels.date.DateViewModel
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
-internal fun DatePickerDialogCompose(
+internal fun DatePickerBottomSheetCompose(
     title: String?,
     confirmTitle: String?,
     cancelTitle: String?,
@@ -102,7 +102,7 @@ internal fun DatePickerDialogCompose(
         }
     }
 
-    DatePickerDialogComposeContent(
+    DatePickerBottomSheetComposeContent(
         title = title,
         confirmTitle = confirmTitle,
         cancelTitle = cancelTitle,
@@ -157,7 +157,7 @@ internal fun DatePickerDialogCompose(
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
-internal fun DatePickerDialogComposeContent(
+internal fun DatePickerBottomSheetComposeContent(
     title: String?,
     confirmTitle: String?,
     cancelTitle: String?,
@@ -191,7 +191,7 @@ internal fun DatePickerDialogComposeContent(
             backgroundBrush == null && backgroundColor == null -> {
                 Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(size = 15.dp))
+                    .clip(shape = RoundedCornerShape(topEnd = 15.dp, topStart = 15.dp))
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
@@ -403,8 +403,8 @@ internal fun DatePickerDialogComposeContent(
 
 @Preview
 @Composable
-internal fun DatePickerDialogPreview() {
-    DatePickerDialogCompose(
+internal fun DatePickerBottomSheetPreview() {
+    DatePickerBottomSheetCompose(
         title = null,
         confirmTitle = null,
         cancelTitle = null,

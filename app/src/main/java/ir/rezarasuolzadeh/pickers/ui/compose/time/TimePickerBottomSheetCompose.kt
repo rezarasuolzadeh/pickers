@@ -53,7 +53,7 @@ import ir.rezarasuolzadeh.pickers.viewmodels.time.TimeViewModel
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
-internal fun TimePickerDialogCompose(
+internal fun TimePickerBottomSheetCompose(
     title: String?,
     confirmTitle: String?,
     cancelTitle: String?,
@@ -104,7 +104,7 @@ internal fun TimePickerDialogCompose(
         }
     }
 
-    TimePickerDialogComposeContent(
+    TimePickerBottomSheetComposeContent(
         title = title,
         confirmTitle = confirmTitle,
         cancelTitle = cancelTitle,
@@ -141,7 +141,7 @@ internal fun TimePickerDialogCompose(
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
-internal fun TimePickerDialogComposeContent(
+internal fun TimePickerBottomSheetComposeContent(
     title: String?,
     confirmTitle: String?,
     cancelTitle: String?,
@@ -174,7 +174,7 @@ internal fun TimePickerDialogComposeContent(
             backgroundBrush == null && backgroundColor == null -> {
                 Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(size = 15.dp))
+                    .clip(shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp))
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
@@ -508,8 +508,8 @@ internal fun TimePickerDialogComposeContent(
 
 @Preview
 @Composable
-internal fun TimePickerDialogPreview() {
-    TimePickerDialogCompose(
+internal fun TimePickerBottomSheetPreview() {
+    TimePickerBottomSheetCompose(
         title = null,
         confirmTitle = null,
         cancelTitle = null,
