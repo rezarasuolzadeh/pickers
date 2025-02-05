@@ -83,7 +83,7 @@ onTimeSelect = { selectedTime ->
 
 ## تابع انتخاب زمان (BottomSheet)
 <p align="center">
-    <img alt="Date Dialog" src="/shots/time_dialog.png"  width="400" height="300"> 
+    <img alt="Date Dialog" src="/shots/time_bottom_sheet.png"  width="400" height="300"> 
 </p>
 
 با فراخوانی تابع زیر، شما میتونید خروجی بالا (که به صورت BottomSheet هست) رو تو هر جایی از کد compose تون که بخواین داشته باشین:
@@ -180,7 +180,7 @@ onDateSelect = { selectedDate ->
 
 ## تابع انتخاب تاریخ (BottomSheet)
 <p align="center">
-    <img alt="Time Dialog" src="/shots/date_dialog.png"  width="400" height="300"> 
+    <img alt="Time Dialog" src="/shots/date_bottom_sheet.png"  width="400" height="300"> 
 </p>
 
 با فراخوانی تابع زیر، شما میتونید خروجی بالا (که به صورت BottomSheet هست) رو تو هر جایی از کد compose تون که بخواین داشته باشین:
