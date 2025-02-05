@@ -31,7 +31,7 @@ dependencies {
 }
 ```
 <br>&nbsp;<br>
-## تابع انتخاب زمان
+## تابع انتخاب زمان (Dialog)
 <p align="center">
     <img alt="Date Dialog" src="/shots/time_dialog.png"  width="400" height="300"> 
 </p>
@@ -81,7 +81,7 @@ onTimeSelect = { selectedTime ->
 ```
 <br>&nbsp;<br>
 
-## تابع انتخاب تاریخ
+## تابع انتخاب تاریخ (Dialog)
 <p align="center">
     <img alt="Time Dialog" src="/shots/date_dialog.png"  width="400" height="300"> 
 </p>
