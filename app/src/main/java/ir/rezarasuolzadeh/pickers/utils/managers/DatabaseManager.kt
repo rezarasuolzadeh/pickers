@@ -88,6 +88,25 @@ class DatabaseManager(
     }
 
     /**
+     * get the all provinces in string list from database.
+     */
+    fun getProvinceId(provinceTitle: String): Int {
+        var id = 1
+        val db = openDatabase()
+        val cursor: Cursor = db.rawQuery("SELECT id FROM iran_cities WHERE title = ?", arrayOf(provinceTitle))
+
+        if (cursor.moveToFirst()) {
+//            do {
+                id = cursor.getInt(0)
+//            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+        return id
+    }
+
+    /**
      * get the all cities in specific province according it's id in string list from database.
      */
     fun getProvinceCities(provinceId: Int): List<String> {
