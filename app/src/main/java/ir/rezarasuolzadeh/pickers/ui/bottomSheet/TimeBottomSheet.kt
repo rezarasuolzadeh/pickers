@@ -4,12 +4,15 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import ir.rezarasuolzadeh.pickers.ui.compose.time.TimePickerBottomSheetCompose
 import ir.rezarasuolzadeh.pickers.utils.enums.TimeOutputType
 import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
@@ -60,38 +63,40 @@ fun TimeBottomSheet(
         val sheetState = rememberModalBottomSheetState()
         val scope = rememberCoroutineScope()
 
-        ModalBottomSheet(
-            onDismissRequest = { scope.launch { sheetState.hide() } },
-            sheetState = sheetState,
-            dragHandle = null
-        ) {
-            TimePickerBottomSheetCompose(
-                title = title,
-                confirmTitle = confirmTitle,
-                cancelTitle = cancelTitle,
-                initialHour = initialHour,
-                initialMinute = initialMinute,
-                initialSecond = initialSecond,
-                initialTimeType = initialTimeType,
-                fontFamily = fontFamily,
-                is12Hour = is12Hour,
-                showSeconds = showSeconds,
-                titleColor = titleColor,
-                hourColor = hourColor,
-                minuteColor = minuteColor,
-                secondColor = secondColor,
-                timeTypeColor = timeTypeColor,
-                colonColor = colonColor,
-                confirmColor = confirmColor,
-                cancelColor = cancelColor,
-                dividerColor = dividerColor,
-                backgroundColor = backgroundColor,
-                backgroundBrush = backgroundBrush,
-                outputType = outputType,
-                outputSeparator = outputSeparator,
-                onTimeSelect = onTimeSelect,
-                onCancel = onCancel
-            )
+        CompositionLocalProvider(value = LocalLayoutDirection provides LayoutDirection.Rtl) {
+            ModalBottomSheet(
+                onDismissRequest = { scope.launch { sheetState.hide() } },
+                sheetState = sheetState,
+                dragHandle = null
+            ) {
+                TimePickerBottomSheetCompose(
+                    title = title,
+                    confirmTitle = confirmTitle,
+                    cancelTitle = cancelTitle,
+                    initialHour = initialHour,
+                    initialMinute = initialMinute,
+                    initialSecond = initialSecond,
+                    initialTimeType = initialTimeType,
+                    fontFamily = fontFamily,
+                    is12Hour = is12Hour,
+                    showSeconds = showSeconds,
+                    titleColor = titleColor,
+                    hourColor = hourColor,
+                    minuteColor = minuteColor,
+                    secondColor = secondColor,
+                    timeTypeColor = timeTypeColor,
+                    colonColor = colonColor,
+                    confirmColor = confirmColor,
+                    cancelColor = cancelColor,
+                    dividerColor = dividerColor,
+                    backgroundColor = backgroundColor,
+                    backgroundBrush = backgroundBrush,
+                    outputType = outputType,
+                    outputSeparator = outputSeparator,
+                    onTimeSelect = onTimeSelect,
+                    onCancel = onCancel
+                )
+            }
         }
     } else {
         context.toast(message = "زمان اولیه نامعتبر می باشد")

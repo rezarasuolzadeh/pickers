@@ -4,12 +4,15 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import ir.rezarasuolzadeh.pickers.ui.compose.date.DatePickerBottomSheetCompose
 import ir.rezarasuolzadeh.pickers.utils.enums.DateOutputType
 import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
@@ -57,35 +60,37 @@ fun DateBottomSheet(
         val sheetState = rememberModalBottomSheetState()
         val scope = rememberCoroutineScope()
 
-        ModalBottomSheet(
-            onDismissRequest = { scope.launch { sheetState.hide() } },
-            sheetState = sheetState,
-            dragHandle = null
-        ) {
-            DatePickerBottomSheetCompose(
-                title = title,
-                confirmTitle = confirmTitle,
-                cancelTitle = cancelTitle,
-                initialDay = initialDay,
-                initialMonth = initialMonth,
-                initialYear = initialYear,
-                yearRange = yearRange,
-                fontFamily = fontFamily,
-                titleColor = titleColor,
-                yearColor = yearColor,
-                monthColor = monthColor,
-                dayColor = dayColor,
-                slashColor = slashColor,
-                confirmColor = confirmColor,
-                cancelColor = cancelColor,
-                dividerColor = dividerColor,
-                backgroundColor = backgroundColor,
-                backgroundBrush = backgroundBrush,
-                outputSeparator = outputSeparator,
-                outputType = outputType,
-                onCancel = onCancel,
-                onDateSelect = onDateSelect
-            )
+        CompositionLocalProvider(value = LocalLayoutDirection provides LayoutDirection.Rtl) {
+            ModalBottomSheet(
+                onDismissRequest = { scope.launch { sheetState.hide() } },
+                sheetState = sheetState,
+                dragHandle = null
+            ) {
+                DatePickerBottomSheetCompose(
+                    title = title,
+                    confirmTitle = confirmTitle,
+                    cancelTitle = cancelTitle,
+                    initialDay = initialDay,
+                    initialMonth = initialMonth,
+                    initialYear = initialYear,
+                    yearRange = yearRange,
+                    fontFamily = fontFamily,
+                    titleColor = titleColor,
+                    yearColor = yearColor,
+                    monthColor = monthColor,
+                    dayColor = dayColor,
+                    slashColor = slashColor,
+                    confirmColor = confirmColor,
+                    cancelColor = cancelColor,
+                    dividerColor = dividerColor,
+                    backgroundColor = backgroundColor,
+                    backgroundBrush = backgroundBrush,
+                    outputSeparator = outputSeparator,
+                    outputType = outputType,
+                    onCancel = onCancel,
+                    onDateSelect = onDateSelect
+                )
+            }
         }
     } else {
         context.toast(message = "تاریخ اولیه نامعتبر می باشد")
