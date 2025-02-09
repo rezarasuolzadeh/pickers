@@ -4,8 +4,8 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import ir.rezarasuolzadeh.pickers.utils.constants.DB_NAME
-import ir.rezarasuolzadeh.pickers.utils.constants.DB_VERSION
+import ir.rezarasuolzadeh.pickers.utils.constants.CITY_DATABASE_NAME
+import ir.rezarasuolzadeh.pickers.utils.constants.CITY_DATABASE_VERSION
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -13,9 +13,9 @@ import java.io.OutputStream
 
 class DatabaseManager(
     private val context: Context
-) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
+) : SQLiteOpenHelper(context, CITY_DATABASE_NAME, null, CITY_DATABASE_VERSION) {
 
-    private val dbPath: String = context.getDatabasePath(DB_NAME).path
+    private val dbPath: String = context.getDatabasePath(CITY_DATABASE_NAME).path
 
     init {
         copyDatabaseIfNeeded()
@@ -45,7 +45,7 @@ class DatabaseManager(
      */
     private fun copyDatabase() {
         try {
-            val inputStream: InputStream = context.assets.open(DB_NAME)
+            val inputStream: InputStream = context.assets.open(CITY_DATABASE_NAME)
             val outputStream: OutputStream = FileOutputStream(dbPath)
             val buffer = ByteArray(size = 1024)
             var length: Int
@@ -88,7 +88,7 @@ class DatabaseManager(
     }
 
     /**
-     * get the all provinces in string list from database.
+     * get the province id according to it's title in string list from database.
      */
     fun getProvinceId(provinceTitle: String): Int {
         var id = 1
@@ -96,9 +96,7 @@ class DatabaseManager(
         val cursor: Cursor = db.rawQuery("SELECT id FROM iran_cities WHERE title = ?", arrayOf(provinceTitle))
 
         if (cursor.moveToFirst()) {
-//            do {
-                id = cursor.getInt(0)
-//            } while (cursor.moveToNext())
+            id = cursor.getInt(0)
         }
 
         cursor.close()
