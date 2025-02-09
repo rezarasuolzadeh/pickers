@@ -34,8 +34,8 @@ class PickersActivity : ComponentActivity() {
                 ) {
                     val isTimeDialogVisible = remember { mutableStateOf(value = false) }
                     val isDateDialogVisible = remember { mutableStateOf(value = false) }
-                    val isCityDialogVisible = remember { mutableStateOf(value = false) }
-                    val isTimeBottomSheetVisible = remember { mutableStateOf(value = true) }
+                    val isCityDialogVisible = remember { mutableStateOf(value = true) }
+                    val isTimeBottomSheetVisible = remember { mutableStateOf(value = false) }
                     val isDateBottomSheetVisible = remember { mutableStateOf(value = false) }
                     val isCityBottomSheetVisible = remember { mutableStateOf(value = false) }
 
@@ -64,7 +64,7 @@ class PickersActivity : ComponentActivity() {
                     if (isCityDialogVisible.value) {
                         ShowCityDialog(
                             onCancel = {
-                                isDateDialogVisible.value = false
+                                isCityDialogVisible.value = false
                             },
                             onCitySelect = { selectedCity ->
                                 Toast.makeText(this@PickersActivity, selectedCity, Toast.LENGTH_SHORT).show()
