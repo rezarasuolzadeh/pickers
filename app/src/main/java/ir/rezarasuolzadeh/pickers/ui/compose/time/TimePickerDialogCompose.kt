@@ -415,8 +415,8 @@ internal fun TimePickerDialogComposeContent(
                     .fillMaxHeight()
                     .height(height = 50.dp)
                     .constrainAs(ref = confirm) {
-                        start.linkTo(anchor = cancel.end)
-                        end.linkTo(anchor = parent.end)
+                        start.linkTo(anchor = parent.start)
+                        end.linkTo(anchor = cancel.start)
                         width = Dimension.fillToConstraints
                         bottom.linkTo(anchor = parent.bottom)
                         top.linkTo(anchor = parent.top)
@@ -441,8 +441,8 @@ internal fun TimePickerDialogComposeContent(
                     .fillMaxWidth()
                     .height(height = 50.dp)
                     .constrainAs(ref = cancel) {
-                        end.linkTo(anchor = confirm.start)
-                        start.linkTo(anchor = parent.start)
+                        start.linkTo(anchor = confirm.end)
+                        end.linkTo(anchor = parent.end)
                         width = Dimension.fillToConstraints
                         bottom.linkTo(anchor = parent.bottom)
                         top.linkTo(anchor = parent.top)

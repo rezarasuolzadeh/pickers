@@ -34,9 +34,9 @@ class PickersActivity : ComponentActivity() {
                 ) {
                     val isTimeDialogVisible = remember { mutableStateOf(value = false) }
                     val isDateDialogVisible = remember { mutableStateOf(value = false) }
-                    val isCityDialogVisible = remember { mutableStateOf(value = true) }
+                    val isCityDialogVisible = remember { mutableStateOf(value = false) }
                     val isTimeBottomSheetVisible = remember { mutableStateOf(value = false) }
-                    val isDateBottomSheetVisible = remember { mutableStateOf(value = false) }
+                    val isDateBottomSheetVisible = remember { mutableStateOf(value = true) }
                     val isCityBottomSheetVisible = remember { mutableStateOf(value = false) }
 
                     if (isTimeDialogVisible.value) {
