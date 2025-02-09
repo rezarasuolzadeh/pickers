@@ -46,6 +46,7 @@ class PickersActivity : ComponentActivity() {
                             },
                             onTimeSelect = { selectedTime ->
                                 Toast.makeText(this@PickersActivity, selectedTime, Toast.LENGTH_SHORT).show()
+                                isTimeDialogVisible.value = false
                             }
                         )
                     }
@@ -57,6 +58,7 @@ class PickersActivity : ComponentActivity() {
                             },
                             onDateSelect = { selectedDate ->
                                 Toast.makeText(this@PickersActivity, selectedDate, Toast.LENGTH_SHORT).show()
+                                isDateDialogVisible.value = false
                             }
                         )
                     }
@@ -68,6 +70,7 @@ class PickersActivity : ComponentActivity() {
                             },
                             onCitySelect = { selectedCity ->
                                 Toast.makeText(this@PickersActivity, selectedCity, Toast.LENGTH_SHORT).show()
+                                isCityDialogVisible.value = false
                             }
                         )
                     }
@@ -79,6 +82,7 @@ class PickersActivity : ComponentActivity() {
                             },
                             onTimeSelect = { selectedTime ->
                                 Toast.makeText(this@PickersActivity, selectedTime, Toast.LENGTH_SHORT).show()
+                                isTimeBottomSheetVisible.value = false
                             }
                         )
                     }
@@ -90,6 +94,7 @@ class PickersActivity : ComponentActivity() {
                             },
                             onDateSelect = { selectedDate ->
                                 Toast.makeText(this@PickersActivity, selectedDate, Toast.LENGTH_SHORT).show()
+                                isDateBottomSheetVisible.value = false
                             }
                         )
                     }
@@ -101,6 +106,7 @@ class PickersActivity : ComponentActivity() {
                             },
                             onCitySelect = { selectedCity ->
                                 Toast.makeText(this@PickersActivity, selectedCity, Toast.LENGTH_SHORT).show()
+                                isCityBottomSheetVisible.value = false
                             }
                         )
                     }
