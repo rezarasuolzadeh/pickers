@@ -53,7 +53,7 @@ fun DateDialog(
             yearRange = yearRange
         )
     ) {
-        CompositionLocalProvider(value = LocalLayoutDirection provides LayoutDirection.Rtl) {
+        CompositionLocalProvider(value = LocalLayoutDirection provides LayoutDirection.Ltr) {
             Dialog(
                 onDismissRequest = {
                     // nothing to do yet

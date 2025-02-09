@@ -63,7 +63,7 @@ fun TimeBottomSheet(
         val sheetState = rememberModalBottomSheetState()
         val scope = rememberCoroutineScope()
 
-        CompositionLocalProvider(value = LocalLayoutDirection provides LayoutDirection.Rtl) {
+        CompositionLocalProvider(value = LocalLayoutDirection provides LayoutDirection.Ltr) {
             ModalBottomSheet(
                 onDismissRequest = { scope.launch { sheetState.hide() } },
                 sheetState = sheetState,

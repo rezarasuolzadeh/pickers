@@ -56,7 +56,7 @@ fun TimeDialog(
             is12Hour = is12Hour
         )
     ) {
-        CompositionLocalProvider(value = LocalLayoutDirection provides LayoutDirection.Rtl) {
+        CompositionLocalProvider(value = LocalLayoutDirection provides LayoutDirection.Ltr) {
             Dialog(
                 onDismissRequest = {
                     // nothing to do yet
