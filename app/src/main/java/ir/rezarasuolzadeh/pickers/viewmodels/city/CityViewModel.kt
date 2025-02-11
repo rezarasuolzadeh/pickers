@@ -1,6 +1,5 @@
 package ir.rezarasuolzadeh.pickers.viewmodels.city
 
-import android.util.Log
 import ir.rezarasuolzadeh.pickers.utils.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,9 +34,11 @@ internal class CityViewModel : BaseViewModel<CityEvent>() {
             is CityEvent.SetDefaultCities -> {
                 setDefaultCities(cityList = event.cities)
             }
+
             is CityEvent.SetProvinces -> {
                 setProvinces(provinceList = event.provinces)
             }
+
             is CityEvent.SetCities -> {
                 setCities(cityList = event.cities)
             }
