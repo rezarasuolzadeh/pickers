@@ -79,6 +79,11 @@ internal fun CityPickerDialogCompose(
     LaunchedEffect(Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             cityViewModel.onEvent(
+                event = CityEvent.SetDefaultCities(
+                    cities = DatabaseManager(context = context).getProvinceCities(provinceId = 1)
+                )
+            )
+            cityViewModel.onEvent(
                 event = CityEvent.SetProvinces(
                     provinces = DatabaseManager(context = context).getProvinces()
                 )
