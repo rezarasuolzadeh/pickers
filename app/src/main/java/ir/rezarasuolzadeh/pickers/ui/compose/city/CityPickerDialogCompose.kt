@@ -60,6 +60,9 @@ internal fun CityPickerDialogCompose(
     cancelTitle: String?,
     fontFamily: FontFamily?,
     titleColor: Color?,
+    provinceColor: Color?,
+    cityColor: Color?,
+    dashColor: Color?,
     confirmColor: Color?,
     cancelColor: Color?,
     dividerColor: Color?,
@@ -97,6 +100,9 @@ internal fun CityPickerDialogCompose(
         cancelTitle = cancelTitle,
         fontFamily = fontFamily,
         titleColor = titleColor,
+        provinceColor = provinceColor,
+        cityColor = cityColor,
+        dashColor = dashColor,
         confirmColor = confirmColor,
         cancelColor = cancelColor,
         dividerColor = dividerColor,
@@ -144,6 +150,9 @@ internal fun CityPickerDialogComposeContent(
     cancelTitle: String?,
     fontFamily: FontFamily?,
     titleColor: Color?,
+    provinceColor: Color?,
+    cityColor: Color?,
+    dashColor: Color?,
     confirmColor: Color?,
     cancelColor: Color?,
     dividerColor: Color?,
@@ -220,7 +229,7 @@ internal fun CityPickerDialogComposeContent(
                         .padding(top = 25.dp)
                         .width(width = 160.dp),
                     fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
-                    itemColor = White,
+                    itemColor = provinceColor ?: White,
                     textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 16.sp),
                     onItemChanged = onProvinceChanged
@@ -231,7 +240,7 @@ internal fun CityPickerDialogComposeContent(
                     .padding(top = 30.dp)
                     .width(width = 10.dp),
                 text = "-",
-                color = White,
+                color = dashColor ?: White,
                 fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
@@ -245,7 +254,7 @@ internal fun CityPickerDialogComposeContent(
                         .padding(top = 25.dp)
                         .width(width = 160.dp),
                     fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
-                    itemColor = White,
+                    itemColor = cityColor ?: White,
                     textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 16.sp),
                     onItemChanged = onCityChanged
@@ -347,6 +356,9 @@ internal fun CityPickerDialogPreview() {
         cancelTitle = null,
         fontFamily = null,
         titleColor = null,
+        provinceColor = null,
+        cityColor = null,
+        dashColor = null,
         confirmColor = null,
         cancelColor = null,
         dividerColor = null,
