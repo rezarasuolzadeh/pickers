@@ -82,7 +82,7 @@ internal fun Picker(
         return items[index % items.size]
     }
 
-    LaunchedEffect(key1 = listState) {
+    LaunchedEffect(key1 = items.size) {
         snapshotFlow { listState.firstVisibleItemIndex }
             .map { index ->
                 getItem(index = index + visibleItemsMiddle)

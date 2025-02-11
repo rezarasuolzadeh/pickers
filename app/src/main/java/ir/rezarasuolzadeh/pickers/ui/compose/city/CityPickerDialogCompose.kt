@@ -1,4 +1,4 @@
-package ir.rezarasuolzadeh.pickers.ui.compose.date
+package ir.rezarasuolzadeh.pickers.ui.compose.city
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -39,114 +40,101 @@ import ir.rezarasuolzadeh.pickers.ui.compose.picker.rememberPickerState
 import ir.rezarasuolzadeh.pickers.ui.theme.DarkBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.White
-import ir.rezarasuolzadeh.pickers.utils.enums.DateOutputType
-import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
 import ir.rezarasuolzadeh.pickers.utils.extensions.noRippleClickable
-import ir.rezarasuolzadeh.pickers.utils.extensions.toNumericMonth
-import ir.rezarasuolzadeh.pickers.viewmodels.date.DateEvent
-import ir.rezarasuolzadeh.pickers.viewmodels.date.DateViewModel
+import ir.rezarasuolzadeh.pickers.utils.managers.DatabaseManager
+import ir.rezarasuolzadeh.pickers.viewmodels.city.CityEvent
+import ir.rezarasuolzadeh.pickers.viewmodels.city.CityViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            screen                                              //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
-internal fun DatePickerBottomSheetCompose(
+internal fun CityPickerDialogCompose(
     title: String?,
     confirmTitle: String?,
     cancelTitle: String?,
-    initialDay: Int?,
-    initialMonth: MonthType?,
-    initialYear: Int?,
-    yearRange: IntRange,
     fontFamily: FontFamily?,
     titleColor: Color?,
-    yearColor: Color?,
-    monthColor: Color?,
-    dayColor: Color?,
-    slashColor: Color?,
+    provinceColor: Color?,
+    cityColor: Color?,
+    dashColor: Color?,
     confirmColor: Color?,
     cancelColor: Color?,
     dividerColor: Color?,
     backgroundColor: Color?,
     backgroundBrush: Brush?,
     outputSeparator: Char?,
-    outputType: DateOutputType?,
-    onDateSelect: (String) -> Unit,
+    onCitySelect: (String) -> Unit,
     onCancel: () -> Unit,
-    dateViewModel: DateViewModel = viewModel()
+    cityViewModel: CityViewModel = viewModel()
 ) {
-    val years by dateViewModel.years.collectAsStateWithLifecycle()
-    val months by dateViewModel.months.collectAsStateWithLifecycle()
-    val days by dateViewModel.days.collectAsStateWithLifecycle()
-    val yearPickerState = rememberPickerState()
-    val monthPickerState = rememberPickerState()
-    val dayPickerState = rememberPickerState()
+    val context = LocalContext.current
+    val provinces by cityViewModel.provinces.collectAsStateWithLifecycle()
+    val cities by cityViewModel.cities.collectAsStateWithLifecycle()
+    val provincePickerState = rememberPickerState()
+    val cityPickerState = rememberPickerState()
 
-    LaunchedEffect(key1 = Unit) {
-        dateViewModel.apply {
-            onEvent(
-                event = DateEvent.SetYearRange(
-                    yearRange = yearRange
+    LaunchedEffect(Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            cityViewModel.onEvent(
+                event = CityEvent.SetDefaultCities(
+                    cities = DatabaseManager(context = context).getProvinceCities(provinceId = 1)
                 )
             )
-            onEvent(
-                event = DateEvent.SetInitialDate(
-                    initialDay = initialDay,
-                    initialMonth = initialMonth,
-                    initialYear = initialYear,
-                    yearRange = yearRange
+            cityViewModel.onEvent(
+                event = CityEvent.SetProvinces(
+                    provinces = DatabaseManager(context = context).getProvinces()
                 )
             )
         }
     }
 
-    DatePickerBottomSheetComposeContent(
+    CityPickerDialogComposeContent(
         title = title,
         confirmTitle = confirmTitle,
         cancelTitle = cancelTitle,
         fontFamily = fontFamily,
         titleColor = titleColor,
-        yearColor = yearColor,
-        monthColor = monthColor,
-        dayColor = dayColor,
-        slashColor = slashColor,
+        provinceColor = provinceColor,
+        cityColor = cityColor,
+        dashColor = dashColor,
         confirmColor = confirmColor,
         cancelColor = cancelColor,
         dividerColor = dividerColor,
         backgroundColor = backgroundColor,
         backgroundBrush = backgroundBrush,
         outputSeparator = outputSeparator,
-        outputType = outputType,
-        years = years,
-        months = months,
-        days = days,
-        yearPickerState = yearPickerState,
-        monthPickerState = monthPickerState,
-        dayPickerState = dayPickerState,
-        onDayChanged = {
-            dateViewModel.onEvent(
-                DateEvent.UpdateSelectedDay(
-                    selectedDay = it.toInt()
-                )
-            )
+        onCitySelect = onCitySelect,
+        provinces = provinces,
+        cities = cities,
+        provincePickerState = provincePickerState,
+        cityPickerState = cityPickerState,
+        onProvinceChanged = { provinceTitle ->
+            CoroutineScope(context = Dispatchers.IO).launch {
+                val deferred = CoroutineScope(context = Dispatchers.IO).async {
+                    val cityList: List<String>
+                    val databaseManager = DatabaseManager(context = context)
+                    val provinceId = databaseManager.getProvinceId(provinceTitle = provinceTitle)
+                    cityList = databaseManager.getProvinceCities(provinceId = provinceId)
+                    cityList
+                }
+                deferred.await().let {
+                    cityViewModel.onEvent(
+                        event = CityEvent.SetCities(
+                            cities = deferred.await()
+                        )
+                    )
+                }
+            }
         },
-        onMonthChanged = {
-            dateViewModel.onEvent(
-                DateEvent.UpdateDays(
-                    selectedMonth = it
-                )
-            )
+        onCityChanged = {
+            // nothing to do yet
         },
-        onYearChanged = { year ->
-            dateViewModel.onEvent(
-                DateEvent.CheckLeapYear(
-                    year = year,
-                    month = monthPickerState.selectedItem
-                )
-            )
-        },
-        onDateSelect = onDateSelect,
         onCancel = onCancel
     )
 }
@@ -156,33 +144,28 @@ internal fun DatePickerBottomSheetCompose(
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Composable
-internal fun DatePickerBottomSheetComposeContent(
+internal fun CityPickerDialogComposeContent(
     title: String?,
     confirmTitle: String?,
     cancelTitle: String?,
     fontFamily: FontFamily?,
     titleColor: Color?,
-    yearColor: Color?,
-    monthColor: Color?,
-    dayColor: Color?,
-    slashColor: Color?,
+    provinceColor: Color?,
+    cityColor: Color?,
+    dashColor: Color?,
     confirmColor: Color?,
     cancelColor: Color?,
     dividerColor: Color?,
     backgroundColor: Color?,
     backgroundBrush: Brush?,
     outputSeparator: Char?,
-    outputType: DateOutputType?,
-    years: List<String>,
-    months: List<String>,
-    days: List<String>,
-    yearPickerState: PickerState,
-    monthPickerState: PickerState,
-    dayPickerState: PickerState,
-    onDayChanged: (String) -> Unit,
-    onMonthChanged: (String) -> Unit,
-    onYearChanged: (String) -> Unit,
-    onDateSelect: (String) -> Unit,
+    provinces: List<String>,
+    cities: List<String>,
+    provincePickerState: PickerState,
+    cityPickerState: PickerState,
+    onProvinceChanged: (String) -> Unit,
+    onCityChanged: (String) -> Unit,
+    onCitySelect: (String) -> Unit,
     onCancel: () -> Unit
 ) {
     Column(
@@ -190,7 +173,7 @@ internal fun DatePickerBottomSheetComposeContent(
             backgroundBrush == null && backgroundColor == null -> {
                 Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(topEnd = 15.dp, topStart = 15.dp))
+                    .clip(shape = RoundedCornerShape(size = 15.dp))
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
@@ -225,7 +208,7 @@ internal fun DatePickerBottomSheetComposeContent(
             modifier = Modifier
                 .padding(top = 18.dp)
                 .fillMaxWidth(),
-            text = title ?: "انتخاب تاریخ",
+            text = title ?: "انتخاب شهر",
             color = titleColor ?: White,
             fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
             fontWeight = FontWeight.Bold,
@@ -237,68 +220,44 @@ internal fun DatePickerBottomSheetComposeContent(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            if(years.isNotEmpty()) {
+            if (provinces.isNotEmpty()) {
                 Picker(
-                    state = yearPickerState,
-                    items = years,
+                    state = provincePickerState,
+                    items = provinces,
                     visibleItemsCount = 3,
                     modifier = Modifier
                         .padding(top = 25.dp)
-                        .width(width = 90.dp),
+                        .width(width = 160.dp),
                     fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
-                    itemColor = yearColor ?: White,
+                    itemColor = provinceColor ?: White,
                     textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 16.sp),
-                    onItemChanged = onYearChanged
+                    onItemChanged = onProvinceChanged
                 )
             }
             Text(
                 modifier = Modifier
-                    .padding(top = 20.dp),
-                text = "/",
-                color = slashColor ?: White,
+                    .padding(top = 30.dp)
+                    .width(width = 10.dp),
+                text = "-",
+                color = dashColor ?: White,
                 fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )
-            if(months.isNotEmpty()) {
+            if (cities.isNotEmpty()) {
                 Picker(
-                    state = monthPickerState,
-                    items = months,
+                    state = cityPickerState,
+                    items = cities,
                     visibleItemsCount = 3,
                     modifier = Modifier
                         .padding(top = 25.dp)
-                        .width(width = 90.dp),
+                        .width(width = 160.dp),
                     fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
-                    itemColor = monthColor ?: White,
+                    itemColor = cityColor ?: White,
                     textModifier = Modifier.padding(all = 8.dp),
                     textStyle = TextStyle(fontSize = 16.sp),
-                    onItemChanged = onMonthChanged
-                )
-            }
-            Text(
-                modifier = Modifier
-                    .padding(top = 20.dp),
-                text = "/",
-                color = slashColor ?: White,
-                fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
-                fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Center
-            )
-            if(days.isNotEmpty()) {
-                Picker(
-                    state = dayPickerState,
-                    items = days,
-                    visibleItemsCount = 3,
-                    modifier = Modifier
-                        .padding(top = 25.dp)
-                        .width(width = 90.dp),
-                    fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
-                    itemColor = dayColor ?: White,
-                    startIndex = 0,
-                    textModifier = Modifier.padding(all = 8.dp),
-                    textStyle = TextStyle(fontSize = 16.sp),
-                    onItemChanged = onDayChanged
+                    onItemChanged = onCityChanged
                 )
             }
         }
@@ -366,19 +325,7 @@ internal fun DatePickerBottomSheetComposeContent(
                         top.linkTo(anchor = parent.top)
                     }
                     .noRippleClickable {
-                        when (outputType) {
-                            DateOutputType.PERSIAN -> {
-                                onDateSelect("${yearPickerState.selectedItem}${outputSeparator ?: "/"}${monthPickerState.selectedItem}${outputSeparator ?: "/"}${dayPickerState.selectedItem}")
-                            }
-
-                            DateOutputType.NUMERIC -> {
-                                onDateSelect("${yearPickerState.selectedItem}${outputSeparator ?: "/"}${monthPickerState.selectedItem.toNumericMonth()}${outputSeparator ?: "/"}${dayPickerState.selectedItem}")
-                            }
-
-                            else -> {
-                                onDateSelect("${yearPickerState.selectedItem}${outputSeparator ?: "/"}${monthPickerState.selectedItem}${outputSeparator ?: "/"}${dayPickerState.selectedItem}")
-                            }
-                        }
+                        onCitySelect("${provincePickerState.selectedItem}${outputSeparator ?: "-"}${cityPickerState.selectedItem}")
                     },
                 contentAlignment = Alignment.Center
             ) {
@@ -402,33 +349,28 @@ internal fun DatePickerBottomSheetComposeContent(
 
 @Preview
 @Composable
-internal fun DatePickerBottomSheetPreview() {
-    DatePickerBottomSheetCompose(
+internal fun CityPickerDialogPreview() {
+    CityPickerDialogCompose(
         title = null,
         confirmTitle = null,
         cancelTitle = null,
-        initialDay = null,
-        initialMonth = null,
-        initialYear = null,
-        yearRange = 1380..1410,
         fontFamily = null,
         titleColor = null,
-        yearColor = null,
-        monthColor = null,
-        dayColor = null,
-        slashColor = null,
+        provinceColor = null,
+        cityColor = null,
+        dashColor = null,
         confirmColor = null,
         cancelColor = null,
         dividerColor = null,
         backgroundColor = null,
         backgroundBrush = null,
         outputSeparator = null,
-        outputType = null,
-        onDateSelect = {
+        onCitySelect = {
             // nothing to do yet
         },
         onCancel = {
             // nothing to do yet
-        }
+        },
+        cityViewModel = CityViewModel()
     )
 }

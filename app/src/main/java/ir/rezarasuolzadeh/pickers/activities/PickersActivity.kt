@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import ir.rezarasuolzadeh.pickers.ui.bottomSheet.CityBottomSheet
 import ir.rezarasuolzadeh.pickers.ui.bottomSheet.DateBottomSheet
 import ir.rezarasuolzadeh.pickers.ui.bottomSheet.TimeBottomSheet
+import ir.rezarasuolzadeh.pickers.ui.dialog.CityDialog
 import ir.rezarasuolzadeh.pickers.ui.dialog.DateDialog
 import ir.rezarasuolzadeh.pickers.ui.dialog.TimeDialog
 import ir.rezarasuolzadeh.pickers.ui.theme.PickersTheme
@@ -30,10 +32,12 @@ class PickersActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = White
                 ) {
-                    val isTimeDialogVisible = remember { mutableStateOf(value = false) }
+                    val isTimeDialogVisible = remember { mutableStateOf(value = true) }
                     val isDateDialogVisible = remember { mutableStateOf(value = false) }
+                    val isCityDialogVisible = remember { mutableStateOf(value = false) }
                     val isTimeBottomSheetVisible = remember { mutableStateOf(value = false) }
-                    val isDateBottomSheetVisible = remember { mutableStateOf(value = true) }
+                    val isDateBottomSheetVisible = remember { mutableStateOf(value = false) }
+                    val isCityBottomSheetVisible = remember { mutableStateOf(value = false) }
 
                     if (isTimeDialogVisible.value) {
                         ShowTimeDialog (
@@ -42,6 +46,7 @@ class PickersActivity : ComponentActivity() {
                             },
                             onTimeSelect = { selectedTime ->
                                 Toast.makeText(this@PickersActivity, selectedTime, Toast.LENGTH_SHORT).show()
+                                isTimeDialogVisible.value = false
                             }
                         )
                     }
@@ -53,6 +58,19 @@ class PickersActivity : ComponentActivity() {
                             },
                             onDateSelect = { selectedDate ->
                                 Toast.makeText(this@PickersActivity, selectedDate, Toast.LENGTH_SHORT).show()
+                                isDateDialogVisible.value = false
+                            }
+                        )
+                    }
+
+                    if (isCityDialogVisible.value) {
+                        ShowCityDialog(
+                            onCancel = {
+                                isCityDialogVisible.value = false
+                            },
+                            onCitySelect = { selectedCity ->
+                                Toast.makeText(this@PickersActivity, selectedCity, Toast.LENGTH_SHORT).show()
+                                isCityDialogVisible.value = false
                             }
                         )
                     }
@@ -64,6 +82,7 @@ class PickersActivity : ComponentActivity() {
                             },
                             onTimeSelect = { selectedTime ->
                                 Toast.makeText(this@PickersActivity, selectedTime, Toast.LENGTH_SHORT).show()
+                                isTimeBottomSheetVisible.value = false
                             }
                         )
                     }
@@ -75,6 +94,19 @@ class PickersActivity : ComponentActivity() {
                             },
                             onDateSelect = { selectedDate ->
                                 Toast.makeText(this@PickersActivity, selectedDate, Toast.LENGTH_SHORT).show()
+                                isDateBottomSheetVisible.value = false
+                            }
+                        )
+                    }
+
+                    if (isCityBottomSheetVisible.value) {
+                        ShowCityBottomSheet(
+                            onCancel = {
+                                isCityBottomSheetVisible.value = false
+                            },
+                            onCitySelect = { selectedCity ->
+                                Toast.makeText(this@PickersActivity, selectedCity, Toast.LENGTH_SHORT).show()
+                                isCityBottomSheetVisible.value = false
                             }
                         )
                     }
@@ -123,6 +155,21 @@ class PickersActivity : ComponentActivity() {
     }
 
     /**
+     * show the city picker dialog with it's parameters.
+     */
+    @Composable
+    private fun ShowCityDialog(
+        onCancel: () -> Unit,
+        onCitySelect: (String) -> Unit
+    ) {
+        CityDialog(
+            onCancel = onCancel,
+            onCitySelect = onCitySelect
+        )
+    }
+
+
+    /**
      * show the time picker bottom sheet with it's parameters.
      */
     @Composable
@@ -158,6 +205,20 @@ class PickersActivity : ComponentActivity() {
             yearRange = 1375..1403,
             onCancel = onCancel,
             onDateSelect = onDateSelect
+        )
+    }
+
+    /**
+     * show the city picker bottom sheet with it's parameters.
+     */
+    @Composable
+    private fun ShowCityBottomSheet(
+        onCancel: () -> Unit,
+        onCitySelect: (String) -> Unit
+    ) {
+        CityBottomSheet(
+            onCancel = onCancel,
+            onCitySelect = onCitySelect
         )
     }
 
