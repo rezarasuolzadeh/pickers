@@ -38,7 +38,7 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation("com.github.rezarasuolzadeh:pickers:1.1.15")
+    implementation("com.github.rezarasuolzadeh:pickers:1.2.17")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0")
 }
 ```
