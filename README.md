@@ -16,10 +16,10 @@
     &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب تاریخ (bottom sheet)
 </div>
 <div style="text-align: right;">
-    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب شهر (dialog)
+    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب شهر و استان (dialog)
 </div>
 <div style="text-align: right;">
-    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب شهر (bottom sheet)
+    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب شهر و استان (bottom sheet)
 </div>
 <br>&nbsp;<br>
 
