@@ -1,13 +1,25 @@
 [![](https://jitpack.io/v/rezarasuolzadeh/pickers.svg)](https://jitpack.io/#rezarasuolzadeh/pickers)
 
 ### درباره کتابخونه
-تو این کتابخونه که با jetpack compose توسعه داده شده، شما میتونید به راحتی time picker و date picker رو به صورت dialog (البته فعلا) استفاده کنید. توی هر قسمت که تو ادامه بهش اشاره میشه، یک سری پارامترها برای هر تابع در نظر گرفته شده که به شما امکان شخصی سازی تا حد زیادی رو میده که با اپلیکیشن شما سازگاری داشته باشه. در حال حاضر توابع زیر قابل استفاده هستن:
+تو این کتابخونه که با jetpack compose توسعه داده شده، شما میتونید به راحتی time picker ، date picker و city picker رو به صورت dialog و bottom sheet استفاده کنید. توی هر قسمت که تو ادامه بهش اشاره میشه، یک سری پارامترها برای هر تابع در نظر گرفته شده که به شما امکان شخصی سازی تا حد زیادی رو میده که با اپلیکیشن شما سازگاری داشته باشه. در حال حاضر توابع زیر قابل استفاده هستن:
 
 <div style="text-align: right;">
-    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب زمان
+    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب زمان (dialog)
 </div>
 <div style="text-align: right;">
-    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب تاریخ
+    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب زمان (bottom sheet)
+</div>
+<div style="text-align: right;">
+    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب تاریخ (dialog)
+</div>
+<div style="text-align: right;">
+    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب تاریخ (bottom sheet)
+</div>
+<div style="text-align: right;">
+    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب شهر (dialog)
+</div>
+<div style="text-align: right;">
+    &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تابع انتخاب شهر (bottom sheet)
 </div>
 <br>&nbsp;<br>
 
