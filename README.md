@@ -237,3 +237,44 @@ onDateSelect = { selectedDate ->
 ```
 <br>&nbsp;<br>
 
+## تابع انتخاب شهر و استان (ِDialog)
+<p align="center">
+    <img alt="Time Dialog" src="/shots/city_dialog.png"  width="400" height="300"> 
+</p>
+
+با فراخوانی تابع زیر، شما میتونید خروجی بالا (که به صورت Dialog هست) رو تو هر جایی از کد compose تون که بخواین داشته باشین:
+
+```kotlin
+CityDialog(
+    title = null,
+    confirmTitle = null,
+    cancelTitle = null,
+    fontFamily = null,
+    titleColor = null,
+    provinceColor = null,
+    cityColor = null,
+    dashColor = null,
+    confirmColor = null,
+    cancelColor = null,
+    dividerColor = null,
+    backgroundColor = null,
+    backgroundBrush = null,
+    outputSeparator = null,
+    onCancel = {},
+    onCitySelect = {}
+)
+```
+در این قسمت شما میتونید با استفاده از پارامترهای ورودی تابع (که اسمشم جوری گذاشتم که گویا باشه) استفاده کنید و تا جای ممکن دیالوگ رو برای خودتون شخصی سازی کنین. تو اینجا دو تا lambda function داریم که اولیش onCancel هست که وقتی روی دکمه انصراف (یا هر چیزی که اسمش رو خودتون توی cancelTitle بزارید) زده بشه فراخوانی میشه:
+```kotlin
+onCancel = {
+    // dismiss the dilog or do something
+}
+```
+دومیش هم onCitySelect هست که وقتی روی دکمه ثبت (یا هر چیزی که اسمش رو خودتون توی confirmTitle بزارید) زده بشه فراخوانی میشه که مقدار selectedCity همون زمانی هست که انتخاب کردید:
+```kotlin
+onCitySelect = { selectedCity ->
+    // show the city or do something
+}
+```
+<br>&nbsp;<br>
+
