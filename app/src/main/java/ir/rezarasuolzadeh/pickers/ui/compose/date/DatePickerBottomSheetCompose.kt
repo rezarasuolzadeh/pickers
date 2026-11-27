@@ -13,8 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,8 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import ir.rezarasuolzadeh.pickers.R
 import ir.rezarasuolzadeh.pickers.ui.compose.picker.Picker
 import ir.rezarasuolzadeh.pickers.ui.compose.picker.PickerState
@@ -41,10 +38,9 @@ import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.White
 import ir.rezarasuolzadeh.pickers.utils.enums.DateOutputType
 import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
+import ir.rezarasuolzadeh.pickers.utils.extensions.isLeapYear
 import ir.rezarasuolzadeh.pickers.utils.extensions.noRippleClickable
 import ir.rezarasuolzadeh.pickers.utils.extensions.toNumericMonth
-import ir.rezarasuolzadeh.pickers.viewmodels.date.DateEvent
-import ir.rezarasuolzadeh.pickers.viewmodels.date.DateViewModel
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            screen                                              //
@@ -73,32 +69,26 @@ internal fun DatePickerBottomSheetCompose(
     outputSeparator: Char?,
     outputType: DateOutputType?,
     onDateSelect: (String) -> Unit,
-    onCancel: () -> Unit,
-    dateViewModel: DateViewModel = viewModel()
+    onCancel: () -> Unit
 ) {
-    val years by dateViewModel.years.collectAsStateWithLifecycle()
-    val months by dateViewModel.months.collectAsStateWithLifecycle()
-    val days by dateViewModel.days.collectAsStateWithLifecycle()
     val yearPickerState = rememberPickerState()
     val monthPickerState = rememberPickerState()
     val dayPickerState = rememberPickerState()
-
-    LaunchedEffect(key1 = Unit) {
-        dateViewModel.apply {
-            onEvent(
-                event = DateEvent.SetYearRange(
-                    yearRange = yearRange
-                )
-            )
-            onEvent(
-                event = DateEvent.SetInitialDate(
-                    initialDay = initialDay,
-                    initialMonth = initialMonth,
-                    initialYear = initialYear,
-                    yearRange = yearRange
-                )
-            )
-        }
+    val years = remember(yearRange, initialYear) { bottomSheetDateOptions(yearRange, initialYear) }
+    val months = remember(initialMonth) {
+        val offset = initialMonth?.ordinal ?: 0
+        (MonthType.entries.drop(offset) + MonthType.entries.take(offset)).map { it.title }
+    }
+    val month = MonthType.entries.find { it.title == monthPickerState.selectedItem }
+        ?: initialMonth ?: MonthType.FARVARDIN
+    val year = yearPickerState.selectedItem.toIntOrNull() ?: years.firstOrNull()?.toIntOrNull()
+    val lastDay = when {
+        month.index <= 6 -> 31
+        month == MonthType.ESFAND && year?.isLeapYear() != true -> 29
+        else -> 30
+    }
+    val days = remember(lastDay, initialDay) {
+        bottomSheetDateOptions(1..lastDay, dayPickerState.selectedItem.toIntOrNull() ?: initialDay)
     }
 
     DatePickerBottomSheetComposeContent(
@@ -124,31 +114,15 @@ internal fun DatePickerBottomSheetCompose(
         yearPickerState = yearPickerState,
         monthPickerState = monthPickerState,
         dayPickerState = dayPickerState,
-        onDayChanged = {
-            dateViewModel.onEvent(
-                DateEvent.UpdateSelectedDay(
-                    selectedDay = it.toInt()
-                )
-            )
-        },
-        onMonthChanged = {
-            dateViewModel.onEvent(
-                DateEvent.UpdateDays(
-                    selectedMonth = it
-                )
-            )
-        },
-        onYearChanged = { year ->
-            dateViewModel.onEvent(
-                DateEvent.CheckLeapYear(
-                    year = year,
-                    month = monthPickerState.selectedItem
-                )
-            )
-        },
         onDateSelect = onDateSelect,
         onCancel = onCancel
     )
+}
+
+private fun bottomSheetDateOptions(range: IntRange, initial: Int?): List<String> {
+    if (range.isEmpty()) return emptyList()
+    val start = (initial ?: range.first).coerceIn(range)
+    return ((start..range.last) + (range.first until start)).map { it.toString().padStart(2, '0') }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,9 +153,6 @@ internal fun DatePickerBottomSheetComposeContent(
     yearPickerState: PickerState,
     monthPickerState: PickerState,
     dayPickerState: PickerState,
-    onDayChanged: (String) -> Unit,
-    onMonthChanged: (String) -> Unit,
-    onYearChanged: (String) -> Unit,
     onDateSelect: (String) -> Unit,
     onCancel: () -> Unit
 ) {
@@ -248,8 +219,7 @@ internal fun DatePickerBottomSheetComposeContent(
                     fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                     itemColor = yearColor ?: White,
                     textModifier = Modifier.padding(all = 8.dp),
-                    textStyle = TextStyle(fontSize = 16.sp),
-                    onItemChanged = onYearChanged
+                    textStyle = TextStyle(fontSize = 16.sp)
                 )
             }
             Text(
@@ -272,8 +242,7 @@ internal fun DatePickerBottomSheetComposeContent(
                     fontFamily = fontFamily ?: FontFamily(Font(resId = R.font.vazir_num)),
                     itemColor = monthColor ?: White,
                     textModifier = Modifier.padding(all = 8.dp),
-                    textStyle = TextStyle(fontSize = 16.sp),
-                    onItemChanged = onMonthChanged
+                    textStyle = TextStyle(fontSize = 16.sp)
                 )
             }
             Text(
@@ -297,8 +266,7 @@ internal fun DatePickerBottomSheetComposeContent(
                     itemColor = dayColor ?: White,
                     startIndex = 0,
                     textModifier = Modifier.padding(all = 8.dp),
-                    textStyle = TextStyle(fontSize = 16.sp),
-                    onItemChanged = onDayChanged
+                    textStyle = TextStyle(fontSize = 16.sp)
                 )
             }
         }

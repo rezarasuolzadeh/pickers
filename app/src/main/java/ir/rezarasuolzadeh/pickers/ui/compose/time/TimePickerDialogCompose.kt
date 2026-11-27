@@ -16,7 +16,10 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,8 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import ir.rezarasuolzadeh.pickers.ui.compose.picker.Picker
 import ir.rezarasuolzadeh.pickers.R
 import ir.rezarasuolzadeh.pickers.utils.extensions.noRippleClickable
@@ -45,8 +46,6 @@ import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.White
 import ir.rezarasuolzadeh.pickers.utils.enums.TimeOutputType
 import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
-import ir.rezarasuolzadeh.pickers.viewmodels.time.TimeEvent
-import ir.rezarasuolzadeh.pickers.viewmodels.time.TimeViewModel
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                         screen                                                 //
@@ -78,31 +77,12 @@ internal fun TimePickerDialogCompose(
     outputType: TimeOutputType?,
     outputSeparator: Char?,
     onTimeSelect: (String) -> Unit,
-    onCancel: () -> Unit,
-    timeViewModel: TimeViewModel = viewModel()
+    onCancel: () -> Unit
 ) {
-    val timeType by timeViewModel.timeType.collectAsStateWithLifecycle()
-    val hours by timeViewModel.hours.collectAsStateWithLifecycle()
-    val minutes by timeViewModel.minutes.collectAsStateWithLifecycle()
-    val seconds by timeViewModel.seconds.collectAsStateWithLifecycle()
-
-    LaunchedEffect(key1 = Unit) {
-        timeViewModel.apply {
-            onEvent(
-                event = TimeEvent.SetTimeFormat(
-                    is12Hour = is12Hour
-                )
-            )
-            onEvent(
-                event = TimeEvent.SetInitialTime(
-                    initialHour = initialHour,
-                    initialMinute = initialMinute,
-                    initialSecond = initialSecond,
-                    initialTimeType = initialTimeType
-                )
-            )
-        }
-    }
+    var timeType by rememberSaveable(initialTimeType) { mutableStateOf(initialTimeType ?: TimeType.AM) }
+    val hours = remember(initialHour, is12Hour) { timeOptions(initialHour, if (is12Hour) 12 else 23) }
+    val minutes = remember(initialMinute) { timeOptions(initialMinute, 59) }
+    val seconds = remember(initialSecond) { timeOptions(initialSecond, 59) }
 
     TimePickerDialogComposeContent(
         title = title,
@@ -130,10 +110,14 @@ internal fun TimePickerDialogCompose(
         timeType = timeType,
         onTimeSelect = onTimeSelect,
         onCancel = onCancel,
-        onEvent = {
-            timeViewModel.onEvent(event = it)
-        }
+        onTimeTypeChange = { timeType = it }
     )
+}
+
+private fun timeOptions(initial: Int?, maximum: Int): List<String> {
+    val start = initial ?: 0
+    return (start..maximum).map { if (it < 10) "0$it" else it.toString() } +
+        (0 until start).map { it.toString().padStart(2, '0') }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,7 +151,7 @@ internal fun TimePickerDialogComposeContent(
     timeType: TimeType,
     onTimeSelect: (String) -> Unit,
     onCancel: () -> Unit,
-    onEvent: (TimeEvent) -> Unit
+    onTimeTypeChange: (TimeType) -> Unit
 ) {
     Column(
         modifier = when {
@@ -308,22 +292,14 @@ internal fun TimePickerDialogComposeContent(
                                     )
                                 )
                                 .noRippleClickable {
-                                    onEvent(
-                                        TimeEvent.SetTimeType(
-                                            timeType = TimeType.AM
-                                        )
-                                    )
+                                    onTimeTypeChange(TimeType.AM)
                                 }
                         } else {
                             Modifier
                                 .width(width = 45.dp)
                                 .height(height = 30.dp)
                                 .noRippleClickable {
-                                    onEvent(
-                                        TimeEvent.SetTimeType(
-                                            timeType = TimeType.AM
-                                        )
-                                    )
+                                    onTimeTypeChange(TimeType.AM)
                                 }
                         },
                         text = "ق.ظ",
@@ -356,22 +332,14 @@ internal fun TimePickerDialogComposeContent(
                                     )
                                 )
                                 .noRippleClickable {
-                                    onEvent(
-                                        TimeEvent.SetTimeType(
-                                            timeType = TimeType.PM
-                                        )
-                                    )
+                                    onTimeTypeChange(TimeType.PM)
                                 }
                         } else {
                             Modifier
                                 .width(width = 45.dp)
                                 .height(height = 30.dp)
                                 .noRippleClickable {
-                                    onEvent(
-                                        TimeEvent.SetTimeType(
-                                            timeType = TimeType.PM
-                                        )
-                                    )
+                                    onTimeTypeChange(TimeType.PM)
                                 }
                         },
                         text = "ب.ظ",
