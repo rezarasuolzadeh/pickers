@@ -3,22 +3,42 @@ package ir.rezarasuolzadeh.pickers.activities
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import ir.rezarasuolzadeh.pickers.ui.bottomSheet.CityBottomSheet
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.unit.dp
 import ir.rezarasuolzadeh.pickers.ui.bottomSheet.DateBottomSheet
 import ir.rezarasuolzadeh.pickers.ui.bottomSheet.TimeBottomSheet
-import ir.rezarasuolzadeh.pickers.ui.dialog.CityDialog
 import ir.rezarasuolzadeh.pickers.ui.dialog.DateDialog
 import ir.rezarasuolzadeh.pickers.ui.dialog.TimeDialog
+import ir.rezarasuolzadeh.pickers.ui.theme.DarkBlue
+import ir.rezarasuolzadeh.pickers.ui.theme.LightBlue
 import ir.rezarasuolzadeh.pickers.ui.theme.PickersTheme
 import ir.rezarasuolzadeh.pickers.ui.theme.White
 import ir.rezarasuolzadeh.pickers.utils.enums.MonthType
+import ir.rezarasuolzadeh.pickers.utils.enums.PickerType
 import ir.rezarasuolzadeh.pickers.utils.enums.TimeOutputType
 import ir.rezarasuolzadeh.pickers.utils.enums.TimeType
 
@@ -26,90 +46,66 @@ class PickersActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(
+                scrim = Color.Transparent.toArgb(),
+                darkScrim = Color.Transparent.toArgb()
+            )
+        )
         setContent {
             PickersTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = White
+                var activePicker by rememberSaveable { mutableStateOf<PickerType?>(value = null) }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Brush.verticalGradient(listOf(LightBlue, DarkBlue)))
+                        .verticalScroll(rememberScrollState())
+                        .padding(24.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    val isTimeDialogVisible = remember { mutableStateOf(value = true) }
-                    val isDateDialogVisible = remember { mutableStateOf(value = false) }
-                    val isCityDialogVisible = remember { mutableStateOf(value = false) }
-                    val isTimeBottomSheetVisible = remember { mutableStateOf(value = false) }
-                    val isDateBottomSheetVisible = remember { mutableStateOf(value = false) }
-                    val isCityBottomSheetVisible = remember { mutableStateOf(value = false) }
+                    PickerType.entries.forEach { option ->
+                        Button(
+                            onClick = { activePicker = option },
+                            modifier = Modifier.widthIn(max = 360.dp).fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(containerColor = White, contentColor = DarkBlue)
+                        ) {
+                            Text(option.label)
+                        }
+                    }
+                }
 
-                    if (isTimeDialogVisible.value) {
-                        ShowTimeDialog (
-                            onCancel = {
-                                isTimeDialogVisible.value = false
-                            },
-                            onTimeSelect = { selectedTime ->
-                                Toast.makeText(this@PickersActivity, selectedTime, Toast.LENGTH_SHORT).show()
-                                isTimeDialogVisible.value = false
-                            }
+                val dismiss = { activePicker = null }
+                val onSelect: (String) -> Unit = { value ->
+                    Toast.makeText(this@PickersActivity, value, Toast.LENGTH_SHORT).show()
+                    dismiss()
+                }
+                when (activePicker) {
+                    PickerType.TIME_DIALOG -> {
+                        ShowTimeDialog(
+                            onCancel = dismiss,
+                            onTimeSelect = onSelect
                         )
                     }
-
-                    if (isDateDialogVisible.value) {
+                    PickerType.TIME_BOTTOM_SHEET -> {
+                        ShowTimeBottomSheet(
+                            onCancel = dismiss,
+                            onTimeSelect = onSelect
+                        )
+                    }
+                    PickerType.DATE_DIALOG -> {
                         ShowDateDialog(
-                            onCancel = {
-                                isDateDialogVisible.value = false
-                            },
-                            onDateSelect = { selectedDate ->
-                                Toast.makeText(this@PickersActivity, selectedDate, Toast.LENGTH_SHORT).show()
-                                isDateDialogVisible.value = false
-                            }
+                            onCancel = dismiss,
+                            onDateSelect = onSelect
                         )
                     }
-
-                    if (isCityDialogVisible.value) {
-                        ShowCityDialog(
-                            onCancel = {
-                                isCityDialogVisible.value = false
-                            },
-                            onCitySelect = { selectedCity ->
-                                Toast.makeText(this@PickersActivity, selectedCity, Toast.LENGTH_SHORT).show()
-                                isCityDialogVisible.value = false
-                            }
-                        )
-                    }
-
-                    if (isTimeBottomSheetVisible.value) {
-                        ShowTimeBottomSheet (
-                            onCancel = {
-                                isTimeBottomSheetVisible.value = false
-                            },
-                            onTimeSelect = { selectedTime ->
-                                Toast.makeText(this@PickersActivity, selectedTime, Toast.LENGTH_SHORT).show()
-                                isTimeBottomSheetVisible.value = false
-                            }
-                        )
-                    }
-
-                    if (isDateBottomSheetVisible.value) {
+                    PickerType.DATE_BOTTOM_SHEET -> {
                         ShowDateBottomSheet(
-                            onCancel = {
-                                isDateBottomSheetVisible.value = false
-                            },
-                            onDateSelect = { selectedDate ->
-                                Toast.makeText(this@PickersActivity, selectedDate, Toast.LENGTH_SHORT).show()
-                                isDateBottomSheetVisible.value = false
-                            }
+                            onCancel = dismiss,
+                            onDateSelect = onSelect
                         )
                     }
-
-                    if (isCityBottomSheetVisible.value) {
-                        ShowCityBottomSheet(
-                            onCancel = {
-                                isCityBottomSheetVisible.value = false
-                            },
-                            onCitySelect = { selectedCity ->
-                                Toast.makeText(this@PickersActivity, selectedCity, Toast.LENGTH_SHORT).show()
-                                isCityBottomSheetVisible.value = false
-                            }
-                        )
-                    }
+                    null -> Unit
                 }
             }
         }
@@ -155,21 +151,6 @@ class PickersActivity : ComponentActivity() {
     }
 
     /**
-     * show the city picker dialog with it's parameters.
-     */
-    @Composable
-    private fun ShowCityDialog(
-        onCancel: () -> Unit,
-        onCitySelect: (String) -> Unit
-    ) {
-        CityDialog(
-            onCancel = onCancel,
-            onCitySelect = onCitySelect
-        )
-    }
-
-
-    /**
      * show the time picker bottom sheet with it's parameters.
      */
     @Composable
@@ -205,20 +186,6 @@ class PickersActivity : ComponentActivity() {
             yearRange = 1375..1403,
             onCancel = onCancel,
             onDateSelect = onDateSelect
-        )
-    }
-
-    /**
-     * show the city picker bottom sheet with it's parameters.
-     */
-    @Composable
-    private fun ShowCityBottomSheet(
-        onCancel: () -> Unit,
-        onCitySelect: (String) -> Unit
-    ) {
-        CityBottomSheet(
-            onCancel = onCancel,
-            onCitySelect = onCitySelect
         )
     }
 

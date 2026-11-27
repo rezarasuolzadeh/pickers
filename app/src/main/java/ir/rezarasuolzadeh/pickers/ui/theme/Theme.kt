@@ -29,7 +29,7 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun PickersTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false,
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
